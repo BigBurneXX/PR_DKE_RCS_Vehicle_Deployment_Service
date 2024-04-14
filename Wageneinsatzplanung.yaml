@@ -1,0 +1,963 @@
+openapi: 3.0.3
+info:
+  title: Vehicle Deployment Service
+  description: This is the Vehicle Deployment Service created by Bernhard Birklbauer
+  contact:
+    email: k12105938@students.jku.at
+  version: 0.0.1
+tags:
+  - name: Vehicle Deployment Services
+    description: APIs for managing all vehicle deployment services
+  - name: Vehicle Deployment Plannings
+    description: APIs for managing all vehicle deployment plannings
+  - name: Vehicle Deployment Plans
+    description: APIs for managing all vehicle deployment plans
+  - name: Tripsheets
+    description: APIs for managing all tripsheets
+paths:
+  /vehicle-deployment-services:
+    get:
+      tags:
+        - Vehicle Deployment Services
+      summary: Query vehicle deployment services
+      operationId: vehicleDeploymentServiceRead
+      responses:
+        '200':
+          description: Found matching data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VehicleDeploymentServiceDTO'
+        '500':
+          description: Could not find data for some internal reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    post:
+      tags:
+        - Vehicle Deployment Services
+      summary: Create a new vehicle deployment service
+      operationId: vehicleDeploymentServiceCreate
+      requestBody:
+        description: >-
+          Pass the necessary details to create a new vehicle deployment service in
+          JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleDeploymentServiceDTO'
+      responses:
+        '201':
+          description: >-
+            Datum created successfully (returns DTO of what was actually
+            created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentServiceDTO'
+        '400':
+          description: Could not create datum because it is malformed
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Malformed data
+        '500':
+          description: Could not create datum for some other (internal) reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+  /vehicle-deployment-services/{id}:
+    get:
+      tags:
+        - Vehicle Deployment Services
+      summary: Query a specific vehicle deployment service
+      operationId: vehicleDeploymentServiceReadById
+      parameters:
+        - name: id
+          in: path
+          description: ID of the vehicle deployment service to be queried
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Found matching data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentServiceDTO'
+        '404':
+          description: No matching data found
+        '500':
+          description: Could not find data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    put:
+      tags:
+        - Vehicle Deployment Services
+      summary: Update a specific vehicle deployment service
+      operationId: vehicleDeploymentServiceUpdate
+      parameters:
+        - name: id
+          in: path
+          description: ID of the vehicle deployment service to be updated
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Pass the information to be updated in JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleDeploymentServiceDTO'
+      responses:
+        '200':
+          description: Data updated successfully (returns DTO of the updated data)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentServiceDTO'
+        '400':
+          description: Could not update data because it is malformed
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Malformed data
+        '404':
+          description: Could not find data to update
+        '500':
+          description: Could not update data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    delete:
+      tags:
+        - Vehicle Deployment Services
+      summary: Delete a specific vehicle deployment service
+      operationId: vehicleDeploymentServiceDelete
+      parameters:
+        - name: id
+          in: path
+          description: ID of the vehicle deployment service to be deleted
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Data deleted successfully (returns DTOs of the deleted data, if any)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentServiceDTO'
+        '404':
+          description: Could not find data to delete
+        '500':
+          description: Could not delete data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    patch:
+      tags:
+        - Vehicle Deployment Services
+      summary: Patch a specific vehicle deployment service
+      operationId: vehicleDeploymentServicePatch
+      parameters:
+        - name: id
+          in: path
+          description: ID of the vehicle deployment service to be patched
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Pass the partial information to be updated in JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleDeploymentServiceDTO'
+      responses:
+        '200':
+          description: Data patched successfully (returns DTO of the patched data)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentServiceDTO'
+        '400':
+          description: Could not patch data because it is malformed
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Malformed data
+        '404':
+          description: Could not find data to patch
+        '500':
+          description: Could not patch data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+  /vehicle-deployment-plannings:
+    get:
+      tags:
+        - Vehicle Deployment Plannings
+      summary: Query vehicle deployment plannings
+      operationId: vehicleDeploymentPlanningRead
+      responses:
+        '200':
+          description: Found matching data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+        '500':
+          description: Could not find data for some internal reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    post:
+      tags:
+        - Vehicle Deployment Plannings
+      summary: Create a new vehicle deployment planning
+      operationId: vehicleDeploymentPlanningCreate
+      requestBody:
+        description: >-
+          Pass the necessary details to create a new vehicle deployment planning in
+          JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+      responses:
+        '201':
+          description: >-
+            Datum created successfully (returns DTO of what was actually
+            created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+        '400':
+          description: Could not create datum because it is malformed
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Malformed data
+        '500':
+          description: Could not create datum for some other (internal) reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+  /vehicle-deployment-plannings/{id}:
+    get:
+      tags:
+        - Vehicle Deployment Plannings
+      summary: Query a specific vehicle deployment planning
+      operationId: vehicleDeploymentPlanningReadById
+      parameters:
+        - name: id
+          in: path
+          description: ID of the vehicle deployment planning to be queried
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Found matching data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+        '404':
+          description: No matching data found
+        '500':
+          description: Could not find data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    put:
+      tags:
+        - Vehicle Deployment Plannings
+      summary: Update a specific vehicle deployment planning
+      operationId: vehicleDeploymentPlanningUpdate
+      parameters:
+        - name: id
+          in: path
+          description: ID of the vehicle deployment planning to be updated
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Pass the information to be updated in JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+      responses:
+        '200':
+          description: Data updated successfully (returns DTO of the updated data)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+        '400':
+          description: Could not update data because it is malformed
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Malformed data
+        '404':
+          description: Could not find data to update
+        '500':
+          description: Could not update data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    delete:
+      tags:
+        - Vehicle Deployment Plannings
+      summary: Delete a specific vehicle deployment planning
+      operationId: vehicleDeploymentPlanningDelete
+      parameters:
+        - name: id
+          in: path
+          description: ID of the vehicle deployment planning to be deleted
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Data deleted successfully (returns DTOs of the deleted data, if any)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+        '404':
+          description: Could not find data to delete
+        '500':
+          description: Could not delete data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    patch:
+      tags:
+        - Vehicle Deployment Plannings
+      summary: Patch a specific vehicle deployment planning
+      operationId: vehicleDeploymentPlanningPatch
+      parameters:
+        - name: id
+          in: path
+          description: ID of the vehicle deployment planning to be patched
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Pass the partial information to be updated in JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+      responses:
+        '200':
+          description: Data patched successfully (returns DTO of the patched data)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+        '400':
+          description: Could not patch data because it is malformed
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Malformed data
+        '404':
+          description: Could not find data to patch
+        '500':
+          description: Could not patch data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+  /vehicle-deployment-plans:
+    get:
+      tags:
+        - Vehicle Deployment Plans
+      summary: Query vehicle deployment plans
+      operationId: vehicleDeploymentPlanRead
+      responses:
+        '200':
+          description: Found matching data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+        '500':
+          description: Could not find data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    post:
+      tags:
+        - Vehicle Deployment Plans
+      summary: Create a new vehicle deployment plan
+      operationId: vehicleDeploymentPlanCreate
+      requestBody:
+        description: >-
+          Pass the necessary details to create a new vehicle deployment plan in
+          JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+      responses:
+        '201':
+          description: >-
+            Datum created successfully (returns DTO of what was actually
+            created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+        '400':
+          description: Could not create datum because it is malformed
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Malformed data
+        '500':
+          description: Could not create datum for some other (internal) reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+  /vehicle-deployment-plans/{id}:
+    get:
+      tags:
+        - Vehicle Deployment Plans
+      summary: Query a specific vehicle deployment plan
+      operationId: vehicleDeploymentPlanReadById
+      parameters:
+        - name: id
+          in: path
+          description: ID of the vehicle deployment plan to be queried
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Found matching data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+        '404':
+          description: No matching data found
+        '500':
+          description: Could not find data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    put:
+      tags:
+        - Vehicle Deployment Plans
+      summary: Update a specific vehicle deployment plan
+      operationId: vehicleDeploymentPlanUpdate
+      parameters:
+        - name: id
+          in: path
+          description: ID of the vehicle deployment plan to be updated
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Pass the information to be updated in JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+      responses:
+        '200':
+          description: Data updated successfully (returns DTO of the updated data)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+        '400':
+          description: Could not update data because it is malformed
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Malformed data
+        '404':
+          description: Could not find data to update
+        '500':
+          description: Could not update data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    delete:
+      tags:
+        - Vehicle Deployment Plans
+      summary: Delete a specific vehicle deployment plan
+      operationId: vehicleDeploymentPlanDelete
+      parameters:
+        - name: id
+          in: path
+          description: ID of the vehicle deployment plan to be deleted
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Data deleted successfully (returns DTOs of the deleted data, if any)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+        '404':
+          description: Could not find data to delete
+        '500':
+          description: Could not delete data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    patch:
+      tags:
+        - Vehicle Deployment Plans
+      summary: Patch a specific vehicle deployment plan
+      operationId: vehicleDeploymentPlanPatch
+      parameters:
+        - name: id
+          in: path
+          description: ID of the vehicle deployment plan to be patched
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Pass the partial information to be updated in JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+      responses:
+        '200':
+          description: Data patched successfully (returns DTO of the patched data)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeploymentPlanningDTO'
+        '400':
+          description: Could not patch data because it is malformed
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Malformed data
+        '404':
+          description: Could not find data to patch
+        '500':
+          description: Could not patch data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+  /tripsheets:
+    get:
+      tags:
+        - Tripsheets
+      summary: Query tripsheets
+      operationId: tripsheetRead
+      responses:
+        '200':
+          description: Returns matching data (or empty JSON array)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TripsheetDTO'
+        '500':
+          description: Could not find data for some internal reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    post:
+      tags:
+        - Tripsheets
+      summary: Create a new tripsheet
+      operationId: tripsheetCreate
+      requestBody:
+        description: Pass the necessary details to create a new tripsheet in JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripsheetDTO'
+      responses:
+        '201':
+          description: >-
+            Datum created successfully (returns DTO of what was actually
+            created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripsheetDTO'
+        '400':
+          description: Could not create datum because it is malformed
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Malformed data
+        '500':
+          description: Could not create datum for some other (internal) reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+  /tripsheets/{id}:
+    get:
+      tags:
+        - Tripsheets
+      summary: Query a specific tripsheet
+      operationId: tripsheetReadById
+      parameters:
+        - name: id
+          in: path
+          description: ID of the tripsheet to be queried
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Found matching data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripsheetDTO'
+        '404':
+          description: No matching data found
+        '500':
+          description: Could not find data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    put:
+      tags:
+        - Tripsheets
+      summary: Update a specific tripsheet
+      operationId: tripsheetUpdate
+      parameters:
+        - name: id
+          in: path
+          description: ID of the tripsheet to be updated
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Pass the information to be updated in JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripsheetDTO'
+      responses:
+        '200':
+          description: Data updated successfully (returns DTO of the updated data)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripsheetDTO'
+        '400':
+          description: Could not update data because it is malformed
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Malformed data
+        '404':
+          description: Could not find data to update
+        '500':
+          description: Could not update data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    delete:
+      tags:
+        - Tripsheets
+      summary: Delete a specific tripsheet
+      operationId: tripsheetDelete
+      parameters:
+        - name: id
+          in: path
+          description: ID of the tripsheet to be deleted
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Data deleted successfully (returns DTOs of the deleted data, if any)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripsheetDTO'
+        '404':
+          description: Could not find data to delete
+        '500':
+          description: Could not delete data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+    patch:
+      tags:
+        - Tripsheets
+      summary: Patch a specific tripsheet
+      operationId: tripsheetPatch
+      parameters:
+        - name: id
+          in: path
+          description: ID of the tripsheet to be patched
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Pass the partial information to be updated in JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripsheetDTO'
+      responses:
+        '200':
+          description: Data patched successfully (returns DTO of the patched data)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripsheetDTO'
+        '400':
+          description: Could not patch data because it is malformed
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Malformed data
+        '404':
+          description: Could not find data to patch
+        '500':
+          description: Could not patch data for some other reason
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Database offline
+        '503':
+          description: Service unavailable
+components:
+  schemas:
+    VehicleDeploymentServiceDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        serviceName:
+          type: string
+        description:
+          type: string
+        deploymentPlans:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleDeploymentPlanDTO'
+    VehicleDeploymentPlanningDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        persons:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonDTO'
+        vehicles:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleDTO'
+        plans:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleDeploymentPlanDTO'
+    VehicleDeploymentPlanDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        vehicleId:
+          type: integer
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressDTO'
+    TripsheetDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        vehicleDeploymentPlanId:
+          type: integer
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressDTO'
+        visitStatus:
+          type: array
+          items:
+            type: boolean
+    PersonDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        startAddressId:
+          type: integer
+        targetAddressId:
+          type: integer
+        hasWheelChair:
+          type: boolean
+    VehicleDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        vehicleType:
+          type: string
+        vehicleName:
+          type: string
+        seats:
+          type: integer
+        wheelchair:
+          type: boolean
+    AddressDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        street:
+          type: string
+        houseNo:
+          type: string
+        townId:
+          type: integer
