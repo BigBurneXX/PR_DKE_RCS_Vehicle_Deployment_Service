@@ -1,7 +1,8 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.2.4"
-	id("io.spring.dependency-management") version "1.1.4"
+	id("org.springframework.boot") version "3.2.5"
+	id("io.spring.dependency-management") version "1.1.5"
+	id("io.freefair.lombok") version "8.6"
 }
 
 group = "com.example"
@@ -16,6 +17,8 @@ repositories {
 }
 
 dependencies {
+	implementation("com.oracle.database.jdbc:ojdbc11:23.4.0.24.05")
+	implementation("org.projectlombok:lombok:1.18.32")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
