@@ -1,0 +1,13 @@
+.container {
+  width: 50%;
+  margin: auto;
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.btn {
+  margin-top: 10px;
+}

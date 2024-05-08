@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TripsheetComponent } from './tripsheet.component';
+import { TripSheetComponent } from './trip-sheet.component';
 
-describe('TripsheetComponent', () => {
-  let component: TripsheetComponent;
-  let fixture: ComponentFixture<TripsheetComponent>;
+describe('TripSheetComponent', () => {
+  let component: TripSheetComponent;
+  let fixture: ComponentFixture<TripSheetComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TripsheetComponent]
+      imports: [TripSheetComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(TripsheetComponent);
+
+    fixture = TestBed.createComponent(TripSheetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

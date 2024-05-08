@@ -1,29 +1,19 @@
-<div>
+<div class="container">
   <h2>Create Vehicle Deployment Service</h2>
-  <form (ngSubmit)="saveVehicleDeploymentService()">
+  <form (submit)="saveVehicleDeploymentService()">
     <div class="form-group">
       <label for="serviceName">Service Name:</label>
-      <input type="text" class="form-control" id="serviceName" name="serviceName" [(ngModel)]="vehicleDeploymentService.name" required>
+      <input type="text" class="form-control" id="serviceName" [(ngModel)]="vehicleDeploymentService.serviceName" name="serviceName" required>
     </div>
     <div class="form-group">
       <label for="description">Description:</label>
-      <textarea class="form-control" id="description" name="description" rows="3" [(ngModel)]="vehicleDeploymentService.description" required></textarea>
+      <textarea class="form-control" id="description" [(ngModel)]="vehicleDeploymentService.description" name="description" required></textarea>
     </div>
     <div class="form-group">
       <label for="vehicleDeploymentPlannings">Vehicle Deployment Plannings:</label>
-      <div *ngFor="let plannings of vehicleDeploymentService.vehicleDeploymentPlannings">
-        <!-- Display existing plans or edit new plans -->
-        <!-- Include input fields for plan properties -->
-      </div>
-      <!-- Input fields for adding a new plan -->
-      <div class="form-group">
-        <label for="newPlan">New Plan:</label>
-        <!-- Include input fields for new plan properties -->
-      </div>
-      <button type="button" class="btn btn-primary" (click)="addVehicleDeploymentPlan()">Add Plan</button>
+      <input type="text" class="form-control" id="vehicleDeploymentPlannings" name="vehicleDeploymentPlannings">
+      <!-- <button type="button" class="btn btn-primary" (click)="addVehicleDeploymentPlan(newPlan)">Add Plan</button> -->
     </div>
     <button type="submit" class="btn btn-success">Save</button>
   </form>
 </div>
-
-
