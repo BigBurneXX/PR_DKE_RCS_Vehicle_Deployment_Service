@@ -25,4 +25,8 @@ public class Person {
     private Long targetAddressId;
 
     private boolean hasWheelChair;
+
+    @ManyToOne
+    @JoinColumn(name = "vehicle_deployment_planning_id")
+    private VehicleDeploymentPlanning vehicleDeploymentPlanning;
 }

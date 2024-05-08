@@ -1,9 +1,6 @@
 package com.example.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -24,4 +21,8 @@ public class Vehicle {
     private int seats;
 
     private boolean wheelchair;
+
+    @ManyToOne
+    @JoinColumn(name = "vehicle_deployment_planning_id")
+    private VehicleDeploymentPlanning vehicleDeploymentPlanning;
 }

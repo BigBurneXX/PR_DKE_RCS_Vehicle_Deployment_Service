@@ -21,4 +21,8 @@ public class VehicleDeploymentPlan {
 
     @OneToMany(mappedBy = "vehicleDeploymentPlan", cascade = CascadeType.ALL)
     private List<Address> addresses;
+
+    @ManyToOne
+    @JoinColumn(name = "vehicle_deployment_planning_id")
+    private VehicleDeploymentPlanning vehicleDeploymentPlanning;
 }
