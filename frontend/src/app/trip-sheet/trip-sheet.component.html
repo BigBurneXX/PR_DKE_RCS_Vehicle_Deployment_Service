@@ -1,1 +1,18 @@
-<p>tripSheet works!</p>
+<div class="container">
+  <h2>Add New Trip Sheet</h2>
+  <form (submit)="saveTripSheet()">
+    <div class="form-group">
+      <label for="id">TripSheet ID:</label>
+      <input type="number" class="form-control" id="id" [(ngModel)]="newTripSheet.id" name="id" required>
+    </div>
+    <div class="form-group">
+      <label for="vehicleDeploymentPlanId">Vehicle Deployment Plan ID:</label>
+      <input type="number" class="form-control" id="vehicleDeploymentPlanId" [(ngModel)]="newTripSheet.vehicleDeploymentPlanId" name="vehicleDeploymentPlanId" required>
+    </div>
+    <div class="form-group">
+      <label for="visitStatus">Visit Status:</label>
+      <input type="text" class="form-control" id="visitStatus" [(ngModel)]="newTripSheet.visitStatus" name="visitStatus" required>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+  </form>
+</div>

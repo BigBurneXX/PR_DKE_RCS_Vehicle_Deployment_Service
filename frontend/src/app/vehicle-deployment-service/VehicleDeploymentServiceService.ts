@@ -1,4 +1,4 @@
-import {HttpHeaders, HttpErrorResponse, HttpClient} from '@angular/common/http';
+import { HttpHeaders, HttpErrorResponse, HttpClient} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -15,6 +15,7 @@ export class VehicleDeploymentServiceService {
   constructor(private http: HttpClient) { }
 
   getVehicleDeploymentServices(): Observable<VehicleDeploymentService[]> {
+    console.log("better yet");
     return this.http.get<VehicleDeploymentService[]>('http://localhost:8082/vehicle-deployment-services/').pipe(
       tap(_ => this.log('Vehicle deployment services fetched')),
       catchError((error: HttpErrorResponse) => {
@@ -24,6 +25,7 @@ export class VehicleDeploymentServiceService {
   }
 
   addVehicleDeploymentService(vehicleDeploymentService: VehicleDeploymentService): Observable<VehicleDeploymentService> {
+    console.log("well");
     return this.http.post<VehicleDeploymentService>('http://localhost:8082/vehicle-deployment-services/', vehicleDeploymentService, this.httpOptions).pipe(
       tap(_ => this.log('Vehicle deployment service added')),
       catchError((error: HttpErrorResponse) => {

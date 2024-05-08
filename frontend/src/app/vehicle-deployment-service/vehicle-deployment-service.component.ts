@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
 import { VehicleDeploymentService } from './VehicleDeploymentService';
 import { VehicleDeploymentServiceService } from "./VehicleDeploymentServiceService";
-import {FormsModule} from "@angular/forms";
+import { FormsModule } from "@angular/forms";
+import { NgFor } from "@angular/common";
 
 @Component({
   selector: 'app-vehicle-deployment-service',
   standalone: true,
   imports: [
-    FormsModule
+    NgFor, FormsModule
   ],
   templateUrl: './vehicle-deployment-service.component.html',
   styleUrls: ['./vehicle-deployment-service.component.css']
 })
 
 export class VehicleDeploymentServiceComponent {
-  vehicleDeploymentService: VehicleDeploymentService = {
+  newVehicleDeploymentService: VehicleDeploymentService = {
     id: null,
     serviceName: '',
     description: '',
@@ -25,9 +26,9 @@ export class VehicleDeploymentServiceComponent {
   }
 
   saveVehicleDeploymentService(): void {
-    this.vehicleDeploymentServiceService.addVehicleDeploymentService(this.vehicleDeploymentService).subscribe(() => {
+    this.vehicleDeploymentServiceService.addVehicleDeploymentService(this.newVehicleDeploymentService).subscribe(() => {
       console.log('Vehicle deployment service created successfully!');
-      // Reset form or navigate to another page
     });
+    console.log(this.vehicleDeploymentServiceService.getVehicleDeploymentServices());
   }
 }
