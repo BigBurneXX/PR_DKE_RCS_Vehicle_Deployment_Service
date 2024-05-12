@@ -4,12 +4,12 @@
 }
 
 .marker {
-  background-color: #fff;
-  border: 1px solid #000;
+  background-color: transparent;
+  border: none;
   color: #000;
   font-weight: bold;
   padding: 5px 10px;
-  position: relative;
+  position: fixed;
   display: inline-block;
   transform: translate(-50%, -100%);
 }

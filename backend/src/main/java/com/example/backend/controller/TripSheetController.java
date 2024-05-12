@@ -2,21 +2,19 @@ package com.example.backend.controller;
 
 import com.example.backend.model.TripSheet;
 import com.example.backend.repository.TripsheetRepository;
-import jakarta.validation.Payload;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/trip-sheets")
+@RequiredArgsConstructor
 public class TripSheetController {
-
-    @Autowired
-    private TripsheetRepository tripSheetRepository;
+    private final TripsheetRepository tripSheetRepository;
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/")
