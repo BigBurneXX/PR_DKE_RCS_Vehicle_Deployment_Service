@@ -10,7 +10,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "Person")
 public class TripSheet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

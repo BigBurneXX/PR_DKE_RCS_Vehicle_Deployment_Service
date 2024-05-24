@@ -7,10 +7,9 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "VehicleDeploymentService")
 public class VehicleDeploymentService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

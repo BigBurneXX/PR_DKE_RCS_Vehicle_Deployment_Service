@@ -18,6 +18,8 @@ repositories {
 
 dependencies {
 	implementation("com.oracle.database.jdbc:ojdbc10:19.22.0.0")
+	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+	implementation("org.modelmapper:modelmapper:3.2.0")
 	implementation("org.projectlombok:lombok:1.18.32")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-validation")

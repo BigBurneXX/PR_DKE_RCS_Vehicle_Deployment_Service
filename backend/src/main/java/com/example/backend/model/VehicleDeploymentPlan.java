@@ -11,7 +11,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "VehicleDeploymentPlan")
 public class VehicleDeploymentPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

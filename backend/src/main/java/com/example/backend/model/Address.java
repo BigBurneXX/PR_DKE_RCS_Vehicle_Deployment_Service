@@ -8,12 +8,8 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Address {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Entity(name = "Address")
+public class Address extends MetaData {
 
     private String street;
 

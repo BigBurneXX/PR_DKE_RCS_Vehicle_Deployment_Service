@@ -1,9 +1,9 @@
 package com.example.backend.controller;
 
 import com.example.backend.model.TripSheet;
-import com.example.backend.repository.TripsheetRepository;
+import com.example.backend.repository.TripSheetRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +14,8 @@ import java.util.Optional;
 @RequestMapping("/trip-sheets")
 @RequiredArgsConstructor
 public class TripSheetController {
-    private final TripsheetRepository tripSheetRepository;
+    private final TripSheetRepository tripSheetRepository;
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/")
     public ResponseEntity<List<TripSheet>> getAllTripSheets() {
         List<TripSheet> tripSheets = tripSheetRepository.findAll();
@@ -26,20 +25,16 @@ public class TripSheetController {
             return ResponseEntity.ok(tripSheets);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/{id}")
     public ResponseEntity<TripSheet> getTripSheetById(@PathVariable Long id) {
         Optional<TripSheet> tripSheets = tripSheetRepository.findById(id);
         return tripSheets.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/")
     public ResponseEntity<TripSheet> createTripSheet(@RequestBody TripSheet tripSheet) {
         TripSheet savedTripSheet = tripSheetRepository.save(tripSheet);
-        //URI location = URI.create("/tripSheets/" + savedTripSheet.getId());
-        //return ResponseEntity.created(location).body(savedTripSheet);
-        return ResponseEntity.ok(savedTripSheet);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedTripSheet);
     }
 
     @PutMapping("/{id}")
@@ -47,14 +42,14 @@ public class TripSheetController {
         if (tripSheetRepository.existsById(id)) {
             tripsheet.setId(id);
             TripSheet updatedTripsheet = tripSheetRepository.save(tripsheet);
-            return ResponseEntity.ok(updatedTripsheet);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedTripsheet);
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<TripSheet> deleteTripsheet(@PathVariable Long id) {
+    public ResponseEntity<TripSheet> deleteTripSheet(@PathVariable Long id) {
         if (tripSheetRepository.existsById(id)) {
             Optional<TripSheet> tripSheet = tripSheetRepository.findById(id);
             tripSheetRepository.deleteById(id);
