@@ -1,17 +1,5 @@
-import {
-  Component,
-  Input,
-  OnDestroy,
-  Inject,
-  ViewEncapsulation
-} from '@angular/core';
-import {
-  Router,
-  NavigationStart,
-  NavigationEnd,
-  NavigationCancel,
-  NavigationError
-} from '@angular/router';
+import { Component, Input, OnDestroy, Inject, ViewEncapsulation } from '@angular/core';
+import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
@@ -34,11 +22,11 @@ export class SpinnerComponent implements OnDestroy {
       event => {
         if (event instanceof NavigationStart) {
           this.isSpinnerVisible = true;
-        } 
+        }
         else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
           this.isSpinnerVisible = false;
         }
-      },      
+      },
       () => {
         this.isSpinnerVisible = false;
       }

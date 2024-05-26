@@ -34,9 +34,9 @@ a.link {
   }
 }
 
-// 
+//
 // Font weight
-// 
+//
 
 html body {
   .font-medium {
@@ -44,15 +44,14 @@ html body {
   }
 }
 
-// 
+//
 // Round
-// 
+//
 .round {
-  line-height: 48px;
+  line-height: 52px;
   width: 50px;
   height: 50px;
   background: $blue;
-  line-height: 52px;
 }
 
 .round-lg {

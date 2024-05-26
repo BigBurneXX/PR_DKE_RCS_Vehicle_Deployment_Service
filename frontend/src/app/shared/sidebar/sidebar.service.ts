@@ -13,9 +13,9 @@ export class VerticalSidebarService {
     public collapseSidebar: boolean = false;
     public fullScreen: boolean = false;
 
-    MENUITEMS: RouteInfo[] = ROUTES;
+    MENU_ITEMS: RouteInfo[] = ROUTES;
 
-    items = new BehaviorSubject<RouteInfo[]>(this.MENUITEMS);
+    items = new BehaviorSubject<RouteInfo[]>(this.MENU_ITEMS);
 
     constructor() {
     }

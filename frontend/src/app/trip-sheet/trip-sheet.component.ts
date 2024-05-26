@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
 import { TripSheetService } from "./TripSheetService";
 import { TripSheet } from "./TripSheet";
-import {FormsModule} from "@angular/forms";
-import {NgForOf, NgIf} from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { NgForOf, NgIf } from "@angular/common";
 
 @Component({
-  selector: 'app-trip-sheet',
   standalone: true,
-  imports: [
-    FormsModule,
-    NgIf,
-    NgForOf
-  ],
   templateUrl: './trip-sheet.component.html',
-  styleUrl: './trip-sheet.component.css'
+  imports: [
+    NgIf,
+    NgForOf,
+    FormsModule
+  ],
+  styleUrls: ['./trip-sheet.component.css']
 })
 export class TripSheetComponent {
   newTripSheet: any = TripSheet;

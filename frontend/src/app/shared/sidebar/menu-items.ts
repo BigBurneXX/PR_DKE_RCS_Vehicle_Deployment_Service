@@ -83,7 +83,7 @@ export const ROUTES: RouteInfo[] = [
     submenu: []
   },
   {
-    path: '/component/trip-sheet',
+    path: '/trip-sheet',
     title: 'TripSheets',
     icon: 'bi bi-car-front',
     class: '',

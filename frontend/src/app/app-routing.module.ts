@@ -19,6 +19,10 @@ export const AppRoutes: Routes = [
       {
         path: 'component',
         loadChildren: () => import('./component/component.module').then(m => m.ComponentsModule)
+      },
+      {
+        path: 'trip-sheet',
+        loadChildren: () => import('./trip-sheet/trip-sheet.module').then(m => m.TripSheetModule)
       }
     ]
   },
