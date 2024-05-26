@@ -16,6 +16,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { AppRoutes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './shared/spinner.component';
+import {RouteMapComponent} from "./component/route-map/route-map.component";
 
 
 @NgModule({
@@ -23,19 +24,20 @@ import { SpinnerComponent } from './shared/spinner.component';
     AppComponent,
     SpinnerComponent,
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NgbModule,
-    RouterModule.forRoot(AppRoutes, { useHash: false }),
-    FullComponent,
-    NavigationComponent,
-    SidebarComponent,
-  ],
+    imports: [
+        CommonModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        NgbModule,
+        RouterModule.forRoot(AppRoutes, {useHash: false}),
+        FullComponent,
+        NavigationComponent,
+        SidebarComponent,
+        RouteMapComponent,
+    ],
   providers: [
     {provide: LocationStrategy, useClass: PathLocationStrategy }
   ],

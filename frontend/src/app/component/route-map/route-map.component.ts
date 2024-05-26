@@ -4,10 +4,11 @@ import { OrsService } from '../../services/ors.service';
 
 @Component({
   selector: 'app-route-map',
+  standalone: true,
   templateUrl: './route-map.component.html',
   styleUrls: ['./route-map.component.css']
 })
-export class MapComponent implements OnInit {
+export class RouteMapComponent implements OnInit {
   private map: any;
 
   constructor(private orsService: OrsService) { }
