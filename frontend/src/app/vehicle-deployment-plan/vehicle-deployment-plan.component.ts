@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './vehicle-deployment-plan.component.html',
-  styleUrl: './vehicle-deployment-plan.component.css'
+  styleUrls: ['./vehicle-deployment-plan.component.css']
 })
 export class VehicleDeploymentPlanComponent {
 

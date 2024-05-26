@@ -23,6 +23,18 @@ export const AppRoutes: Routes = [
       {
         path: 'trip-sheet',
         loadChildren: () => import('./trip-sheet/trip-sheet.module').then(m => m.TripSheetModule)
+      },
+      {
+        path: 'vehicle-deployment-plan',
+        loadChildren: () => import('./vehicle-deployment-plan/vehicle-deployment-plan.module').then(m => m.VehicleDeploymentPlanModule)
+      },
+      {
+        path: 'vehicle-deployment-planning',
+        loadChildren: () => import('./vehicle-deployment-planning/vehicle-deployment-planning.module').then(m => m.VehicleDeploymentPlanningModule)
+      },
+      {
+        path: 'vehicle-deployment-service',
+        loadChildren: () => import('./vehicle-deployment-service/vehicle-deployment-service.module').then(m => m.VehicleDeploymentServiceModule)
       }
     ]
   },

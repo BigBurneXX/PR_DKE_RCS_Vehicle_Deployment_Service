@@ -1,73 +1,55 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import Map from 'ol/Map';
-import View from 'ol/View';
-import TileLayer from 'ol/layer/Tile';
-import OSM from 'ol/source/OSM';
-import Overlay from 'ol/Overlay';
-import { fromLonLat } from 'ol/proj';
-import {isPlatformBrowser} from "@angular/common";
+import { Component, OnInit } from '@angular/core';
+import * as L from 'leaflet';
+import { OrsService } from '../../services/ors.service';
 
 @Component({
-  selector: 'app-map',
-  standalone: true,
-  imports: [],
-  templateUrl: './map.component.html',
-  styleUrl: './map.component.css'
+  selector: 'app-route-map',
+  templateUrl: './route-map.component.html',
+  styleUrls: ['./route-map.component.css']
 })
 export class MapComponent implements OnInit {
-  map!: Map;
+  private map: any;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+  constructor(private orsService: OrsService) { }
 
-  ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.initMap();
-    }
+  ngOnInit(): void {
+    this.initMap();
+    this.loadRoute();
   }
 
-  initMap() {
-    this.map = new Map({
-      target: 'map',
-      layers: [
-        new TileLayer({
-          source: new OSM()
-        })
-      ],
-      view: new View({
-        center: fromLonLat([14.3225, 48.33585]),
-        zoom: 15
-      })
+  private initMap(): void {
+    this.map = L.map('map', {
+      center: [51.1657, 10.4515], // Center the map to Germany
+      zoom: 6
     });
 
-    const markerElement = document.getElementById('marker');
-    if (markerElement) {
-      const marker = new Overlay({
-        position: fromLonLat([14.3225, 48.33585]),
-        positioning: 'center-center',
-        element: markerElement,
-        stopEvent: false
-      });
-
-      markerElement.innerHTML = '<img src="../../../../../../../../OneDrive/Bernhard/JKU/6.%20Semester/TemporaryFrontendSave/src/assets/placeholder.png" alt="Location Icon" style="width: 30px; height: auto; border: none; padding: 0; margin: 0; background-color: transparent;" />'
-
-      this.map.addOverlay(marker);
-    } else {
-      console.error('Marker element not found');
-    }
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(this.map);
   }
 
-  setMarker(coordinates: [number, number]) {
-    const markerElement = document.getElementById('marker');
-    if (markerElement) {
-      const marker = new Overlay({
-        position: fromLonLat(coordinates),
-        positioning: 'center-center',
-        element: markerElement,
-        stopEvent: false
-      });
-      this.map.addOverlay(marker);
-    } else {
-      console.error('Marker element not found');
-    }
+  private loadRoute(): void {
+    const coordinates = [
+      [8.681495, 49.41461],  // Start coordinate
+      [8.687872, 49.420318]  // End coordinate
+    ];
+
+    this.orsService.getRoute(coordinates).then(response => {
+      const geojson = response.data;
+
+      L.geoJSON(geojson, {
+        style: {
+          color: 'blue',
+          weight: 4,
+          opacity: 0.7
+        }
+      }).addTo(this.map);
+
+      // Zoom the map to fit the route
+      this.map.fitBounds(L.geoJSON(geojson).getBounds());
+    }).catch(error => {
+      console.error('Error fetching route', error);
+    });
   }
 }
