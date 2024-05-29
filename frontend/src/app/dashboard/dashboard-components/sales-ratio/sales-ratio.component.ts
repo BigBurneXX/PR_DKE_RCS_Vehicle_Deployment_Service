@@ -11,7 +11,7 @@ import {
   ApexTheme,
   ApexGrid,
   ApexPlotOptions,
-  ApexStroke
+  //ApexStroke
 
   // ChartComponent,
   // ApexAxisChartSeries,

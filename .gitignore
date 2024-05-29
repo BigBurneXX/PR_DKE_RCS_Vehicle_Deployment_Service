@@ -28,3 +28,4 @@ replay_pid*
 /frontend/@types
 /frontend/dist
 /frontend/node_modules
+/node_modules

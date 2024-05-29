@@ -31,10 +31,6 @@ export const AppRoutes: Routes = [
       {
         path: 'vehicle-deployment-planning',
         loadChildren: () => import('./vehicle-deployment-planning/vehicle-deployment-planning.module').then(m => m.VehicleDeploymentPlanningModule)
-      },
-      {
-        path: 'vehicle-deployment-service',
-        loadChildren: () => import('./vehicle-deployment-service/vehicle-deployment-service.module').then(m => m.VehicleDeploymentServiceModule)
       }
     ]
   },

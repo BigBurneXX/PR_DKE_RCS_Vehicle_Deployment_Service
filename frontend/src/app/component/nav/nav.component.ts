@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgbNavModule, NgbNavChangeEvent, NgbDropdownModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule, NgbDropdownModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({

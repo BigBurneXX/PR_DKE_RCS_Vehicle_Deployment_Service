@@ -1,4 +1,4 @@
-import { Input, Component, OnInit } from '@angular/core';
+import { Input, Component } from '@angular/core';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgFor, NgIf } from '@angular/common';
 

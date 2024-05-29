@@ -9,6 +9,7 @@ import { FeedsComponent } from "./dashboard-components/feeds/feeds.component";
 import { TopSellingComponent } from "./dashboard-components/top-selling/top-selling.component";
 import { TopCardsComponent } from "./dashboard-components/top-cards/top-cards.component";
 import { BlogCardsComponent } from "./dashboard-components/blog-cards/blog-cards.component";
+import {RouteMapComponent} from "../component/route-map/route-map.component";
 
 
 const routes: Routes = [
@@ -23,13 +24,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    RouterModule.forChild(routes),
-    NgApexchartsModule,
-  ],
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        RouterModule.forChild(routes),
+        NgApexchartsModule,
+        RouteMapComponent,
+    ],
   declarations: [
     DashboardComponent,
     SalesRatioComponent,

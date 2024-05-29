@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import axios from 'axios';
+import * as polyline from '@mapbox/polyline';
 
 @Injectable({
   providedIn: 'root'
@@ -10,18 +11,35 @@ export class OrsService {
 
   constructor() { }
 
-  getRoute(coordinates: number[][]) {
+  async getRoute(coordinates: number[][]) {
     const url = `${this.apiUrl}`;
     const data = {
       coordinates: coordinates,
       format: 'geojson'
     };
 
-    return axios.post(url, data, {
+    const response = await axios.post(url, data, {
       headers: {
         'Authorization': this.apiKey,
         'Content-Type': 'application/json'
       }
     });
+
+    const route = response.data.routes[0];
+    const decodedCoordinates = polyline.decode(route.geometry);
+
+    return {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: decodedCoordinates.map((coord: number[]) => [coord[1], coord[0]]) // Swap lat and lng
+          }
+        }
+      ]
+    };
   }
 }
