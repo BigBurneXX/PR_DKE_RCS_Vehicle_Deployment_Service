@@ -3,17 +3,14 @@ package com.example.backend.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "Person")
-public class Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Person extends MetaData{
     private String firstName;
 
     private String lastName;
@@ -26,7 +23,11 @@ public class Person {
 
     private boolean hasWheelChair;
 
-    @ManyToOne
-    @JoinColumn(name = "vehicle_deployment_planning_id")
-    private VehicleDeploymentPlanning vehicleDeploymentPlanning;
+    @ManyToMany
+    @JoinTable(
+            name = "Person_to_VehicleDeploymentPlanning",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "vehicleDeploymentPlanning_id")
+    )
+    private Set<VehicleDeploymentPlanning> vehicleDeploymentPlannings = new HashSet<>();
 }

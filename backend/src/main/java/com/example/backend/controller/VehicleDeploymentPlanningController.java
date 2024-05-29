@@ -2,6 +2,7 @@ package com.example.backend.controller;
 
 import com.example.backend.model.VehicleDeploymentPlanning;
 import com.example.backend.repository.VehicleDeploymentPlanningRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/vehicle-plannings")
 public class VehicleDeploymentPlanningController {
-
-    @Autowired
-    private VehicleDeploymentPlanningRepository planningRepository;
+    private final VehicleDeploymentPlanningRepository planningRepository;
 
     @GetMapping("/")
     public ResponseEntity<List<VehicleDeploymentPlanning>> getAllPlannings() {

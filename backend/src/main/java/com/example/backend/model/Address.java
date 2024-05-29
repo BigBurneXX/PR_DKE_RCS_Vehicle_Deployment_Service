@@ -3,13 +3,17 @@ package com.example.backend.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
-@AllArgsConstructor
-@Entity(name = "Address")
-public class Address extends MetaData {
+@Entity
+public class Address {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String street;
 
@@ -19,7 +23,19 @@ public class Address extends MetaData {
 
     private String coordinates;
 
-    @ManyToOne
-    @JoinColumn(name = "vehicle_deployment_plan_id")
-    private VehicleDeploymentPlan vehicleDeploymentPlan;
+    @ManyToMany
+    @JoinTable(
+            name = "Address_to_VehicleDeploymentPlans",
+            joinColumns = @JoinColumn(name = "address_id"),
+            inverseJoinColumns = @JoinColumn(name = "vehicleDeploymentPlan_id")
+    )
+    private Set<VehicleDeploymentPlan> vehicleDeploymentPlans = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "Address_to_TripSheet",
+            joinColumns = @JoinColumn(name = "addresss_id"),
+            inverseJoinColumns = @JoinColumn(name = "tripSheet_id")
+    )
+    private Set<TripSheet> tripSheets = new HashSet<>();
 }

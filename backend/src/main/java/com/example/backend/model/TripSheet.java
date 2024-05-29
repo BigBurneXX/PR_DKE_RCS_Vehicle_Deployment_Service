@@ -3,21 +3,19 @@ package com.example.backend.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "Person")
-public class TripSheet {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Entity
+public class TripSheet extends MetaData{
+    @ManyToOne(mappedBy = "tripSheet")
+    private VehicleDeploymentPlan vehicleDeploymentPlan;
 
-    private Long vehicleDeploymentPlanId;
-
-    @ElementCollection
-    private List<Boolean> visitStatus;
+    @ManyToMany
+    private Set<Address> addresses = new HashSet<>();
 }

@@ -2,6 +2,7 @@ import {AfterViewInit, Component } from '@angular/core';
 import 'leaflet/dist/leaflet.css';
 import * as L from 'leaflet';
 import { OrsService } from '../../services/ors.service';
+import * as chroma from 'chroma-js';
 
 @Component({
   selector: 'app-route-map',
@@ -63,10 +64,15 @@ export class RouteMapComponent implements AfterViewInit {
       }
     ];
 
+    const colorScale = chroma.scale(['blue', 'red', 'green']).mode('lab').colors(persons.length);
+
     try {
       const geoJsonLayers = [];
 
-      for (const person of persons) {
+      for (let i = 0; i < persons.length; i++) {
+        const person = persons[i];
+        const color = colorScale[i];
+
         const coordsArray = [person.startCoords, person.endCoords];
         const geojson = await this.orsService.getRoute(coordsArray);
 
@@ -76,7 +82,7 @@ export class RouteMapComponent implements AfterViewInit {
 
         const geoJsonLayer = L.geoJSON(geojson as GeoJSON.FeatureCollection, {
           style: {
-            color: 'blue',
+            color: color,
             weight: 4,
             opacity: 0.7
           }
@@ -98,10 +104,10 @@ export class RouteMapComponent implements AfterViewInit {
           popupAnchor: [0, -32]
         });
 
-        const startMarker = L.marker([person.startCoords[1], person.startCoords[0]], { icon: startCustomIcon }).addTo(this.map);
+        const startMarker = L.marker([person.startCoords[1], person.startCoords[0]], {icon: startCustomIcon}).addTo(this.map);
         startMarker.bindPopup(`<b>${person.startLabel}</b>`).openPopup();
 
-        const endMarker = L.marker([person.endCoords[1], person.endCoords[0]], { icon: endCustomIcon }).addTo(this.map);
+        const endMarker = L.marker([person.endCoords[1], person.endCoords[0]], {icon: endCustomIcon}).addTo(this.map);
         endMarker.bindPopup(`<b>${person.endLabel}</b>`).openPopup();
       }
 

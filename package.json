@@ -1,6 +1,10 @@
 {
   "devDependencies": {
+    "@types/chroma-js": "^2.4.4",
     "css-loader": "^7.1.2",
     "style-loader": "^4.0.0"
+  },
+  "dependencies": {
+    "chroma-js": "^2.4.2"
   }
 }

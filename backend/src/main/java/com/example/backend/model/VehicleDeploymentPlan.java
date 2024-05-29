@@ -1,28 +1,26 @@
 package com.example.backend.model;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
-@AllArgsConstructor
-@Entity(name = "VehicleDeploymentPlan")
-public class VehicleDeploymentPlan {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Entity
+public class VehicleDeploymentPlan extends MetaData{
+    @OneToMany(mappedBy = "vehicleDeploymentPlan")
+    private Set<Vehicle> vehicles;
 
-    private Long vehicleId;
+    @OneToMany(mappedBy = "vehicleDeploymentPlan")
+    private Set<Address> addresses;
 
-    @OneToMany(mappedBy = "vehicleDeploymentPlan", cascade = CascadeType.ALL)
-    private List<Address> addresses;
+    @OneToMany
+    private Set<TripSheet> tripSheets = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "vehicle_deployment_planning_id")
+    @JoinColumn(name = "vehicleDeploymentPlanning_id")
     private VehicleDeploymentPlanning vehicleDeploymentPlanning;
 }

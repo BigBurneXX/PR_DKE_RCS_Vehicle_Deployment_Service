@@ -11,18 +11,15 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/trip-sheets")
 @RequiredArgsConstructor
+@RequestMapping("/trip-sheets")
 public class TripSheetController {
     private final TripSheetRepository tripSheetRepository;
 
     @GetMapping("/")
     public ResponseEntity<List<TripSheet>> getAllTripSheets() {
         List<TripSheet> tripSheets = tripSheetRepository.findAll();
-        if (tripSheets.isEmpty())
-            return ResponseEntity.noContent().build();
-        else
-            return ResponseEntity.ok(tripSheets);
+        return tripSheets.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(tripSheets);
     }
 
     @GetMapping("/{id}")
@@ -53,7 +50,8 @@ public class TripSheetController {
         if (tripSheetRepository.existsById(id)) {
             Optional<TripSheet> tripSheet = tripSheetRepository.findById(id);
             tripSheetRepository.deleteById(id);
-            return ResponseEntity.ok(tripSheet.get());
+            if(tripSheet.isPresent())
+                return ResponseEntity.ok(tripSheet.get());
         }
         return ResponseEntity.notFound().build();
     }
