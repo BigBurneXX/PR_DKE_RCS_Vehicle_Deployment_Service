@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import 'leaflet/dist/leaflet.css';
 import * as L from 'leaflet';
 import { OrsService } from '../../services/ors.service';
 
@@ -8,12 +9,12 @@ import { OrsService } from '../../services/ors.service';
   templateUrl: './route-map.component.html',
   styleUrls: ['./route-map.component.css']
 })
-export class RouteMapComponent implements OnInit {
+export class RouteMapComponent implements AfterViewInit {
   private map: any;
 
   constructor(private orsService: OrsService) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.initMap();
     this.loadRoute();
   }
