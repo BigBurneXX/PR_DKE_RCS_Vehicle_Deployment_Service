@@ -1,5 +1,6 @@
 package com.example.backend.model;
 
+import com.example.backend.dto.VehicleDeploymentPlanningInputDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,4 +21,12 @@ public class VehicleDeploymentPlanning extends MetaData {
 
     @OneToMany(mappedBy = "vehicleDeploymentPlanning", cascade = CascadeType.ALL)
     private Set<VehicleDeploymentPlan> plans = new HashSet<>();
+
+    public VehicleDeploymentPlanning(VehicleDeploymentPlanningInputDTO vehicleDeploymentPlanningInputDTO) {
+        super();
+        setPersons(vehicleDeploymentPlanningInputDTO.getPersons());
+        setVehicles(vehicleDeploymentPlanningInputDTO.getVehicles());
+
+        //TODO: here the plans should be created!
+    }
 }

@@ -6,4 +6,5 @@ export interface PersonDto {
   startAddress: string;
   targetAddress: string;
   hasWheelchair: boolean;
+  selected?: boolean;
 }

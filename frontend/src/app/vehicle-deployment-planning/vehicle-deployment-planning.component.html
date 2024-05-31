@@ -1,28 +1,69 @@
-<div>
-    <button (click)="showPeople()">Show People</button>
-    <table *ngIf="people.length > 0">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Date of Birth</th>
-            <th>Start Address</th>
-            <th>Target Address</th>
-            <th>Has Wheelchair</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let person of people">
-            <td>{{ person.id }}</td>
-            <td>{{ person.firstName }}</td>
-            <td>{{ person.lastName }}</td>
-            <td>{{ person.dateOfBirth }}</td>
-            <td>{{ person.startAddress }}</td>
-            <td>{{ person.targetAddress }}</td>
-            <td>{{ person.hasWheelchair }}</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<div class="container">
+    <h1>Vehicle Deployment Planning</h1>
 
+    <h2>Select People</h2>
+    <div class="table-responsive" *ngIf="people.length > 0">
+        <table class="table align-middle text-nowrap">
+            <thead>
+            <tr>
+                <th class="text-dark font-medium fs-4">Select</th>
+                <th class="text-dark font-medium fs-4">ID</th>
+                <th class="text-dark font-medium fs-4">First Name</th>
+                <th class="text-dark font-medium fs-4">Last Name</th>
+                <th class="text-dark font-medium fs-4">Date of Birth</th>
+                <th class="text-dark font-medium fs-4">Has Wheelchair</th>
+                <th class="text-dark font-medium fs-4">Start Address</th>
+                <th class="text-dark font-medium fs-4">Target Address</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let person of people">
+                <td><input type="checkbox" [(ngModel)]="person.selected"></td>
+                <td class="fs-4">{{ person.id }}</td>
+                <td class="fs-4">{{ person.firstName }}</td>
+                <td class="fs-4">{{ person.lastName }}</td>
+                <td class="fs-4">{{ person.dateOfBirth }}</td>
+                <td>
+                    <span [class]="'p-2 rounded-circle d-inline-block ms-3 ' + (person.hasWheelchair ? 'bg-success' : 'bg-danger')"></span>
+                </td>
+                <td class="fs-4">{{ person.startAddress }}</td>
+                <td class="fs-4">{{ person.targetAddress }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Select Vehicles</h2>
+    <div class="table-responsive" *ngIf="vehicles.length > 0">
+        <table class="table align-middle text-nowrap">
+            <thead>
+            <tr>
+                <th class="text-dark font-medium fs-4">Select</th>
+                <th class="text-dark font-medium fs-4">ID</th>
+                <th class="text-dark font-medium fs-4">Name</th>
+                <th class="text-dark font-medium fs-4">Type</th>
+                <th class="text-dark font-medium fs-4">Seats</th>
+                <th class="text-dark font-medium fs-4">Has Wheelchair</th>
+                <th class="text-dark font-medium fs-4">Start Coordinates</th>
+                <th class="text-dark font-medium fs-4">End Coordinates</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let vehicle of vehicles">
+                <td><input type="checkbox" [(ngModel)]="vehicle.selected"></td>
+                <td class="fs-4">{{ vehicle.id }}</td>
+                <td class="fs-4">{{ vehicle.vehicle_name }}</td>
+                <td class="fs-4">{{ vehicle.vehicle_type }}</td>
+                <td class="fs-4">{{ vehicle.seats }}</td>
+                <td class="fs-4">{{ vehicle.wheelchair }}</td>
+                <td class="fs-4">{{ vehicle.start_coordinates }}</td>
+                <td class="fs-4">{{ vehicle.end_coordinates }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-success" (click)="savePlanning()">Save</button>
+    </div>
+</div>

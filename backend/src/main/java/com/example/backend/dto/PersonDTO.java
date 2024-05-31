@@ -3,9 +3,6 @@ package com.example.backend.dto;
 import lombok.*;
 
 @Getter
-@Setter
-@ToString
-@NoArgsConstructor
 @AllArgsConstructor
 public class PersonDTO {
     private Long id;

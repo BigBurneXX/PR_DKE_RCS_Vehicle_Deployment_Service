@@ -8,4 +8,5 @@ export interface VehicleDto {
   wheelchair: string;
   start_coordinates: string;
   end_coordinates: string;
+  selected?: boolean;
 }

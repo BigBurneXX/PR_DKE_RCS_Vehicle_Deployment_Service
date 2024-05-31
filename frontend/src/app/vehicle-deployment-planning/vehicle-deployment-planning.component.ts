@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { NgForOf, NgIf } from "@angular/common";
 import { VehicleDeploymentPlanningService } from "../services/vehicle-deployment-planning.service";
 import { PersonDto } from "./Person.dto";
 import { VehicleDto } from "./Vehicle.dto";
+import { VehicleDeploymentPlanningInput, VehicleDeploymentPlanningInputDto } from "./VehicleDeploymentPlanningInput.dto";
 
 @Component({
   selector: 'app-vehicle-deployment-planning',
@@ -16,21 +17,35 @@ import { VehicleDto } from "./Vehicle.dto";
   templateUrl: './vehicle-deployment-planning.component.html',
   styleUrls: ['./vehicle-deployment-planning.component.css']
 })
-export class VehicleDeploymentPlanningComponent {
+export class VehicleDeploymentPlanningComponent implements OnInit {
   people: PersonDto[] = [];
   vehicles: VehicleDto[] = [];
+  vehicleDeploymentPlanning: VehicleDeploymentPlanningInputDto = new VehicleDeploymentPlanningInput();
 
-  constructor(private personService: VehicleDeploymentPlanningService) { }
+  constructor(private vehicleDeploymentPlanningService: VehicleDeploymentPlanningService) { }
 
-  showPeople() {
-    this.personService.getPeople().subscribe(data => {
+  ngOnInit() {
+    this.loadPeople();
+    this.loadVehicles();
+  }
+
+  loadPeople() {
+    this.vehicleDeploymentPlanningService.getPeople().subscribe(data => {
       this.people = data;
     });
   }
 
-  showVehicles(){
-    this.personService.getVehicles().subscribe(data => {
+  loadVehicles(){
+    this.vehicleDeploymentPlanningService.getVehicles().subscribe(data => {
       this.vehicles = data;
+    });
+  }
+
+  savePlanning() {
+    this.vehicleDeploymentPlanning.persons = this.people.filter(person => person.selected);
+    this.vehicleDeploymentPlanning.vehicles = this.vehicles.filter(vehicle => vehicle.selected);
+    this.vehicleDeploymentPlanningService.postVehicleDeploymentPlanning(this.vehicleDeploymentPlanning).subscribe(response => {
+      console.log('Vehicle Deployment Planning saved successfully:', response);
     });
   }
 }

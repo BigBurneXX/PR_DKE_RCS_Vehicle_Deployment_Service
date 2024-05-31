@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PersonDto } from '../vehicle-deployment-planning/Person.dto';
 import { VehicleDto } from "../vehicle-deployment-planning/Vehicle.dto";
+import {VehicleDeploymentPlanningInputDto} from "../vehicle-deployment-planning/VehicleDeploymentPlanningInput.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -10,6 +11,7 @@ import { VehicleDto } from "../vehicle-deployment-planning/Vehicle.dto";
 export class VehicleDeploymentPlanningService {
     private peopleUrl = 'http://localhost:8080/peopleRead';
     private vehicleUrl = 'http://localhost:8081/vehicles';
+    private backendUrl = 'http://localhost:8082/';
 
     constructor(private http: HttpClient) { }
 
@@ -35,5 +37,9 @@ export class VehicleDeploymentPlanningService {
             });
         }
         return this.http.get<VehicleDto[]>(this.vehicleUrl, { params });
+    }
+
+    postVehicleDeploymentPlanning(data: VehicleDeploymentPlanningInputDto): Observable<any> {
+        return this.http.post<VehicleDeploymentPlanningInputDto>(this.backendUrl, data);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import com.example.backend.dto.VehicleDeploymentPlanningInputDTO;
 import com.example.backend.model.VehicleDeploymentPlanning;
 import com.example.backend.repository.VehicleDeploymentPlanningRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +29,10 @@ public class VehicleDeploymentPlanningController {
         return planning.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    //TODO: a post request should create a number of vdp with the help of open route service
     @PostMapping("/")
-    public ResponseEntity<VehicleDeploymentPlanning> createPlanning(@RequestBody VehicleDeploymentPlanning planning) {
-        VehicleDeploymentPlanning savedPlanning = planningRepository.save(planning);
+    public ResponseEntity<VehicleDeploymentPlanning> createPlanning(@RequestBody VehicleDeploymentPlanningInputDTO planning) {
+        VehicleDeploymentPlanning newPlanning = new VehicleDeploymentPlanning(planning);
+        VehicleDeploymentPlanning savedPlanning = planningRepository.save(newPlanning);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPlanning);
     }
 
