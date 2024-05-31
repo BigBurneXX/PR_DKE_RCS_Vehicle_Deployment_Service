@@ -1,6 +1,6 @@
-import { VehicleDeploymentPlanning } from './VehicleDeploymentPlanning';
 
-export interface Vehicle {
+
+export interface VehicleDto {
   id: number
   vehicle_name: string;
   vehicle_type: string;
@@ -8,5 +8,4 @@ export interface Vehicle {
   wheelchair: string;
   start_coordinates: string;
   end_coordinates: string;
-  vehicle_deployment_planning: VehicleDeploymentPlanning;
 }

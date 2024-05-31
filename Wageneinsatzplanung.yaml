@@ -1,16 +1,16 @@
 openapi: 3.0.3
 info:
-  title: Vehicle Deployment Service
-  description: This is the Vehicle Deployment Service created by Bernhard Birklbauer
+  title: VehicleDto Deployment Service
+  description: This is the VehicleDto Deployment Service created by Bernhard Birklbauer
   contact:
     email: k12105938@students.jku.at
   version: 0.0.1
 tags:
-  - name: Vehicle Deployment Services
+  - name: VehicleDto Deployment Services
     description: APIs for managing all vehicle deployment services
-  - name: Vehicle Deployment Plannings
+  - name: VehicleDto Deployment Plannings
     description: APIs for managing all vehicle deployment plannings
-  - name: Vehicle Deployment Plans
+  - name: VehicleDto Deployment Plans
     description: APIs for managing all vehicle deployment plans
   - name: Tripsheets
     description: APIs for managing all tripsheets
@@ -18,7 +18,7 @@ paths:
   /vehicle-deployment-services:
     get:
       tags:
-        - Vehicle Deployment Services
+        - VehicleDto Deployment Services
       summary: Query vehicle deployment services
       operationId: vehicleDeploymentServiceRead
       responses:
@@ -41,7 +41,7 @@ paths:
           description: Service unavailable
     post:
       tags:
-        - Vehicle Deployment Services
+        - VehicleDto Deployment Services
       summary: Create a new vehicle deployment service
       operationId: vehicleDeploymentServiceCreate
       requestBody:
@@ -81,7 +81,7 @@ paths:
   /vehicle-deployment-services/{id}:
     get:
       tags:
-        - Vehicle Deployment Services
+        - VehicleDto Deployment Services
       summary: Query a specific vehicle deployment service
       operationId: vehicleDeploymentServiceReadById
       parameters:
@@ -111,7 +111,7 @@ paths:
           description: Service unavailable
     put:
       tags:
-        - Vehicle Deployment Services
+        - VehicleDto Deployment Services
       summary: Update a specific vehicle deployment service
       operationId: vehicleDeploymentServiceUpdate
       parameters:
@@ -155,7 +155,7 @@ paths:
           description: Service unavailable
     delete:
       tags:
-        - Vehicle Deployment Services
+        - VehicleDto Deployment Services
       summary: Delete a specific vehicle deployment service
       operationId: vehicleDeploymentServiceDelete
       parameters:
@@ -185,7 +185,7 @@ paths:
           description: Service unavailable
     patch:
       tags:
-        - Vehicle Deployment Services
+        - VehicleDto Deployment Services
       summary: Patch a specific vehicle deployment service
       operationId: vehicleDeploymentServicePatch
       parameters:
@@ -230,7 +230,7 @@ paths:
   /vehicle-deployment-plannings:
     get:
       tags:
-        - Vehicle Deployment Plannings
+        - VehicleDto Deployment Plannings
       summary: Query vehicle deployment plannings
       operationId: vehicleDeploymentPlanningRead
       responses:
@@ -253,7 +253,7 @@ paths:
           description: Service unavailable
     post:
       tags:
-        - Vehicle Deployment Plannings
+        - VehicleDto Deployment Plannings
       summary: Create a new vehicle deployment planning
       operationId: vehicleDeploymentPlanningCreate
       requestBody:
@@ -293,7 +293,7 @@ paths:
   /vehicle-deployment-plannings/{id}:
     get:
       tags:
-        - Vehicle Deployment Plannings
+        - VehicleDto Deployment Plannings
       summary: Query a specific vehicle deployment planning
       operationId: vehicleDeploymentPlanningReadById
       parameters:
@@ -323,7 +323,7 @@ paths:
           description: Service unavailable
     put:
       tags:
-        - Vehicle Deployment Plannings
+        - VehicleDto Deployment Plannings
       summary: Update a specific vehicle deployment planning
       operationId: vehicleDeploymentPlanningUpdate
       parameters:
@@ -367,7 +367,7 @@ paths:
           description: Service unavailable
     delete:
       tags:
-        - Vehicle Deployment Plannings
+        - VehicleDto Deployment Plannings
       summary: Delete a specific vehicle deployment planning
       operationId: vehicleDeploymentPlanningDelete
       parameters:
@@ -397,7 +397,7 @@ paths:
           description: Service unavailable
     patch:
       tags:
-        - Vehicle Deployment Plannings
+        - VehicleDto Deployment Plannings
       summary: Patch a specific vehicle deployment planning
       operationId: vehicleDeploymentPlanningPatch
       parameters:
@@ -442,7 +442,7 @@ paths:
   /vehicle-deployment-plans:
     get:
       tags:
-        - Vehicle Deployment Plans
+        - VehicleDto Deployment Plans
       summary: Query vehicle deployment plans
       operationId: vehicleDeploymentPlanRead
       responses:
@@ -465,7 +465,7 @@ paths:
           description: Service unavailable
     post:
       tags:
-        - Vehicle Deployment Plans
+        - VehicleDto Deployment Plans
       summary: Create a new vehicle deployment plan
       operationId: vehicleDeploymentPlanCreate
       requestBody:
@@ -505,7 +505,7 @@ paths:
   /vehicle-deployment-plans/{id}:
     get:
       tags:
-        - Vehicle Deployment Plans
+        - VehicleDto Deployment Plans
       summary: Query a specific vehicle deployment plan
       operationId: vehicleDeploymentPlanReadById
       parameters:
@@ -535,7 +535,7 @@ paths:
           description: Service unavailable
     put:
       tags:
-        - Vehicle Deployment Plans
+        - VehicleDto Deployment Plans
       summary: Update a specific vehicle deployment plan
       operationId: vehicleDeploymentPlanUpdate
       parameters:
@@ -579,7 +579,7 @@ paths:
           description: Service unavailable
     delete:
       tags:
-        - Vehicle Deployment Plans
+        - VehicleDto Deployment Plans
       summary: Delete a specific vehicle deployment plan
       operationId: vehicleDeploymentPlanDelete
       parameters:
@@ -609,7 +609,7 @@ paths:
           description: Service unavailable
     patch:
       tags:
-        - Vehicle Deployment Plans
+        - VehicleDto Deployment Plans
       summary: Patch a specific vehicle deployment plan
       operationId: vehicleDeploymentPlanPatch
       parameters:

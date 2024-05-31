@@ -1,10 +1,10 @@
-import { Vehicle } from './Vehicle';
-import { Person } from './Person';
+import { VehicleDto } from './Vehicle.dto';
+import { PersonDto } from './Person.dto';
 import { VehicleDeploymentPlan } from '../vehicle-deployment-plan/VehicleDeploymentPlan';
 
 export interface VehicleDeploymentPlanning {
-  id: number | null;
-  persons: Person[];
-  vehicles: Vehicle[];
+  id: number;
+  persons: PersonDto[];
+  vehicles: VehicleDto[];
   plans: VehicleDeploymentPlan[];
 }
