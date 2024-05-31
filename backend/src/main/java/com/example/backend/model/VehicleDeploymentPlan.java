@@ -11,13 +11,14 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class VehicleDeploymentPlan extends MetaData{
-    @OneToMany(mappedBy = "vehicleDeploymentPlan")
-    private Set<Vehicle> vehicles;
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
 
-    @OneToMany(mappedBy = "vehicleDeploymentPlan")
+    @ManyToMany
     private Set<Address> addresses;
 
-    @OneToMany
+    @OneToMany(mappedBy = "vehicleDeploymentPlan")
     private Set<TripSheet> tripSheets = new HashSet<>();
 
     @ManyToOne

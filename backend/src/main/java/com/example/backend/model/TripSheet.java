@@ -13,9 +13,14 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 public class TripSheet extends MetaData{
-    @ManyToOne(mappedBy = "tripSheet")
+    @ManyToOne
+    @JoinColumn(name="vehicleDeploymentPlan_id", nullable = false)
     private VehicleDeploymentPlan vehicleDeploymentPlan;
 
     @ManyToMany
     private Set<Address> addresses = new HashSet<>();
+
+    public void addAddress (Address address) {
+        addresses.add(address);
+    }
 }

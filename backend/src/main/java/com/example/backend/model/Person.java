@@ -10,7 +10,12 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Person extends MetaData{
+@Entity
+public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String firstName;
 
     private String lastName;
@@ -25,7 +30,7 @@ public class Person extends MetaData{
 
     @ManyToMany
     @JoinTable(
-            name = "Person_to_VehicleDeploymentPlanning",
+            name = "person_vehicleDeploymentPlanning",
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "vehicleDeploymentPlanning_id")
     )

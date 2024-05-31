@@ -1,7 +1,12 @@
 package com.example.backend.repository;
 
 import com.example.backend.model.TripSheet;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.backend.model.VehicleDeploymentPlan;
+import org.springframework.stereotype.Repository;
 
-public interface TripSheetRepository extends JpaRepository<TripSheet, Long> {
+import java.util.List;
+
+@Repository
+public interface TripSheetRepository extends ApiRepository<TripSheet>, CustomApiRepository<TripSheet> {
+    List<TripSheet> findByVehicleDeploymentPlanAndIsActiveTrue(VehicleDeploymentPlan vehicleDeploymentPlan);
 }

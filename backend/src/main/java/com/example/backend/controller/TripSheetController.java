@@ -1,9 +1,11 @@
 package com.example.backend.controller;
 
+import com.example.backend.model.Address;
 import com.example.backend.model.TripSheet;
+import com.example.backend.model.VehicleDeploymentPlan;
 import com.example.backend.repository.TripSheetRepository;
+import com.example.backend.repository.VehicleDeploymentPlanRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,43 +17,60 @@ import java.util.Optional;
 @RequestMapping("/trip-sheets")
 public class TripSheetController {
     private final TripSheetRepository tripSheetRepository;
+    private final VehicleDeploymentPlanRepository vehicleDeploymentPlanRepository;
 
     @GetMapping("/")
     public ResponseEntity<List<TripSheet>> getAllTripSheets() {
-        List<TripSheet> tripSheets = tripSheetRepository.findAll();
+        List<TripSheet> tripSheets = tripSheetRepository.findByIsActiveTrue();
         return tripSheets.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(tripSheets);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TripSheet> getTripSheetById(@PathVariable Long id) {
-        Optional<TripSheet> tripSheets = tripSheetRepository.findById(id);
+        Optional<TripSheet> tripSheets = tripSheetRepository.findByIdAndIsActiveTrue(id);
         return tripSheets.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/")
-    public ResponseEntity<TripSheet> createTripSheet(@RequestBody TripSheet tripSheet) {
-        TripSheet savedTripSheet = tripSheetRepository.save(tripSheet);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedTripSheet);
+    @GetMapping("/vehicleDeploymentPlan/{vehicleDeploymentPlanId}")
+    public ResponseEntity<List<TripSheet>> getTripSheetsByVehicleDeploymentPlan(@PathVariable Long vehicleDeploymentPlanId) {
+        Optional<VehicleDeploymentPlan> vehicleDeploymentPlan = vehicleDeploymentPlanRepository.findByIdAndIsActiveTrue(vehicleDeploymentPlanId);
+        if(vehicleDeploymentPlan.isPresent()) {
+            List<TripSheet> tripSheets = tripSheetRepository.findByVehicleDeploymentPlanAndIsActiveTrue(vehicleDeploymentPlan.get());
+            return tripSheets.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(tripSheets);
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TripSheet> updateTripSheet(@PathVariable Long id, @RequestBody TripSheet tripsheet) {
-        if (tripSheetRepository.existsById(id)) {
-            tripsheet.setId(id);
-            TripSheet updatedTripsheet = tripSheetRepository.save(tripsheet);
-            return ResponseEntity.status(HttpStatus.OK).body(updatedTripsheet);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    @PostMapping("/vehicleDeploymentPlan/{vehicleDeploymentPlanId}")
+    public ResponseEntity<TripSheet> createTripSheet(@PathVariable Long vehicleDeploymentPlanId) {
+        Optional<VehicleDeploymentPlan> vehicleDeploymentPlan = vehicleDeploymentPlanRepository.findByIdAndIsActiveTrue(vehicleDeploymentPlanId);
+        if(vehicleDeploymentPlan.isPresent()) {
+            TripSheet tripSheet = new TripSheet();
+            tripSheet.setVehicleDeploymentPlan(vehicleDeploymentPlan.get());
+            tripSheetRepository.save(tripSheet);
+            return ResponseEntity.ok(tripSheet);
         }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<TripSheet> updateTripSheet(@PathVariable Long id, @RequestBody Address address) {
+        Optional<TripSheet> possibleTripSheet = tripSheetRepository.findByIdAndIsActiveTrue(id);
+        if(possibleTripSheet.isPresent()) {
+            TripSheet tripSheet = possibleTripSheet.get();
+            tripSheet.addAddress(address);
+            tripSheetRepository.save(tripSheet);
+            return ResponseEntity.ok(tripSheet);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<TripSheet> deleteTripSheet(@PathVariable Long id) {
-        if (tripSheetRepository.existsById(id)) {
-            Optional<TripSheet> tripSheet = tripSheetRepository.findById(id);
-            tripSheetRepository.deleteById(id);
-            if(tripSheet.isPresent())
-                return ResponseEntity.ok(tripSheet.get());
+        Optional<TripSheet> tripSheet = tripSheetRepository.findByIdAndIsActiveTrue(id);
+        if(tripSheet.isPresent()) {
+            tripSheetRepository.softDelete(id, TripSheet.class);
+            return ResponseEntity.ok(tripSheet.get());
         }
         return ResponseEntity.notFound().build();
     }

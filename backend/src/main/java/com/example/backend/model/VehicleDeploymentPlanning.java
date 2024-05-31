@@ -13,10 +13,10 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 public class VehicleDeploymentPlanning extends MetaData {
-    @ManyToMany(mappedBy = "vehicleDeploymentPlanning")
+    @ManyToMany(mappedBy = "vehicleDeploymentPlannings")
     private Set<Person> persons;
 
-    @ManyToMany(mappedBy = "vehicleDeploymentPlanning")
+    @ManyToMany(mappedBy = "vehicleDeploymentPlannings")
     private Set<Vehicle> vehicles;
 
     @OneToMany(mappedBy = "vehicleDeploymentPlanning", cascade = CascadeType.ALL)

@@ -25,17 +25,17 @@ public class Address {
 
     @ManyToMany
     @JoinTable(
-            name = "Address_to_VehicleDeploymentPlans",
+            name = "address_vehicleDeploymentPlan",
             joinColumns = @JoinColumn(name = "address_id"),
             inverseJoinColumns = @JoinColumn(name = "vehicleDeploymentPlan_id")
     )
-    private Set<VehicleDeploymentPlan> vehicleDeploymentPlans = new HashSet<>();
+    private Set<VehicleDeploymentPlan> vehicleDeploymentPlan = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
-            name = "Address_to_TripSheet",
-            joinColumns = @JoinColumn(name = "addresss_id"),
+            name = "address_tripSheet",
+            joinColumns = @JoinColumn(name = "address_id"),
             inverseJoinColumns = @JoinColumn(name = "tripSheet_id")
     )
-    private Set<TripSheet> tripSheets = new HashSet<>();
+    private Set<TripSheet> tripSheet = new HashSet<>();
 }

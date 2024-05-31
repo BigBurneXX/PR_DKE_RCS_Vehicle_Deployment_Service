@@ -1,7 +1,12 @@
 package com.example.backend.repository;
 
 import com.example.backend.model.VehicleDeploymentPlan;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.backend.model.VehicleDeploymentPlanning;
+import org.springframework.stereotype.Repository;
 
-public interface VehicleDeploymentPlanRepository extends JpaRepository<VehicleDeploymentPlan, Long> {
+import java.util.List;
+
+@Repository
+public interface VehicleDeploymentPlanRepository extends ApiRepository<VehicleDeploymentPlan>, CustomApiRepository<VehicleDeploymentPlan> {
+    List<VehicleDeploymentPlan> findByVehicleDeploymentPlanningAndIsActiveTrue(VehicleDeploymentPlanning vehicleDeploymentPlanning);
 }

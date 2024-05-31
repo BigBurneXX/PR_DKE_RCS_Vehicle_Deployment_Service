@@ -26,9 +26,12 @@ public class Vehicle {
 
     @ManyToMany
     @JoinTable(
-            name = "Vehicle_to_VehicleDeploymentPlannings",
+            name = "vehicle_vehicleDeploymentPlanning",
             joinColumns = @JoinColumn(name = "vehicle_id"),
             inverseJoinColumns = @JoinColumn(name = "vehicleDeploymentPlanning_id")
     )
     private Set<VehicleDeploymentPlanning> vehicleDeploymentPlannings = new HashSet<>();
+
+    @OneToMany(mappedBy = "vehicle")
+    private Set<VehicleDeploymentPlan> vehicleDeploymentPlan = new HashSet<>();
 }

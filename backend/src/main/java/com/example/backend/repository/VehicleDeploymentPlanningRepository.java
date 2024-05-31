@@ -1,7 +1,9 @@
 package com.example.backend.repository;
 
 import com.example.backend.model.VehicleDeploymentPlanning;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface VehicleDeploymentPlanningRepository extends JpaRepository<VehicleDeploymentPlanning, Long> {
+@Repository
+public interface VehicleDeploymentPlanningRepository extends ApiRepository<VehicleDeploymentPlanning>, CustomApiRepository<VehicleDeploymentPlanning> {
+
 }
