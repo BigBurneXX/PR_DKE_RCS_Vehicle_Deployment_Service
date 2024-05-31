@@ -11,6 +11,30 @@ export const ROUTES: RouteInfo[] = [
     submenu: []
   },
   {
+    path: '/vehicle-deployment-planning',
+    title: 'Plannings',
+    icon: 'bi bi-clipboard-data',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/vehicle-deployment-plan',
+    title: 'Plans',
+    icon: 'bi bi-pin-map',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/trip-sheet',
+    title: 'TripSheets',
+    icon: 'bi bi-car-front',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
     path: '/component/alert',
     title: 'Alert',
     icon: 'bi bi-bell',
@@ -78,14 +102,6 @@ export const ROUTES: RouteInfo[] = [
     path: '/about',
     title: 'About',
     icon: 'bi bi-people',
-    class: '',
-    extralink: false,
-    submenu: []
-  },
-  {
-    path: '/trip-sheet',
-    title: 'TripSheets',
-    icon: 'bi bi-car-front',
     class: '',
     extralink: false,
     submenu: []

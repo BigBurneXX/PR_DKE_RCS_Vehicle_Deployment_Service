@@ -1,4 +1,4 @@
-import {VehicleDeploymentPlanning} from "./VehicleDeploymentPlanning";
+import { VehicleDeploymentPlanning } from './VehicleDeploymentPlanning';
 
 export interface Vehicle {
   id: number

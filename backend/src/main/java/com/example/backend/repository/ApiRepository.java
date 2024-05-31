@@ -1,7 +1,6 @@
 package com.example.backend.repository;
 
 import com.example.backend.model.MetaData;
-import com.example.backend.model.VehicleDeploymentPlanning;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
