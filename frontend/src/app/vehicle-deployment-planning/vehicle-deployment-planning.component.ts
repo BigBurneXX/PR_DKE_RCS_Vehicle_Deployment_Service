@@ -20,6 +20,8 @@ import { VehicleDeploymentPlanningInput, VehicleDeploymentPlanningInputDto } fro
 export class VehicleDeploymentPlanningComponent implements OnInit {
   people: PersonDto[] = [];
   vehicles: VehicleDto[] = [];
+  peopleError: boolean = false;
+  vehiclesError: boolean = false;
   vehicleDeploymentPlanning: VehicleDeploymentPlanningInputDto = new VehicleDeploymentPlanningInput();
 
   constructor(private vehicleDeploymentPlanningService: VehicleDeploymentPlanningService) { }
@@ -30,15 +32,23 @@ export class VehicleDeploymentPlanningComponent implements OnInit {
   }
 
   loadPeople() {
-    this.vehicleDeploymentPlanningService.getPeople().subscribe(data => {
-      this.people = data;
-    });
+    this.vehicleDeploymentPlanningService.getPeople().subscribe(
+        data => {
+            this.people = data;
+        },
+        error => {
+          this.peopleError = true;
+        });
   }
 
   loadVehicles(){
-    this.vehicleDeploymentPlanningService.getVehicles().subscribe(data => {
-      this.vehicles = data;
-    });
+    this.vehicleDeploymentPlanningService.getVehicles().subscribe(
+        data => {
+            this.vehicles = data;
+        },
+        error => {
+          this.vehiclesError = true;
+        });
   }
 
   savePlanning() {

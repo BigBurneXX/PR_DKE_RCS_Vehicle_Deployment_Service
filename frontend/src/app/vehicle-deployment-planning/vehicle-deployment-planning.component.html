@@ -2,6 +2,9 @@
     <h1>Vehicle Deployment Planning</h1>
 
     <h2>Select People</h2>
+    <div *ngIf="peopleError" class="alert alert-danger">
+        Table People currently not reachable.
+    </div>
     <div class="table-responsive" *ngIf="people.length > 0">
         <table class="table align-middle text-nowrap">
             <thead>
@@ -34,6 +37,9 @@
     </div>
 
     <h2>Select Vehicles</h2>
+    <div *ngIf="vehiclesError" class="alert alert-danger">
+        Table Vehicles currently not reachable.
+    </div>
     <div class="table-responsive" *ngIf="vehicles.length > 0">
         <table class="table align-middle text-nowrap">
             <thead>
