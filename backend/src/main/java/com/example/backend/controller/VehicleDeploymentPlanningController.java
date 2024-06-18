@@ -3,6 +3,7 @@ package com.example.backend.controller;
 import com.example.backend.dto.VehicleDeploymentPlanningInputDTO;
 import com.example.backend.model.VehicleDeploymentPlanning;
 import com.example.backend.repository.VehicleDeploymentPlanningRepository;
+import com.example.backend.service.VehicleRoutingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,9 @@ import java.util.Optional;
 @RequestMapping("/vehicle-plannings")
 public class VehicleDeploymentPlanningController {
     private final VehicleDeploymentPlanningRepository planningRepository;
+    private final VehicleRoutingService vehicleRoutingService;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<VehicleDeploymentPlanning>> getAllPlannings() {
         List<VehicleDeploymentPlanning> plannings = planningRepository.findByIsActiveTrue();
         return plannings.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(plannings);
@@ -29,11 +31,10 @@ public class VehicleDeploymentPlanningController {
         return planning.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<VehicleDeploymentPlanning> createPlanning(@RequestBody VehicleDeploymentPlanningInputDTO planning) {
-        VehicleDeploymentPlanning newPlanning = new VehicleDeploymentPlanning(planning);
-        VehicleDeploymentPlanning savedPlanning = planningRepository.save(newPlanning);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedPlanning);
+        VehicleDeploymentPlanning solution = vehicleRoutingService.solve(planning);
+        return ResponseEntity.status(HttpStatus.CREATED).body(solution);
     }
 
     @DeleteMapping("/{id}")

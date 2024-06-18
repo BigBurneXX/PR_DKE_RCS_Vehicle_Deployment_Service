@@ -2,37 +2,34 @@ package com.example.backend.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.HashSet;
-import java.util.Set;
+import org.optaplanner.core.api.domain.entity.PlanningEntity;
+import org.optaplanner.core.api.domain.variable.PlanningVariable;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@PlanningEntity
 @Entity
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
+    private Location startLocation;
+    @ManyToOne
+    private Location endLocation;
+    private int demand = 1; // Set to 1, as each person occupies one seat
 
-    private String firstName;
+    @PlanningVariable(valueRangeProviderRefs = "vehicleRange")
+    @ManyToOne
+    private Vehicle vehicle;
 
-    private String lastName;
+    @PlanningVariable(valueRangeProviderRefs = "personRange")
+    @ManyToOne
+    private Person previousPerson;
 
-    private String dateOfBirth;
-
-    private Long startAddressId;
-
-    private Long targetAddressId;
-
-    private boolean hasWheelChair;
-
-    @ManyToMany
-    @JoinTable(
-            name = "person_vehicleDeploymentPlanning",
-            joinColumns = @JoinColumn(name = "person_id"),
-            inverseJoinColumns = @JoinColumn(name = "vehicleDeploymentPlanning_id")
-    )
-    private Set<VehicleDeploymentPlanning> vehicleDeploymentPlannings = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "vehicleDeploymentPlanning_id")
+    private VehicleDeploymentPlanning vehicleDeploymentPlanning;
 }

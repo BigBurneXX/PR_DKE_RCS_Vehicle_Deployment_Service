@@ -3,6 +3,12 @@ package com.example.backend.model;
 import com.example.backend.dto.VehicleDeploymentPlanningInputDTO;
 import jakarta.persistence.*;
 import lombok.*;
+import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
+import org.optaplanner.core.api.domain.solution.PlanningScore;
+import org.optaplanner.core.api.domain.solution.PlanningSolution;
+import org.optaplanner.core.api.domain.solution.ProblemFactCollectionProperty;
+import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
+import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,23 +16,33 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@PlanningSolution
 @Entity
 public class VehicleDeploymentPlanning extends MetaData {
-    @ManyToMany(mappedBy = "vehicleDeploymentPlannings")
+    @ProblemFactCollectionProperty
+    @ValueRangeProvider(id = "personRange")
+    @OneToMany(mappedBy = "vehicleDeploymentPlanning")
     private Set<Person> persons;
 
-    @ManyToMany(mappedBy = "vehicleDeploymentPlannings")
+    @ProblemFactCollectionProperty
+    @ValueRangeProvider(id = "vehicleRange")
+    @OneToMany(mappedBy = "vehicleDeploymentPlanning")
     private Set<Vehicle> vehicles;
 
-    @OneToMany(mappedBy = "vehicleDeploymentPlanning", cascade = CascadeType.ALL)
-    private Set<VehicleDeploymentPlan> plans = new HashSet<>();
+    @PlanningEntityCollectionProperty
+    @OneToMany(mappedBy = "vehicleDeploymentPlanning")
+    private Set<Location> locations;
+
+    @PlanningScore
+    private HardSoftScore score;
 
     public VehicleDeploymentPlanning(VehicleDeploymentPlanningInputDTO vehicleDeploymentPlanningInputDTO) {
-        super();
-        setPersons(vehicleDeploymentPlanningInputDTO.getPersons());
-        setVehicles(vehicleDeploymentPlanningInputDTO.getVehicles());
-
-        //TODO: here the plans should be created!
+        this.persons = vehicleDeploymentPlanningInputDTO.persons();
+        this.vehicles = vehicleDeploymentPlanningInputDTO.vehicles();
+        this.locations = new HashSet<>();
+        this.locations.addAll(vehicleDeploymentPlanningInputDTO.persons().stream().map(Person::getStartLocation).toList());
+        this.locations.addAll(vehicleDeploymentPlanningInputDTO.persons().stream().map(Person::getEndLocation).toList());
+        this.locations.addAll(vehicleDeploymentPlanningInputDTO.vehicles().stream().map(Vehicle::getStartLocation).toList());
+        this.locations.addAll(vehicleDeploymentPlanningInputDTO.vehicles().stream().map(Vehicle::getEndLocation).toList());
     }
 }

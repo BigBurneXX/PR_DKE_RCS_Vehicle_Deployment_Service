@@ -19,7 +19,7 @@ public class TripSheetController {
     private final TripSheetRepository tripSheetRepository;
     private final VehicleDeploymentPlanRepository vehicleDeploymentPlanRepository;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<TripSheet>> getAllTripSheets() {
         List<TripSheet> tripSheets = tripSheetRepository.findByIsActiveTrue();
         return tripSheets.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(tripSheets);
@@ -52,7 +52,7 @@ public class TripSheetController {
         }
         return ResponseEntity.notFound().build();
     }
-
+/*
     @PatchMapping("/{id}")
     public ResponseEntity<TripSheet> updateTripSheet(@PathVariable Long id, @RequestBody Address address) {
         Optional<TripSheet> possibleTripSheet = tripSheetRepository.findByIdAndIsActiveTrue(id);
@@ -64,7 +64,7 @@ public class TripSheetController {
         }
         return ResponseEntity.notFound().build();
     }
-
+*/
     @DeleteMapping("/{id}")
     public ResponseEntity<TripSheet> deleteTripSheet(@PathVariable Long id) {
         Optional<TripSheet> tripSheet = tripSheetRepository.findByIdAndIsActiveTrue(id);

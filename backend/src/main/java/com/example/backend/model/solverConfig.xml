@@ -1,0 +1,12 @@
+<solver>
+    <solutionClass>com.example.VehicleDeploymentPlanning</solutionClass>
+    <entityClass>com.example.Person</entityClass>
+
+    <scoreDirectorFactory>
+        <constraintProviderClass>com.example.VehicleRoutingConstraintProvider</constraintProviderClass>
+    </scoreDirectorFactory>
+
+    <termination>
+        <secondsSpentLimit>30</secondsSpentLimit>
+    </termination>
+</solver>

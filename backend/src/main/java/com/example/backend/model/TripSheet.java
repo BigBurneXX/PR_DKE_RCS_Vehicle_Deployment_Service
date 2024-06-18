@@ -17,10 +17,14 @@ public class TripSheet extends MetaData{
     @JoinColumn(name="vehicleDeploymentPlan_id", nullable = false)
     private VehicleDeploymentPlan vehicleDeploymentPlan;
 
+    /*
     @ManyToMany
     private Set<Address> addresses = new HashSet<>();
-
-    public void addAddress (Address address) {
-        addresses.add(address);
-    }
+*/
+    @ManyToMany
+    private Set<Location> locations = new HashSet<>();
+    /*
+    public void addAddress (Location location) {
+        locations.add(location);
+    }*/
 }

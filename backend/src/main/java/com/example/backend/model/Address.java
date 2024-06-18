@@ -9,19 +9,15 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String street;
-
     private String houseNo;
-
-    private Long townId;
-
-    private String coordinates;
+    private int postalCode;
+    private String latitude;
+    private String longitude;
 
     @ManyToMany
     @JoinTable(

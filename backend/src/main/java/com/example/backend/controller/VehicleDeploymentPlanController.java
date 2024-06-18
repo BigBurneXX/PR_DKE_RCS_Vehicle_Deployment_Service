@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +18,7 @@ public class VehicleDeploymentPlanController {
     private final VehicleDeploymentPlanRepository planRepository;
     private final VehicleDeploymentPlanningRepository planningRepository;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<VehicleDeploymentPlan>> getAllPlans() {
         List<VehicleDeploymentPlan> plans = planRepository.findByIsActiveTrue();
         return plans.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(plans);
@@ -28,6 +27,12 @@ public class VehicleDeploymentPlanController {
     @GetMapping("/{id}")
     public ResponseEntity<VehicleDeploymentPlan> getPlanById(@PathVariable Long id) {
         Optional<VehicleDeploymentPlan> plan = planRepository.findByIdAndIsActiveTrue(id);
+        return plan.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/vehicle/{vehicleId}")
+    public ResponseEntity<VehicleDeploymentPlan> getPlanByVehicle(@PathVariable Long vehicleId) {
+        Optional<VehicleDeploymentPlan> plan = planRepository.findByVehicleAndIsActiveTrue(vehicleId);
         return plan.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
