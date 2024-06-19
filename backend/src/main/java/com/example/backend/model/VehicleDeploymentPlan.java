@@ -31,7 +31,7 @@ public class VehicleDeploymentPlan extends MetaData{
     private Set<Person> persons = new HashSet<>();
 
     @ManyToMany
-    private Set<Location> coordinates = new HashSet<>();
+    private Set<Location> locations = new HashSet<>();
 
     @OneToMany(mappedBy = "vehicleDeploymentPlan")
     private Set<TripSheet> tripSheets = new HashSet<>();

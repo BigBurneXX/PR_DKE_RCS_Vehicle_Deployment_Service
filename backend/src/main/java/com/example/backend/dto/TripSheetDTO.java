@@ -4,15 +4,6 @@ import lombok.*;
 
 import java.util.List;
 
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
-public class TripSheetDTO {
-    private Long id;
+public record TripSheetInputDTO(VehicleDeploymentPlanDTO vehicleDeploymentPlan, Location[] locations) {
 
-    private Long vehicleDeploymentPlanId;
-
-    private List<Boolean> visitStatus;
 }

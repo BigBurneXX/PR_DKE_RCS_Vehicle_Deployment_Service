@@ -1,17 +1,5 @@
 package com.example.backend.dto;
 
-import lombok.*;
+public record VehicleDeploymentPlanDTO (Long id, VehicleDTO vehicle, Location[] locations) {
 
-import java.util.List;
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class VehicleDeploymentPlanDTO {
-    private Long id;
-
-    private Long vehicleId;
-
-    private List<AddressDTO> addresses;
 }

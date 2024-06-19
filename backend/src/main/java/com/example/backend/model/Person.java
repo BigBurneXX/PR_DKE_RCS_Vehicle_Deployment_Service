@@ -11,15 +11,13 @@ import org.optaplanner.core.api.domain.variable.PlanningVariable;
 @AllArgsConstructor
 @PlanningEntity
 @Entity
-public class Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Person extends MetaData {
     @ManyToOne
     private Location startLocation;
     @ManyToOne
     private Location endLocation;
     private int demand = 1; // Set to 1, as each person occupies one seat
+    private boolean hasWheelchair = false;
 
     @PlanningVariable(valueRangeProviderRefs = "vehicleRange")
     @ManyToOne

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.optaplanner.core.api.domain.entity.PlanningEntity;
 
 @Getter
 @Setter
@@ -14,8 +13,9 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private double longitude;
-    private double latitude;
+
+    private String longitude;
+    private String latitude;
 
     @ManyToOne
     @JoinColumn(name = "vehicleDeploymentPlanning_id")

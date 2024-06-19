@@ -7,11 +7,10 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @Entity(name = "Vehicle")
-public class Vehicle {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private int capacity;
+public class Vehicle extends MetaData {
+    private int seats;
+    private boolean hasWheelchair;
+
     @ManyToOne
     private Location startLocation;
     @ManyToOne

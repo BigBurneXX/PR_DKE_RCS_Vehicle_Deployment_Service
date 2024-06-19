@@ -7,12 +7,5 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddressDTO {
-    private Long id;
-
-    private String street;
-
-    private String houseNo;
-
-    private Long townId;
+public record AddressDTO (Long id, String street, String houseNo, Long townId)
 }
