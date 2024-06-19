@@ -3,6 +3,7 @@ package com.example.backend.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
+import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
 import org.optaplanner.core.api.domain.variable.PlanningVariable;
 
@@ -20,7 +21,7 @@ public class VehicleDeploymentPlan extends MetaData{
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
-    @PlanningVariable(valueRangeProviderRefs = "personRange")
+    @PlanningEntityCollectionProperty
     @ManyToMany
     @JoinTable(
             name = "vehicle_deployment_plan_persons",
