@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { PersonDto } from '../vehicle-deployment-planning/Person.dto';
 import { VehicleDto } from "../vehicle-deployment-planning/Vehicle.dto";
 import {VehicleDeploymentPlanningInputDto} from "../vehicle-deployment-planning/VehicleDeploymentPlanningInput.dto";
+import {VehicleDeploymentPlanDto} from "../new-trip-sheet/VehicleDeploymentPlan.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -41,5 +42,17 @@ export class VehicleDeploymentPlanningService {
 
     postVehicleDeploymentPlanning(data: VehicleDeploymentPlanningInputDto): Observable<any> {
         return this.http.post<VehicleDeploymentPlanningInputDto>(this.backendUrl, data);
+    }
+
+    getVehicleDeploymentPlans(filters?: any): Observable<VehicleDeploymentPlanDto[]> {
+        let params = new HttpParams();
+        if (filters) {
+            Object.keys(filters).forEach(key => {
+                if (filters[key] !== null && filters[key] !== undefined) {
+                    params = params.set(key, filters[key]);
+                }
+            });
+        }
+        return this.http.get<VehicleDeploymentPlanDto[]>(`${this.backendUrl}vehicle-deployment-plans`, { params });
     }
 }

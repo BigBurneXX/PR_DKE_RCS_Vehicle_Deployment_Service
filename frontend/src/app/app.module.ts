@@ -39,7 +39,7 @@ import {RouteMapComponent} from "./component/route-map/route-map.component";
         RouteMapComponent,
     ],
   providers: [
-    {provide: LocationStrategy, useClass: PathLocationStrategy }
+    { provide: LocationStrategy, useClass: PathLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })

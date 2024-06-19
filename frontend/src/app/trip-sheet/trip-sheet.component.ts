@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { TripSheetService } from "./TripSheetService";
+import { Component, OnInit } from '@angular/core';
+import { TripSheetService } from "../services/TripSheetService";
 import { TripSheet } from "./TripSheet";
 import { FormsModule } from "@angular/forms";
 import { NgForOf, NgIf } from "@angular/common";
@@ -14,15 +14,19 @@ import { NgForOf, NgIf } from "@angular/common";
   ],
   styleUrls: ['./trip-sheet.component.css']
 })
-export class TripSheetComponent {
+export class TripSheetComponent implements OnInit {
   newTripSheet: any = TripSheet;
   tripSheets: any[] = [];
 
   constructor(private tripSheetService: TripSheetService) {
   }
 
+  ngOnInit() {
+    this.getTripSheets();
+  }
+
   saveTripSheet(): void {
-    this.tripSheetService.addTripSheet(this.newTripSheet).subscribe(() => {
+    this.tripSheetService.postTripSheet(this.newTripSheet).subscribe(() => {
       console.log('Trip sheet created successfully!');
       this.getTripSheets();
     });

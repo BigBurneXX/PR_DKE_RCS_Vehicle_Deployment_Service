@@ -2,7 +2,8 @@ import { HttpHeaders, HttpErrorResponse, HttpClient} from '@angular/common/http'
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { TripSheet } from './TripSheet';
+import { TripSheet } from '../trip-sheet/TripSheet';
+import {TripSheetInputDto} from "../new-trip-sheet/TripSheetInput.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -23,13 +24,8 @@ export class TripSheetService {
     );
   }
 
-  addTripSheet(tripSheet: TripSheet): Observable<TripSheet> {
-    const requestBody = {
-      vehicleDeploymentPlanId: tripSheet.vehicleDeploymentPlanId,
-      visitStatus: null
-    };
-
-    return this.http.post<TripSheet>('http://localhost:8082/trip-sheets/', requestBody, this.httpOptions).pipe(
+  postTripSheet(tripSheet: TripSheetInputDto): Observable<TripSheetInputDto> {
+    return this.http.post<TripSheetInputDto>('http://localhost:8082/trip-sheets/', tripSheet, this.httpOptions).pipe(
       tap(_ => console.log('Trip sheet added')),
       catchError((error: HttpErrorResponse) => {
         return throwError(error.message || 'Server error');

@@ -29,9 +29,12 @@ public class VehicleDeploymentPlanning extends MetaData {
     @OneToMany(mappedBy = "vehicleDeploymentPlanning")
     private Set<Vehicle> vehicles;
 
+    @OneToMany(mappedBy = "vehicleDeploymentPlanning")
+    private Set<Location> locations = new HashSet<>();
+
     @PlanningEntityCollectionProperty
     @OneToMany(mappedBy = "vehicleDeploymentPlanning")
-    private Set<Location> locations;
+    private Set<VehicleDeploymentPlan> plans = new HashSet<>();
 
     @PlanningScore
     private HardSoftScore score;
@@ -39,7 +42,6 @@ public class VehicleDeploymentPlanning extends MetaData {
     public VehicleDeploymentPlanning(VehicleDeploymentPlanningInputDTO vehicleDeploymentPlanningInputDTO) {
         this.persons = vehicleDeploymentPlanningInputDTO.persons();
         this.vehicles = vehicleDeploymentPlanningInputDTO.vehicles();
-        this.locations = new HashSet<>();
         this.locations.addAll(vehicleDeploymentPlanningInputDTO.persons().stream().map(Person::getStartLocation).toList());
         this.locations.addAll(vehicleDeploymentPlanningInputDTO.persons().stream().map(Person::getEndLocation).toList());
         this.locations.addAll(vehicleDeploymentPlanningInputDTO.vehicles().stream().map(Vehicle::getStartLocation).toList());

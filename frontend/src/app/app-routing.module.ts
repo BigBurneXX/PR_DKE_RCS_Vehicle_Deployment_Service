@@ -31,6 +31,10 @@ export const AppRoutes: Routes = [
       {
         path: 'vehicle-deployment-planning',
         loadChildren: () => import('./vehicle-deployment-planning/vehicle-deployment-planning.module').then(m => m.VehicleDeploymentPlanningModule)
+      },
+      {
+        path: 'new-trip-sheet',
+        loadChildren: () => import('./new-trip-sheet/new-trip-sheet.module').then(m => m.NewTripSheetModule)
       }
     ]
   },

@@ -52,6 +52,8 @@ public class TripSheetController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    //TODO: Implement full post functionality
 /*
     @PatchMapping("/{id}")
     public ResponseEntity<TripSheet> updateTripSheet(@PathVariable Long id, @RequestBody Address address) {
