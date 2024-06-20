@@ -17,6 +17,9 @@ public class Location {
     private String longitude;
     private String latitude;
 
+    // as the Data Base Systems needs the address id it will be saved here
+    private Long addressId = null;
+
     @ManyToOne
     @JoinColumn(name = "vehicleDeploymentPlanning_id")
     private VehicleDeploymentPlanning vehicleDeploymentPlanning;

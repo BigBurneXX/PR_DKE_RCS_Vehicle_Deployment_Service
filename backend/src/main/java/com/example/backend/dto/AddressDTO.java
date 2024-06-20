@@ -1,11 +1,5 @@
 package com.example.backend.dto;
 
-import lombok.*;
+public record AddressDTO (Long id, String street, String houseNo, Long townId, String latitude, String longitude) {
 
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
-public record AddressDTO (Long id, String street, String houseNo, Long townId)
 }
