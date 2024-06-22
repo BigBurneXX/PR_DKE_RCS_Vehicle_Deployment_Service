@@ -3,6 +3,7 @@ package com.example.backend.model;
 import com.example.backend.dto.AddressDTO;
 import com.example.backend.dto.PersonInputDTO;
 import com.example.backend.dto.VehicleDeploymentPlanningInputDTO;
+import com.example.backend.dto.VehicleInputDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
@@ -13,7 +14,10 @@ import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -43,47 +47,53 @@ public class VehicleDeploymentPlanning extends MetaData {
 
     public VehicleDeploymentPlanning(VehicleDeploymentPlanningInputDTO vehicleDeploymentPlanningInputDTO) {
         this.persons = convertToPersons(vehicleDeploymentPlanningInputDTO.persons(), vehicleDeploymentPlanningInputDTO.addresses());
-        //this.persons = vehicleDeploymentPlanningInputDTO.persons();
-        this.vehicles = vehicleDeploymentPlanningInputDTO.vehicles();
-        this.locations.addAll(vehicleDeploymentPlanningInputDTO.persons().stream().map(Person::getStartLocation).toList());
-        this.locations.addAll(vehicleDeploymentPlanningInputDTO.persons().stream().map(Person::getEndLocation).toList());
-        this.locations.addAll(vehicleDeploymentPlanningInputDTO.vehicles().stream().map(Vehicle::getStartLocation).toList());
-        this.locations.addAll(vehicleDeploymentPlanningInputDTO.vehicles().stream().map(Vehicle::getEndLocation).toList());
+        this.vehicles = convertToVehicles(vehicleDeploymentPlanningInputDTO.vehicles());
+        this.locations = Stream.concat(
+                persons.stream().flatMap(p -> Stream.of(p.getStartLocation(), p.getEndLocation())),
+                vehicles.stream().flatMap(v -> Stream.of(v.getStartLocation(), v.getEndLocation()))
+        ).collect(Collectors.toSet());
     }
 
     private Set<Person> convertToPersons(Set<PersonInputDTO> inputPersons, Set<AddressDTO> inputAddresses) {
-        Set<Person> retPersons = new HashSet<>();
-        for(PersonInputDTO inputPerson : inputPersons) {
+        Map<Long, AddressDTO> addressMap = inputAddresses.stream().collect(Collectors.toMap(AddressDTO::id, address -> address));
+        return inputPersons.stream().map(inputPerson -> {
             Person p = new Person();
-            Location location1 = new Location();
-            Long addressId = inputPerson.startAddress();
-            AddressDTO address = findAddress(addressId, inputAddresses);
-            if(address != null) {
-                location1.setAddressId(addressId);
-                location1.setLatitude(address.latitude());
-                location1.setLongitude(address.longitude());
-            }
-            Location location2 = new Location();
-            addressId = inputPerson.targetAddress();
-            address = findAddress(addressId, inputAddresses);
-            if(address != null) {
-                location2.setAddressId(addressId);
-                location2.setLatitude(address.latitude());
-                location2.setLongitude(address.longitude());
-            }
-            p.setStartLocation(location1);
-            p.setEndLocation(location2);
+            p.setStartLocation(createLocation(inputPerson.startAddress(), addressMap));
+            p.setEndLocation(createLocation(inputPerson.targetAddress(), addressMap));
             p.setHasWheelchair(inputPerson.hasWheelchair());
-            retPersons.add(p);
-        }
-        return retPersons;
+            return p;
+        }).collect(Collectors.toSet());
     }
 
-    private AddressDTO findAddress(Long id, Set<AddressDTO> inputAddresses) {
-        for(AddressDTO address : inputAddresses) {
-            if(id == address.id())
-                return address;
+    private Location createLocation(Long addressId, Map<Long, AddressDTO> addressMap) {
+        AddressDTO address = addressMap.get(addressId);
+        if (address != null) {
+            Location location = new Location();
+            location.setAddressId(addressId);
+            location.setLatitude(address.latitude());
+            location.setLongitude(address.longitude());
+            return location;
         }
         return null;
+    }
+
+    private Set<Vehicle> convertToVehicles(Set<VehicleInputDTO> inputVehicles) {
+        return inputVehicles.stream().map(inputVehicle -> {
+            Vehicle v = new Vehicle();
+            v.setStartLocation(createLocation(inputVehicle.startCoordinates()));
+            v.setEndLocation(createLocation(inputVehicle.endCoordinates()));
+            v.setSeats(Math.toIntExact(inputVehicle.seats()));
+            v.setHasWheelchair("Y".equals(inputVehicle.wheelchair()));
+            return v;
+        }).collect(Collectors.toSet());
+
+    }
+
+    private Location createLocation(String coordinates) {
+        String[] coordinate = coordinates.split(" ");
+        Location location = new Location();
+        location.setLatitude(coordinate[0]);
+        location.setLongitude(coordinate[1]);
+        return location;
     }
 }

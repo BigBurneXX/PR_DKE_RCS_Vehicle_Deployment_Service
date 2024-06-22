@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface VehicleDeploymentPlanRepository extends ApiRepository<VehicleDeploymentPlan>, CustomApiRepository<VehicleDeploymentPlan> {
     List<VehicleDeploymentPlan> findByVehicleDeploymentPlanningAndIsActiveTrue(VehicleDeploymentPlanning vehicleDeploymentPlanning);
-    //Optional<VehicleDeploymentPlan> findByVehicleAndIsActiveTrue(Long vehicleId);
+    Optional<VehicleDeploymentPlan> findByVehicleIdAndIsActiveTrue(Long vehicleId);
 }

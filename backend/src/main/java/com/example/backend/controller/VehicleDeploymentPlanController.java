@@ -29,12 +29,12 @@ public class VehicleDeploymentPlanController {
         Optional<VehicleDeploymentPlan> plan = planRepository.findByIdAndIsActiveTrue(id);
         return plan.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-/*
+
     @GetMapping("/vehicle/{vehicleId}")
     public ResponseEntity<VehicleDeploymentPlan> getPlanByVehicle(@PathVariable Long vehicleId) {
-        Optional<VehicleDeploymentPlan> plan = planRepository.findByVehicleAndIsActiveTrue(vehicleId);
+        Optional<VehicleDeploymentPlan> plan = planRepository.findByVehicleIdAndIsActiveTrue(vehicleId);
         return plan.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }*/
+    }
 
     @GetMapping("/vehicleDeploymentPlanning/{id}")
     public ResponseEntity<List<VehicleDeploymentPlan>> getAllPlansByPlanning(@PathVariable Long id) {

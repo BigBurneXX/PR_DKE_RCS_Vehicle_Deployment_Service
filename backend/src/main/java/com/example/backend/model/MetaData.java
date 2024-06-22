@@ -13,7 +13,6 @@ import java.util.Date;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Entity
 @MappedSuperclass
 public abstract class MetaData {
     @Id

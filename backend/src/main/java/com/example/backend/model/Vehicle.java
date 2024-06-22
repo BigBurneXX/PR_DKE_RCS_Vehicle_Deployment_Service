@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity(name = "Vehicle")
 public class Vehicle extends MetaData {
+    private Long vehicleId;
     private int seats;
     private boolean hasWheelchair;
 
