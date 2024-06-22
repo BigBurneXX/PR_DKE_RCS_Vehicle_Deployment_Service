@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.VehicleDeploymentPlanningInputDTO;
+import com.example.backend.dto.VehicleDeploymentPlanningOutputDTO;
 import com.example.backend.model.VehicleDeploymentPlanning;
 import com.example.backend.repository.VehicleDeploymentPlanningRepository;
 import com.example.backend.service.VehicleRoutingService;
@@ -32,9 +33,8 @@ public class VehicleDeploymentPlanningController {
     }
 
     @PostMapping
-    public ResponseEntity<VehicleDeploymentPlanning> createPlanning(@RequestBody VehicleDeploymentPlanningInputDTO planning) {
-        VehicleDeploymentPlanning solution = vehicleRoutingService.solve(planning);
-        return ResponseEntity.status(HttpStatus.CREATED).body(solution);
+    public ResponseEntity<VehicleDeploymentPlanningOutputDTO> createPlanning(@RequestBody VehicleDeploymentPlanningInputDTO planning) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(vehicleRoutingService.solve(planning));
     }
 
     @DeleteMapping("/{id}")

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -28,6 +27,5 @@ public abstract class MetaData {
     @Version
     private Long version;
 
-    @ColumnDefault("true")
-    private boolean isActive;
+    private boolean isActive = true;
 }
