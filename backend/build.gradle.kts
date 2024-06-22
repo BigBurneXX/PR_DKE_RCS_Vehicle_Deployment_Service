@@ -20,6 +20,8 @@ repositories {
 
 dependencies {
 	implementation("com.oracle.database.jdbc:ojdbc10:19.22.0.0")
+	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+	implementation("org.modelmapper:modelmapper:3.2.0")
 	// https://mvnrepository.com/artifact/org.optaplanner/optaplanner-core
 	implementation("org.optaplanner:optaplanner-core:${optaplannerVersion}")
 	// https://mvnrepository.com/artifact/org.optaplanner/optaplanner-persistence-jpa
