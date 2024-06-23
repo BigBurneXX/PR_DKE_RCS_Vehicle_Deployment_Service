@@ -1,14 +1,15 @@
-package com.example.backend.model;
+package com.example.backend.solve;
 
-import com.example.backend.solve.PersonSolve;
+import com.example.backend.response.DistanceMatrixResponse;
+import com.example.backend.service.DistanceMatrixService;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
-import org.optaplanner.core.api.score.stream.ConstraintCollectors;
-import org.optaplanner.core.api.score.stream.ConstraintProvider;
+import org.optaplanner.core.api.score.stream.*;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
-import org.optaplanner.core.api.score.stream.Constraint;
-import org.optaplanner.core.api.score.stream.ConstraintFactory;
-
-public class VehicleRoutingConstraintProvider implements ConstraintProvider {
+@Component
+public class VehicleRoutingSolveConstraintProvider implements ConstraintProvider {
+    private final DistanceMatrixService distanceMatrixService = new DistanceMatrixService(new RestTemplate());
 
     @Override
     public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
@@ -40,9 +41,9 @@ public class VehicleRoutingConstraintProvider implements ConstraintProvider {
     private Constraint minimizeDistance(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .forEach(PersonSolve.class)
-                //TODO: Should access openrouteservice to calculate distance!
                 .penalize(HardSoftScore.ONE_SOFT,  person -> (int) (person.getStartLocation().getDistanceTo(person.getAssignedVehicle().getStartLocation())
                         + person.getEndLocation().getDistanceTo(person.getAssignedVehicle().getEndLocation())))
                 .asConstraint("minimize distance");
     }
 }
+

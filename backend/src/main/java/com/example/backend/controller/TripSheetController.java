@@ -2,6 +2,7 @@ package com.example.backend.controller;
 
 import com.example.backend.dto.LocationDTO;
 import com.example.backend.dto.TripSheetOutputDTO;
+import com.example.backend.dto.TripSheet_PersonInputDTO;
 import com.example.backend.service.TripSheetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,10 +37,10 @@ public class TripSheetController {
     }
 
     @PostMapping("/vehicleDeploymentPlan/{vehicleDeploymentPlanId}")
-    public ResponseEntity<TripSheetOutputDTO> createTripSheet(@PathVariable Long vehicleDeploymentPlanId, @RequestBody Set<LocationDTO> locations) {
-        if(locations == null || locations.isEmpty() || !tripSheetService.existsPlan(vehicleDeploymentPlanId))
+    public ResponseEntity<TripSheetOutputDTO> createTripSheet(@PathVariable Long vehicleDeploymentPlanId, @RequestBody Set<TripSheet_PersonInputDTO> persons) {
+        if(persons == null || persons.isEmpty() || !tripSheetService.existsPlan(vehicleDeploymentPlanId))
             return ResponseEntity.badRequest().build();
-        TripSheetOutputDTO tripSheet = tripSheetService.createTripSheet(vehicleDeploymentPlanId, locations);
+        TripSheetOutputDTO tripSheet = tripSheetService.createTripSheet(vehicleDeploymentPlanId, persons);
         return tripSheet == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(tripSheet);
     }
 

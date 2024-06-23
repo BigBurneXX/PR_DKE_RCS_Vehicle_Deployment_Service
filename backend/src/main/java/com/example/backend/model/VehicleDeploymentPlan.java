@@ -1,36 +1,35 @@
 package com.example.backend.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.optaplanner.core.api.domain.entity.PlanningEntity;
-import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
-import org.optaplanner.core.api.domain.variable.PlanningVariable;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-@PlanningEntity
 public class VehicleDeploymentPlan extends MetaData{
-    @PlanningVariable(valueRangeProviderRefs = "vehicleRange")
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
-    @PlanningEntityCollectionProperty
     @ManyToMany
     @JoinTable(
-            name = "vehicle_deployment_plan_persons",
-            joinColumns = @JoinColumn(name = "vehicle_deployment_plan_id"),
+            name = "plan_person",
+            joinColumns = @JoinColumn(name = "plan_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id")
     )
     private Set<Person> persons = new HashSet<>();
 
-    @ManyToMany
-    private Set<Location> locations = new HashSet<>();
+    @ElementCollection
+    @CollectionTable(name = "plan_route", joinColumns = @JoinColumn(name = "plan_id"))
+    private List<Location> route = new ArrayList<>();
 
     @OneToMany(mappedBy = "vehicleDeploymentPlan")
     private Set<TripSheet> tripSheets = new HashSet<>();

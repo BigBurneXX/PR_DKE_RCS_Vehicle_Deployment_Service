@@ -19,19 +19,24 @@ import java.util.Set;
 @Entity
 public class VehicleDeploymentPlanning extends MetaData {
     @ProblemFactCollectionProperty
-    @ValueRangeProvider(id = "personRange")
-    @OneToMany(mappedBy = "vehicleDeploymentPlanning")
-    private Set<Person> persons = new HashSet<>();
-
-    @ProblemFactCollectionProperty
     @ValueRangeProvider(id = "vehicleRange")
-    @OneToMany(mappedBy = "vehicleDeploymentPlanning")
+    @ManyToMany
+    @JoinTable(
+            name = "planning_vehicle",
+            joinColumns = @JoinColumn(name = "planning_id"),
+            inverseJoinColumns = @JoinColumn(name = "vehicle_id")
+    )
     private Set<Vehicle> vehicles = new HashSet<>();
 
-    @OneToMany(mappedBy = "vehicleDeploymentPlanning")
-    private Set<Location> locations = new HashSet<>();
-
     @PlanningEntityCollectionProperty
+    @ManyToMany
+    @JoinTable(
+            name = "planning_person",
+            joinColumns = @JoinColumn(name = "planning_id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id")
+    )
+    private Set<Person> persons = new HashSet<>();
+
     @OneToMany(mappedBy = "vehicleDeploymentPlanning")
     private Set<VehicleDeploymentPlan> plans = new HashSet<>();
 

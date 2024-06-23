@@ -1,8 +1,8 @@
 package com.example.backend.service;
 
-import com.example.backend.dto.LocationDTO;
 import com.example.backend.dto.TripSheetOutputDTO;
-import com.example.backend.model.Location;
+import com.example.backend.dto.TripSheet_PersonInputDTO;
+import com.example.backend.model.Person;
 import com.example.backend.model.TripSheet;
 import com.example.backend.repository.TripSheetRepository;
 import com.example.backend.repository.VehicleDeploymentPlanRepository;
@@ -23,13 +23,13 @@ public class TripSheetService {
     private final VehicleDeploymentPlanRepository vehicleDeploymentPlanRepository;
     private final ModelMapper modelMapper;
 
-    public TripSheetOutputDTO createTripSheet(Long vehicleDeploymentPlanId, Set<LocationDTO> locations) {
+    public TripSheetOutputDTO createTripSheet(Long vehicleDeploymentPlanId, Set<TripSheet_PersonInputDTO> persons) {
         return vehicleDeploymentPlanRepository.findByIdAndIsActiveTrue(vehicleDeploymentPlanId)
                 .map(plan -> {
                     TripSheet tripSheet = new TripSheet();
                     tripSheet.setVehicleDeploymentPlan(plan);
-                    tripSheet.setLocations(locations.stream()
-                            .map(locationDTO -> modelMapper.map(locationDTO, Location.class))
+                    tripSheet.setPersons(persons.stream()
+                            .map(person -> modelMapper.map(person, Person.class))
                             .collect(Collectors.toSet()));
                     tripSheetRepository.save(tripSheet);
                     return modelMapper.map(tripSheet, TripSheetOutputDTO.class);

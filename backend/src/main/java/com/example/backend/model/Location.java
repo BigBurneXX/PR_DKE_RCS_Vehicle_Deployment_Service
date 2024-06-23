@@ -14,13 +14,28 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String longitude;
-    private String latitude;
+    private double latitude;
+    private double longitude;
 
     // as the Data Base Systems needs the address id it will be saved here
     private Long addressId = null;
 
     @ManyToOne
-    @JoinColumn(name = "vehicleDeploymentPlanning_id")
-    private VehicleDeploymentPlanning vehicleDeploymentPlanning;
+    @JoinColumn(name = "tripSheet_id")
+    private TripSheet tripSheet;
+    @ManyToOne
+    @JoinColumn(name = "vehicleDeploymentPlan_id")
+    private VehicleDeploymentPlan vehicleDeploymentPlan;
+
+    //Temporarily used for LocationSolve
+    public Location(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public double getDistanceTo(Location location) {
+        double deltaLat = location.getLatitude() - this.latitude;
+        double deltaLon = location.getLongitude() - this.longitude;
+        return Math.sqrt(deltaLat * deltaLat + deltaLon * deltaLon);
+    }
 }
