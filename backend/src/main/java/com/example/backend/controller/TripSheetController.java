@@ -1,6 +1,5 @@
 package com.example.backend.controller;
 
-import com.example.backend.dto.LocationDTO;
 import com.example.backend.dto.TripSheetOutputDTO;
 import com.example.backend.dto.TripSheet_PersonInputDTO;
 import com.example.backend.service.TripSheetService;

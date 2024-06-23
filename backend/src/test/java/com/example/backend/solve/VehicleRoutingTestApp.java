@@ -1,12 +1,10 @@
 package com.example.backend.solve;
 
 import com.example.backend.model.Location;
-import com.example.backend.service.DistanceMatrixService;
 import org.optaplanner.core.api.solver.Solver;
 import org.optaplanner.core.api.solver.SolverFactory;
 import org.optaplanner.core.config.solver.SolverConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
 import java.util.ArrayList;
