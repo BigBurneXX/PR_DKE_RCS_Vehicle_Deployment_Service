@@ -1,6 +1,5 @@
 package com.example.backend.model;
 
-import com.example.backend.solve.PersonSolve;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.score.stream.ConstraintCollectors;
 import org.optaplanner.core.api.score.stream.ConstraintProvider;
@@ -21,17 +20,17 @@ public class VehicleRoutingConstraintProvider implements ConstraintProvider {
 
     private Constraint vehicleCapacityConstraint(ConstraintFactory constraintFactory) {
         return constraintFactory
-                .forEach(PersonSolve.class)
-                .groupBy(PersonSolve::getAssignedVehicle, ConstraintCollectors.count())
-                .filter((vehicle, count) -> count > vehicle.getCapacity())
-                .penalize(HardSoftScore.ONE_HARD, (vehicle, count) -> count - vehicle.getCapacity())
+                .forEach(Person.class)
+                .groupBy(Person::getAssignedVehicle, ConstraintCollectors.count())
+                .filter((vehicle, count) -> count > vehicle.getSeats())
+                .penalize(HardSoftScore.ONE_HARD, (vehicle, count) -> count - vehicle.getSeats())
                 .asConstraint("Vehicle capacity");
     }
 
     private Constraint wheelchairCompatibilityConstraint(ConstraintFactory constraintFactory) {
         return constraintFactory
-                .forEach(PersonSolve.class)
-                .filter(PersonSolve::isHasWheelchair)
+                .forEach(Person.class)
+                .filter(Person::isHasWheelchair)
                 .filter(person -> person.getAssignedVehicle() == null || !person.getAssignedVehicle().isCanCarryWheelchair())
                 .penalize(HardSoftScore.ONE_HARD)
                 .asConstraint("Wheelchair compatibility");
@@ -39,7 +38,7 @@ public class VehicleRoutingConstraintProvider implements ConstraintProvider {
 
     private Constraint minimizeDistance(ConstraintFactory constraintFactory) {
         return constraintFactory
-                .forEach(PersonSolve.class)
+                .forEach(Person.class)
                 //TODO: Should access openrouteservice to calculate distance!
                 .penalize(HardSoftScore.ONE_SOFT,  person -> (int) (person.getStartLocation().getDistanceTo(person.getAssignedVehicle().getStartLocation())
                         + person.getEndLocation().getDistanceTo(person.getAssignedVehicle().getEndLocation())))

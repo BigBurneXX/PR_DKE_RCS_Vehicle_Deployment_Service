@@ -21,13 +21,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class VehicleDeploymentPlanningService {
-    private final SolverFactory<VehicleDeploymentPlanning> solverFactory = SolverFactory.create(new SolverConfig()
-            .withSolutionClass(VehicleDeploymentPlanning.class)
-            .withEntityClasses(Person.class)
-            .withConstraintProviderClass(VehicleRoutingConstraintProvider.class)
-            // The solver runs only for 10 seconds on this small dataset.
-            // It's recommended to run for at least 5 minutes ("5m") otherwise.
-            .withTerminationSpentLimit(Duration.ofSeconds(10)));
     private final PersonRepository personRepository;
     private final VehicleRepository vehicleRepository;
     private final LocationRepository locationRepository;
@@ -82,6 +75,17 @@ public class VehicleDeploymentPlanningService {
         planning.setPersons(persons);
         planning.setVehicles(vehicles);
         planning = planningRepository.save(planning);
+
+        // Initiate solverFactory
+        // The solver runs only for 10 seconds on this small dataset.
+        // It's recommended to run for at least 5 minutes ("5m") otherwise.
+        SolverFactory<VehicleDeploymentPlanning> solverFactory = SolverFactory.create(new SolverConfig()
+                .withSolutionClass(VehicleDeploymentPlanning.class)
+                .withEntityClasses(Person.class)
+                .withConstraintProviderClass(VehicleRoutingConstraintProvider.class)
+                // The solver runs only for 10 seconds on this small dataset.
+                // It's recommended to run for at least 5 minutes ("5m") otherwise.
+                .withTerminationSpentLimit(Duration.ofSeconds(10)));
 
         // Solve the problem
         Solver<VehicleDeploymentPlanning> solver = solverFactory.buildSolver();
