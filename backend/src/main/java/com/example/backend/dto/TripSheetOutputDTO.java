@@ -1,3 +1,17 @@
 package com.example.backend.dto;
-public record TripSheetOutputDTO(Long id, VehicleDeploymentPlanOutputDTO vehicleDeploymentPlan, LocationDTO[] locations) {
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+public class TripSheetOutputDTO {
+    private Long id;
+    private Date creationDate;
+    private Date lastModifiedDate;
+    private Long version;
+    private VehicleDeploymentPlanOutputDTO vehicleDeploymentPlan;
+    private LocationDTO[] locations;
 }

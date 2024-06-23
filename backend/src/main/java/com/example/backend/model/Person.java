@@ -12,6 +12,7 @@ import org.optaplanner.core.api.domain.variable.PlanningVariable;
 @PlanningEntity
 @Entity
 public class Person extends MetaData {
+    private Long personId;
     @ManyToOne
     private Location startLocation;
     @ManyToOne

@@ -1,48 +1,44 @@
 package com.example.backend.controller;
 
-import com.example.backend.model.VehicleDeploymentPlan;
-import com.example.backend.model.VehicleDeploymentPlanning;
-import com.example.backend.repository.VehicleDeploymentPlanRepository;
-import com.example.backend.repository.VehicleDeploymentPlanningRepository;
+import com.example.backend.dto.VehicleDeploymentPlanOutputDTO;
+import com.example.backend.service.VehicleDeploymentPlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/vehicle-plans")
 public class VehicleDeploymentPlanController {
-    private final VehicleDeploymentPlanRepository planRepository;
-    private final VehicleDeploymentPlanningRepository planningRepository;
+    private final VehicleDeploymentPlanService planService;
 
     @GetMapping
-    public ResponseEntity<List<VehicleDeploymentPlan>> getAllPlans() {
-        List<VehicleDeploymentPlan> plans = planRepository.findByIsActiveTrue();
+    public ResponseEntity<List<VehicleDeploymentPlanOutputDTO>> getAllPlans() {
+        List<VehicleDeploymentPlanOutputDTO> plans = planService.getAllPlans();
         return plans.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(plans);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VehicleDeploymentPlan> getPlanById(@PathVariable Long id) {
-        Optional<VehicleDeploymentPlan> plan = planRepository.findByIdAndIsActiveTrue(id);
-        return plan.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<VehicleDeploymentPlanOutputDTO> getPlanById(@PathVariable Long id) {
+        return planService.getPlanById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/vehicle/{vehicleId}")
-    public ResponseEntity<VehicleDeploymentPlan> getPlanByVehicle(@PathVariable Long vehicleId) {
-        Optional<VehicleDeploymentPlan> plan = planRepository.findByVehicleIdAndIsActiveTrue(vehicleId);
-        return plan.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<VehicleDeploymentPlanOutputDTO> getPlanByVehicle(@PathVariable Long vehicleId) {
+        return planService.getPlanByVehicle(vehicleId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/vehicleDeploymentPlanning/{id}")
-    public ResponseEntity<List<VehicleDeploymentPlan>> getAllPlansByPlanning(@PathVariable Long id) {
-        Optional<VehicleDeploymentPlanning> vehicleDeploymentPlanning = planningRepository.findByIdAndIsActiveTrue(id);
-        if(vehicleDeploymentPlanning.isPresent()) {
-            List<VehicleDeploymentPlan> plans = planRepository.findByVehicleDeploymentPlanningAndIsActiveTrue(vehicleDeploymentPlanning.get());
-            return plans.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(plans);
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<List<VehicleDeploymentPlanOutputDTO>> getAllPlansByPlanning(@PathVariable Long id) {
+        if(!planService.existsPlanning(id))
+            return ResponseEntity.notFound().build();
+        List<VehicleDeploymentPlanOutputDTO> plans = planService.getAllPlansByPlanning(id);
+        return plans.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(plans);
     }
 }

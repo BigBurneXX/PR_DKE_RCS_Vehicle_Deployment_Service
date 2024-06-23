@@ -1,4 +1,13 @@
 package com.example.backend.dto;
 
-public record LocationDTO(Long id, String latitude, String longitude) {
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@Data
+@NoArgsConstructor
+public class LocationDTO {
+    private Long id;
+    private String latitude;
+    private String longitude;
 }

@@ -1,9 +1,11 @@
 <solver>
-    <solutionClass>com.example.VehicleDeploymentPlanning</solutionClass>
-    <entityClass>com.example.Person</entityClass>
+    <solutionClass>com.example.backend.model.VehicleDeploymentPlanning</solutionClass>
+    <entityClass>com.example.backend.model.Person</entityClass>
+    <entityClass>com.example.backend.model.Vehicle</entityClass>
+    <entityClass>com.example.backend.model.VehicleDeploymentPlan</entityClass>
 
     <scoreDirectorFactory>
-        <constraintProviderClass>com.example.VehicleRoutingConstraintProvider</constraintProviderClass>
+        <constraintProviderClass>com.example.backend.model.VehicleRoutingConstraintProvider</constraintProviderClass>
     </scoreDirectorFactory>
 
     <termination>

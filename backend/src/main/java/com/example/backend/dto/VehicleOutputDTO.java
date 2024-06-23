@@ -1,7 +1,20 @@
 package com.example.backend.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
-public record VehicleOutputDTO(Long id, Date creationDate, Date lastModifiedDate, Long vehicleId, int seats,
-                               boolean hasWheelchair, LocationDTO startLocation, LocationDTO endLocation) {
+@Data
+@NoArgsConstructor
+public class VehicleOutputDTO {
+    private Long id;
+    private Date creationDate;
+    private Date lastModifiedDate;
+    private Long version;
+    private Long vehicleId;
+    private int seats;
+    private boolean hasWheelchair;
+    private LocationDTO startLocation;
+    private LocationDTO endLocation;
 }

@@ -12,4 +12,6 @@ public interface ApiRepository<T extends MetaData> extends JpaRepository<T, Long
     List<T> findByIsActiveTrue();
 
     Optional<T> findByIdAndIsActiveTrue(Long id);
+
+    boolean existsByIdAndIsActiveTrue(Long id);
 }

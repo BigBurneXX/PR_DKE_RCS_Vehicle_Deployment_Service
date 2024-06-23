@@ -12,16 +12,15 @@ public class CustomApiRepositoryImpl<T> implements CustomApiRepository<T> {
 
     @Override
     @Transactional
-    public T softDelete(Long entityId, Class<T> entityClass) {
+    public void softDelete(Long entityId, Class<T> entityClass) {
         T entity = entityManager.find(entityClass, entityId);
         if (entity != null) {
             try {
                 entity.getClass().getMethod("setIsActive", boolean.class).invoke(entity, false);
                 entityManager.merge(entity);
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
-        return entity;
     }
 }
