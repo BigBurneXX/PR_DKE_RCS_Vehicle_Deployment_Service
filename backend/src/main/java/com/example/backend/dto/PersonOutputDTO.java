@@ -13,6 +13,8 @@ public class PersonOutputDTO {
     private Date lastModifiedDate;
     private Long version;
     private Long personId;
+    private String firstName;
+    private String lastName;
     private boolean hasWheelchair;
     private LocationDTO startLocation;
     private LocationDTO endLocation;

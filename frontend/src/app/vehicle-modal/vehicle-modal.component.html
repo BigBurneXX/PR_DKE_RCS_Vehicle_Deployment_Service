@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Vehicles</h1>
+<div mat-dialog-content>
+    <ul>
+        <li *ngFor="let vehicle of data.vehicles">{{ vehicle.vehicle_name }}</li>
+    </ul>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+</div>

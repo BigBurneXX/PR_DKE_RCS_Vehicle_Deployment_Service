@@ -1,8 +1,8 @@
 export interface AddressInputDto {
     id: number;
     street: String;
-    houseNo: String;
-    townId: number;
+    house_no: String;
+    town: number;
     latitude: String;
     longitude: String;
 }

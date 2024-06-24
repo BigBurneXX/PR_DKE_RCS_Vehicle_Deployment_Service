@@ -1,0 +1,44 @@
+<div class="container">
+    <h1>Create a new Trip Sheet</h1>
+
+    <h2>Select Locations</h2>
+    <div *ngIf="planError" class="alert alert-danger">
+        Table People currently not reachable.
+    </div>
+    <div class="table-responsive" *ngIf="plan != undefined">
+        <table class="table align-middle text-nowrap">
+            <thead>
+            <tr>
+                <th class="text-dark font-medium fs-4">Select</th>
+                <th class="text-dark font-medium fs-4">ID</th>
+                <th class="text-dark font-medium fs-4">First Name</th>
+                <th class="text-dark font-medium fs-4">Last Name</th>
+                <th class="text-dark font-medium fs-4">Date of Birth</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let person of persons">
+                <td><input type="checkbox" [(ngModel)]="person.selected"></td>
+                <td class="fs-4">{{ person.first_name }}</td>
+                <td class="fs-4">{{ person.last_name }}</td>
+                <td class="fs-4">{{ person.date_of_birth }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="!planError">
+        <h3>Select Locations Visited</h3>
+        <form (ngSubmit)="saveTripSheet()">
+            <div *ngFor="let location of locations">
+                <label>
+                    <input type="checkbox" [(ngModel)]="location.selected" name="location-{{location.id}}">
+                    {{location.latitude}}, {{location.longitude}}
+                </label>
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-success" (click)="saveTripSheet()">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

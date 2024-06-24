@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
-import {VehicleDeploymentPlanService} from "../services/VehicleDeploymentPlanService";
+import {VehicleDeploymentPlanService} from "../services/vehicle-deployment-plan.service";
+import {VehicleDeploymentPlanOutputDto} from "../dtos/VehicleDeploymentPlanOutput.dto";
 
 @Component({
   selector: 'app-vehicle-deployment-plan',
@@ -12,22 +13,22 @@ import {VehicleDeploymentPlanService} from "../services/VehicleDeploymentPlanSer
         NgIf
     ],
   templateUrl: './vehicle-deployment-plan.component.html',
-  styleUrls: ['./vehicle-deployment-plan.component.css']
+  styleUrls: ['./vehicle-deployment-plan.component.scss']
 })
 
 export class VehicleDeploymentPlanComponent implements OnInit {
-    vehicleDeploymentPlans: any[] = [];
+    plans: VehicleDeploymentPlanOutputDto[] = [];
 
     constructor(private vehicleDeploymentPlanService: VehicleDeploymentPlanService) {
     }
 
     ngOnInit() {
-        this.getVehicleDeploymentPlans();
+        this.loadPlans();
     }
 
-    getVehicleDeploymentPlans(): void {
-        this.vehicleDeploymentPlanService.getVehicleDeploymentPlans().subscribe(vehicleDeploymentPlans => {
-            this.vehicleDeploymentPlans = vehicleDeploymentPlans;
+    loadPlans() {
+        this.vehicleDeploymentPlanService.getVehicleDeploymentPlans().subscribe(plans => {
+            this.plans = plans;
         });
     }
 }

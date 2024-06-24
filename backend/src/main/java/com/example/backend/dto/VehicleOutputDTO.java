@@ -13,6 +13,8 @@ public class VehicleOutputDTO {
     private Date lastModifiedDate;
     private Long version;
     private Long vehicleId;
+    private String name;
+    private String type;
     private int seats;
     private boolean canCarryWheelchair;
     private LocationDTO startLocation;

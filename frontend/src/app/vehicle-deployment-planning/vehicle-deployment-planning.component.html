@@ -1,65 +1,33 @@
 <div class="container">
-    <h1>Vehicle Deployment Planning</h1>
-
-    <h2>Select People</h2>
-    <div *ngIf="peopleError" class="alert alert-danger">
-        Table People currently not reachable.
-    </div>
-    <div class="table-responsive" *ngIf="people.length > 0">
-        <table class="table align-middle text-nowrap">
-            <thead>
-            <tr>
-                <th class="text-dark font-medium fs-4">Select</th>
-                <th class="text-dark font-medium fs-4">First Name</th>
-                <th class="text-dark font-medium fs-4">Last Name</th>
-                <th class="text-dark font-medium fs-4">Date of Birth</th>
-                <th class="text-dark font-medium fs-4">Has Wheelchair</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let person of people">
-                <td><input type="checkbox" [(ngModel)]="person.selected"></td>
-                <td class="fs-4">{{ person.first_name }}</td>
-                <td class="fs-4">{{ person.last_name }}</td>
-                <td class="fs-4">{{ person.date_of_birth }}</td>
-                <td>
-                    <span [class]="'p-2 rounded-circle d-inline-block ms-3 ' + (person.has_wheelchair ? 'bg-success' : 'bg-danger')"></span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <h2>Select Vehicles</h2>
-    <div *ngIf="vehiclesError" class="alert alert-danger">
-        Table Vehicles currently not reachable.
-    </div>
-    <div class="table-responsive" *ngIf="vehicles.length > 0">
-        <table class="table align-middle text-nowrap">
-            <thead>
-            <tr>
-                <th class="text-dark font-medium fs-4">Select</th>
-                <th class="text-dark font-medium fs-4">Name</th>
-                <th class="text-dark font-medium fs-4">Type</th>
-                <th class="text-dark font-medium fs-4">Seats</th>
-                <th class="text-dark font-medium fs-4">Has Wheelchair</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let vehicle of vehicles">
-                <td><input type="checkbox" [(ngModel)]="vehicle.selected"></td>
-                <td class="fs-4">{{ vehicle.vehicle_type }}</td>
-                <td class="fs-4">{{ vehicle.vehicle_name }}</td>
-                <td class="fs-4">{{ vehicle.seats }}</td>
-                <td>
-                    <span [class]="'p-2 rounded-circle d-inline-block ms-3 ' + (vehicle.wheelchair == 'Y' ? 'bg-success' : 'bg-danger')"></span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="mt-3">
-        <button type="submit" class="btn btn-success" (click)="savePlanning()">Save</button>
-    </div>
+<h1>Vehicle Deployment Plannings</h1>
+<div class="table-responsive">
+    <table class="table align-middle text-nowrap">
+        <thead>
+        <tr>
+            <th class="text-dark font-medium fs-4">ID</th>
+            <th class="text-dark font-medium fs-4">Creation Date</th>
+            <th class="text-dark font-medium fs-4">Last Modified Date</th>
+            <th class="text-dark font-medium fs-4">Version</th>
+            <th class="text-dark font-medium fs-4">Persons</th>
+            <th class="text-dark font-medium fs-4">Vehicles</th>
+            <th class="text-dark font-medium fs-4">Plans</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let planning of plannings">
+            <td class="fs-4">{{ planning.id }}</td>
+            <td class="fs-4">{{ planning.creationDate }}</td>
+            <td class="fs-4">{{ planning.lastModifiedDate }}</td>
+            <td class="fs-4">{{ planning.version }}</td>
+            <td class="fs-4">
+                <button (click)="openPersonModal(planning.persons)" class="btn btn-link">View persons</button>
+            </td>
+            <td class="fs-4">
+                <button (click)="openVehicleModal(planning.vehicles)" class="btn btn-link">View vehicles</button>
+            </td>
+            <td class="fs-4">View plans</td> <!-- should lead to a new page that show all plans -->
+        </tr>
+        </tbody>
+    </table>
+</div>
 </div>

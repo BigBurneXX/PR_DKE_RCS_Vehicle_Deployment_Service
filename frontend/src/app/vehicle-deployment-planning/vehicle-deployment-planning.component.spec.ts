@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VehicleDeploymentPlanningComponent } from './vehicle-deployment-planning.component';
 
-describe('VehicleDeploymentPlanningComponent', () => {
+describe('VehicleDeploymentPlanningListComponent', () => {
   let component: VehicleDeploymentPlanningComponent;
   let fixture: ComponentFixture<VehicleDeploymentPlanningComponent>;
 
@@ -11,7 +11,7 @@ describe('VehicleDeploymentPlanningComponent', () => {
       imports: [VehicleDeploymentPlanningComponent]
     })
     .compileComponents();
-
+    
     fixture = TestBed.createComponent(VehicleDeploymentPlanningComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

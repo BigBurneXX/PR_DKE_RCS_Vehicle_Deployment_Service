@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TripSheetService } from "../services/TripSheetService";
-import { TripSheet } from "./TripSheet";
+import { TripSheetServices } from "../services/trip-sheet.services";
 import { FormsModule } from "@angular/forms";
 import { NgForOf, NgIf } from "@angular/common";
+import {TripSheetOutputDto} from "../dtos/TripSheetOutput.dto";
 
 @Component({
   standalone: true,
@@ -12,27 +12,19 @@ import { NgForOf, NgIf } from "@angular/common";
     NgForOf,
     FormsModule
   ],
-  styleUrls: ['./trip-sheet.component.css']
+  styleUrls: ['./trip-sheet.component.scss']
 })
 export class TripSheetComponent implements OnInit {
-  newTripSheet: any = TripSheet;
-  tripSheets: any[] = [];
+  tripSheets: TripSheetOutputDto[] = [];
 
-  constructor(private tripSheetService: TripSheetService) {
+  constructor(private tripSheetService: TripSheetServices) {
   }
 
   ngOnInit() {
-    this.getTripSheets();
+    this.loadTripSheets();
   }
 
-  saveTripSheet(): void {
-    this.tripSheetService.postTripSheet(this.newTripSheet).subscribe(() => {
-      console.log('Trip sheet created successfully!');
-      this.getTripSheets();
-    });
-  }
-
-  getTripSheets(): void {
+  loadTripSheets(): void {
     this.tripSheetService.getTripSheets().subscribe(tripSheets => {
       this.tripSheets = tripSheets;
     });

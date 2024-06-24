@@ -12,6 +12,8 @@ import org.optaplanner.core.api.solver.SolverFactory;
 import org.optaplanner.core.config.solver.SolverConfig;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -70,9 +72,16 @@ public class VehicleDeploymentPlanningService {
                     Optional<Person> possPerson = personRepository.findByPersonId(inputPerson.id());
                     Person p = possPerson.orElseGet(Person::new);
                     p.setPersonId(inputPerson.id());
-                    p.setStartLocation(locationRepository.findByAddressId(inputPerson.startAddress()).orElseThrow());
-                    p.setEndLocation(locationRepository.findByAddressId(inputPerson.targetAddress()).orElseThrow());
-                    p.setHasWheelchair(inputPerson.hasWheelchair());
+                    p.setFirstName(inputPerson.first_name());
+                    p.setLastName(inputPerson.last_name());
+                    try {
+                        p.setDateOfBirth(DateFormat.getInstance().parse(inputPerson.date_of_birth()));
+                    } catch (ParseException e) {
+                        System.out.println("An error occurred when attempting to set date of birth for " + inputPerson.id());
+                    }
+                    p.setStartLocation(locationRepository.findByAddressId(inputPerson.start_address()).orElseThrow());
+                    p.setEndLocation(locationRepository.findByAddressId(inputPerson.target_address()).orElseThrow());
+                    p.setHasWheelchair(inputPerson.has_wheelchair());
                     return personRepository.save(p);
                 }).collect(Collectors.toSet());
     }
@@ -83,10 +92,12 @@ public class VehicleDeploymentPlanningService {
                     Optional<Vehicle> possVehicle = vehicleRepository.findByVehicleId(inputVehicle.id());
                     Vehicle v = possVehicle.orElseGet(Vehicle::new);
                     v.setVehicleId(inputVehicle.id());
+                    v.setName(inputVehicle.vehicle_name());
+                    v.setType(inputVehicle.vehicle_type());
                     v.setSeats(Math.toIntExact(inputVehicle.seats()));
                     v.setCanCarryWheelchair("Y".equals(inputVehicle.wheelchair()));
-                    v.setStartLocation(createLocation(inputVehicle.startCoordinates()));
-                    v.setEndLocation(createLocation(inputVehicle.endCoordinates()));
+                    v.setStartLocation(createLocation(inputVehicle.start_coordinates()));
+                    v.setEndLocation(createLocation(inputVehicle.end_coordinates()));
                     return vehicleRepository.save(v);
                 }).collect(Collectors.toSet());
     }

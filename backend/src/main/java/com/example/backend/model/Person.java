@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
 import org.optaplanner.core.api.domain.variable.PlanningVariable;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,6 +17,9 @@ import org.optaplanner.core.api.domain.variable.PlanningVariable;
 @Entity
 public class Person extends MetaData {
     private Long personId;
+    private String firstName;
+    private String lastName;
+    private Date dateOfBirth;
     private boolean hasWheelchair = false;
     @ManyToOne
     private Location startLocation;

@@ -9,8 +9,8 @@ const routes: Routes = [
   {
     path: "",
     data: {
-      title: "VehicleDto Deployment Plan",
-      urls: [{ title: "VehicleDto Deployment Plan", url: "/vehicle-deployment-plans" }, { title: "VehicleDto Deployment Plan" }],
+      title: "Vehicle Deployment Plan",
+      urls: [{ title: "Vehicle Deployment Plan", url: "/vehicle-deployment-plans" }, { title: "Vehicle Deployment Plan" }],
     },
     component: VehicleDeploymentPlanComponent,
   },

@@ -1,37 +1,31 @@
 <div class="container">
     <h1>Trip Sheets</h1>
-    <!--
-  <h2>Add New Trip Sheet</h2>
-  <form (submit)="saveTripSheet()">
-    <div class="form-group">
-      <label for="vehicleDeploymentPlanId">Vehicle Deployment Plan ID:</label>
-      <input type="number" class="form-control" id="vehicleDeploymentPlanId" [(ngModel)]="newTripSheet.vehicleDeploymentPlanId" name="vehicleDeploymentPlanId" required>
+    <div class="table-responsive">
+        <table class="table align-middle text-nowrap">
+            <thead>
+            <tr>
+                <th class="text-dark font-medium fs-4">ID</th>
+                <th class="text-dark font-medium fs-4">Creation Date</th>
+                <th class="text-dark font-medium fs-4">Last Modified Date</th>
+                <th class="text-dark font-medium fs-4">Version</th>
+                <th class="text-dark font-medium fs-4">Vehicle</th>
+                <th class="text-dark font-medium fs-4">Persons</th>
+                <th class="text-dark font-medium fs-4">Route</th>
+                <th class="text-dark font-medium fs-4">Plan</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let tripSheet of tripSheets">
+                <td class="fs-4">{{ tripSheet.id }}</td>
+                <td class="fs-4">{{ tripSheet.creationDate }}</td>
+                <td class="fs-4">{{ tripSheet.lastModifiedDate }}</td>
+                <td class="fs-4">{{ tripSheet.version }}</td>
+                <td class="fs-4">{{ tripSheet.vehicle }}</td>
+                <td class="fs-4">{{ tripSheet.persons }}</td>
+                <td class="fs-4">{{ tripSheet.locations }}</td>
+                <td class="fs-4">{{ tripSheet.vehicleDeploymentPlanId }}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <div class="form-group">
-      <label for="visitStatus">Visit Status:</label>
-      <input type="text" class="form-control" id="visitStatus" [(ngModel)]="newTripSheet.visitStatus" name="visitStatus" required>
-    </div>
-    <button type="submit" class="btn btn-success">Save</button>
-  </form>
--->
-  <!-- Display trip sheets -->
-  <div *ngIf="tripSheets && tripSheets.length">
-    <h3>Trip Sheets</h3>
-    <table class="table">
-      <thead>
-      <tr>
-       <th>ID</th>
-       <th>VehicleDto Deployment Plan ID</th>
-        <th>Visit Status</th>
-      </tr>
-      </thead>
-     <tbody>
-      <tr *ngFor="let tripSheet of tripSheets">
-        <td>{{ tripSheet.id }}</td>
-        <td>{{ tripSheet.vehicleDeploymentPlanId }}</td>
-        <td>{{ tripSheet.visitStatus }}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
 </div>

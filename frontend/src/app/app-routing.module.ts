@@ -33,8 +33,12 @@ export const AppRoutes: Routes = [
         loadChildren: () => import('./vehicle-deployment-planning/vehicle-deployment-planning.module').then(m => m.VehicleDeploymentPlanningModule)
       },
       {
+        path: 'new-vehicle-deployment-planning',
+        loadChildren: () => import('./vehicle-deployment-planning-new/new-vehicle-deployment-planning.module').then(m => m.NewVehicleDeploymentPlanningModule)
+      },
+      {
         path: 'new-trip-sheet',
-        loadChildren: () => import('./new-trip-sheet/new-trip-sheet.module').then(m => m.NewTripSheetModule)
+        loadChildren: () => import('./trip-sheet-new/new-trip-sheet.module').then(m => m.NewTripSheetModule)
       }
     ]
   },

@@ -3,16 +3,16 @@ import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Routes, RouterModule } from "@angular/router";
 
-import {TripSheetComponent} from "./trip-sheet.component";
+import {NewVehicleDeploymentPlanningComponent} from "./new-vehicle-deployment-planning.component";
 
 const routes: Routes = [
   {
     path: "",
     data: {
-      title: "TripSheet",
-      urls: [{ title: "TripSheet", url: "/trip-sheets" }, { title: "TripSheet" }],
+      title: "Create new Vehicle Deployment Planning",
+      urls: [{ title: "Vehicle Deployment Planning", url: "/new-vehicle-deployment-plannings" }, { title: "Vehicle Deployment Planning" }],
     },
-    component: TripSheetComponent,
+    component: NewVehicleDeploymentPlanningComponent,
   },
 ];
 
@@ -26,4 +26,4 @@ const routes: Routes = [
   declarations: [
   ],
 })
-export class TripSheetModule {}
+export class NewVehicleDeploymentPlanningModule {}

@@ -17,6 +17,7 @@ import { AppRoutes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './shared/spinner.component';
 import {RouteMapComponent} from "./component/route-map/route-map.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import {RouteMapComponent} from "./component/route-map/route-map.component";
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+        MatDialogModule,
         NgbModule,
         RouterModule.forRoot(AppRoutes, {useHash: false}),
         FullComponent,

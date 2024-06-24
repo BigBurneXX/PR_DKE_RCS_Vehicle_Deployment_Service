@@ -1,65 +1,48 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import {PersonInputDto} from "../component/dtos/PersonInput.dto";
-import {VehicleInputDto} from "../component/dtos/VehicleInput.dto";
-import {VehicleDeploymentPlanningInputDto} from "../component/dtos/VehicleDeploymentPlanningInput.dto";
-import {VehicleDeploymentPlanDto} from "../new-trip-sheet/VehicleDeploymentPlan.dto";
-import {AddressInputDto} from "../component/dtos/AddressInput.dto";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {forkJoin, map, Observable} from 'rxjs';
+import {PersonInputDto} from "../dtos/PersonInput.dto";
+import {VehicleInputDto} from "../dtos/VehicleInput.dto";
+import {VehicleDeploymentPlanningInputDto} from "../dtos/VehicleDeploymentPlanningInput.dto";
+import {AddressInputDto} from "../dtos/AddressInput.dto";
+import {VehicleDeploymentPlanningOutputDto} from "../dtos/VehicleDeploymentPlanningOutput.dto";
 
 @Injectable({
     providedIn: 'root'
 })
 export class VehicleDeploymentPlanningService {
-    private peopleUrl = 'http://localhost:8080/people';
-    private vehicleUrl = 'http://localhost:8081/transport-services/vehicles';
-    private backendUrl = 'http://localhost:8082/';
+    private baseDataUrl = 'http://localhost:8080';
+    private transportServicePortalUrl = 'http://localhost:8081';
+    private backendUrl = 'http://localhost:8082/vehicle-plannings';
 
     constructor(private http: HttpClient) { }
 
-    getPeople(filters?: any): Observable<PersonInputDto[]> {
-        let params = new HttpParams();
-        if (filters) {
-            Object.keys(filters).forEach(key => {
-                if (filters[key] !== null && filters[key] !== undefined) {
-                    params = params.set(key, filters[key]);
-                }
-            });
-        }
-        return this.http.get<PersonInputDto[]>(this.peopleUrl, { params });
+    getPeople(): Observable<PersonInputDto[]> {
+        return this.http.get<PersonInputDto[]>(`${this.baseDataUrl}/people`);
     }
 
-    getVehicles(filters?: any): Observable<VehicleInputDto[]> {
-        let params = new HttpParams();
-        if (filters) {
-            Object.keys(filters).forEach(key => {
-                if (filters[key] !== null && filters[key] !== undefined) {
-                    params = params.set(key, filters[key]);
-                }
-            });
-        }
-        return this.http.get<VehicleInputDto[]>(this.vehicleUrl, { params });
+    getVehicles(): Observable<VehicleInputDto[]> {
+        return this.http.get<VehicleInputDto[]>(`${this.transportServicePortalUrl}/transport-services/vehicles`);
     }
 
-    getAddresses(filters?: any): Observable<AddressInputDto[]> {
-        for(PersonDto person: persons) {
-            this.http.get()
-        }
+    getAddresses(persons: PersonInputDto[]): Observable<AddressInputDto[]> {
+        const addressRequests: Observable<AddressInputDto[]>[] = persons.map(person =>
+            forkJoin([
+                this.http.get<AddressInputDto>(`${this.baseDataUrl}/addresses/${person.start_address}`),
+                this.http.get<AddressInputDto>(`${this.baseDataUrl}/addresses/${person.target_address}`)
+            ])
+        );
+
+        return forkJoin(addressRequests).pipe(
+            map((results: AddressInputDto[][]) => results.flat())  // Flatten the array of arrays
+        );
     }
 
     postVehicleDeploymentPlanning(data: VehicleDeploymentPlanningInputDto): Observable<any> {
         return this.http.post<VehicleDeploymentPlanningInputDto>(this.backendUrl, data);
     }
 
-    getVehicleDeploymentPlans(filters?: any): Observable<VehicleDeploymentPlanDto[]> {
-        let params = new HttpParams();
-        if (filters) {
-            Object.keys(filters).forEach(key => {
-                if (filters[key] !== null && filters[key] !== undefined) {
-                    params = params.set(key, filters[key]);
-                }
-            });
-        }
-        return this.http.get<VehicleDeploymentPlanDto[]>(`${this.backendUrl}vehicle-deployment-plans`, { params });
+    getVehicleDeploymentPlannings(): Observable<VehicleDeploymentPlanningOutputDto[]> {
+        return this.http.get<VehicleDeploymentPlanningOutputDto[]>(this.backendUrl);
     }
 }

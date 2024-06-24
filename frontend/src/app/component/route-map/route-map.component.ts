@@ -115,7 +115,7 @@ export class RouteMapComponent implements AfterViewInit {
       const bounds = geoJsonLayers.reduce((acc, layer) => acc.extend(layer.getBounds()), L.latLngBounds([]));
       this.map.fitBounds(bounds);
     } catch (error) {
-      console.error('Error fetching routes', error);
+      console.error();
     }
   }
 }

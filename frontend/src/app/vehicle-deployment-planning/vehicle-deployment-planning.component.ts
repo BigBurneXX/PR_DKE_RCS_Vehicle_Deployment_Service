@@ -1,61 +1,57 @@
 import {Component, OnInit} from '@angular/core';
-import { FormsModule } from "@angular/forms";
-import { NgForOf, NgIf } from "@angular/common";
-import { VehicleDeploymentPlanningService } from "../services/vehicle-deployment-planning.service";
-import {VehicleDeploymentPlanningInputDto} from "../component/dtos/VehicleDeploymentPlanningInput.dto";
-import {PersonInputDto} from "../component/dtos/PersonInput.dto";
-import {VehicleInputDto} from "../component/dtos/VehicleInput.dto";
+import {VehicleDeploymentPlanningService} from "../services/vehicle-deployment-planning.service";
+import {VehicleDeploymentPlanningOutputDto} from "../dtos/VehicleDeploymentPlanningOutput.dto";
+import {NgForOf, NgIf} from "@angular/common";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatDialog} from "@angular/material/dialog";
+import {PersonModalComponent} from "../person-modal/person-modal.component";
+import {VehicleModalComponent} from "../vehicle-modal/vehicle-modal.component";
+import {Router} from "@angular/router";
+import {PersonOutputDto} from "../dtos/PersonOutput.dto";
+import {VehicleOutputDto} from "../dtos/VehicleOutput.dto";
 
 @Component({
-  selector: 'app-vehicle-deployment-planning',
+  selector: 'app-vehicle-deployment-planning-list',
   standalone: true,
   imports: [
-    FormsModule,
     NgForOf,
-    NgIf
+    NgIf,
+    ReactiveFormsModule
   ],
   templateUrl: './vehicle-deployment-planning.component.html',
-  styleUrls: ['./vehicle-deployment-planning.component.css']
+  styleUrl: './vehicle-deployment-planning.component.scss'
 })
 export class VehicleDeploymentPlanningComponent implements OnInit {
-  people: PersonInputDto[] = [];
-  vehicles: VehicleInputDto[] = [];
-  peopleError: boolean = false;
-  vehiclesError: boolean = false;
-  vehicleDeploymentPlanning: VehicleDeploymentPlanningInputDto = new VehicleDeploymentPlanningInputDto();
-
-  constructor(private vehicleDeploymentPlanningService: VehicleDeploymentPlanningService) { }
+  plannings: VehicleDeploymentPlanningOutputDto[] = [];
+  constructor(private vehicleDeploymentPlanningService: VehicleDeploymentPlanningService,
+              private dialog: MatDialog,
+              private router: Router) { }
 
   ngOnInit() {
-    this.loadPeople();
-    this.loadVehicles();
+    this.loadVehicleDeploymentPlannings();
   }
 
-  loadPeople() {
-    this.vehicleDeploymentPlanningService.getPeople().subscribe(
-        data => {
-            this.people = data;
-        },
-        error => {
-          this.peopleError = true;
-        });
+  loadVehicleDeploymentPlannings() {
+    this.vehicleDeploymentPlanningService.getVehicleDeploymentPlannings().subscribe({
+      next: (data) => {
+        this.plannings = data;
+      }
+    })
   }
 
-  loadVehicles(){
-    this.vehicleDeploymentPlanningService.getVehicles().subscribe(
-        data => {
-            this.vehicles = data;
-        },
-        error => {
-          this.vehiclesError = true;
-        });
-  }
-
-  savePlanning() {
-    this.vehicleDeploymentPlanning.persons = this.people.filter(person => person.selected);
-    this.vehicleDeploymentPlanning.vehicles = this.vehicles.filter(vehicle => vehicle.selected);
-    this.vehicleDeploymentPlanningService.postVehicleDeploymentPlanning(this.vehicleDeploymentPlanning).subscribe(response => {
-      console.log('Vehicle Deployment Planning saved successfully:', response);
+  openPersonModal(persons: PersonOutputDto[]): void {
+    this.dialog.open(PersonModalComponent, {
+      data: { persons }
     });
+  }
+
+  openVehicleModal(vehicles: VehicleOutputDto[]): void {
+    this.dialog.open(VehicleModalComponent, {
+      data: { vehicles }
+    });
+  }
+
+  navigateToPlans(): void {
+    this.router.navigate(['/plans']);
   }
 }
