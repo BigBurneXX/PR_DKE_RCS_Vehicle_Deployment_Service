@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PersonDto } from '../vehicle-deployment-planning/Person.dto';
-import { VehicleDto } from "../vehicle-deployment-planning/Vehicle.dto";
-import {VehicleDeploymentPlanningInputDto} from "../vehicle-deployment-planning/VehicleDeploymentPlanningInput.dto";
+import {PersonInputDto} from "../component/dtos/PersonInput.dto";
+import {VehicleInputDto} from "../component/dtos/VehicleInput.dto";
+import {VehicleDeploymentPlanningInputDto} from "../component/dtos/VehicleDeploymentPlanningInput.dto";
 import {VehicleDeploymentPlanDto} from "../new-trip-sheet/VehicleDeploymentPlan.dto";
+import {AddressInputDto} from "../component/dtos/AddressInput.dto";
 
 @Injectable({
     providedIn: 'root'
 })
 export class VehicleDeploymentPlanningService {
-    private peopleUrl = 'http://localhost:8080/peopleRead';
-    private vehicleUrl = 'http://localhost:8081/vehicles';
+    private peopleUrl = 'http://localhost:8080/people';
+    private vehicleUrl = 'http://localhost:8081/transport-services/vehicles';
     private backendUrl = 'http://localhost:8082/';
 
     constructor(private http: HttpClient) { }
 
-    getPeople(filters?: any): Observable<PersonDto[]> {
+    getPeople(filters?: any): Observable<PersonInputDto[]> {
         let params = new HttpParams();
         if (filters) {
             Object.keys(filters).forEach(key => {
@@ -25,10 +26,10 @@ export class VehicleDeploymentPlanningService {
                 }
             });
         }
-        return this.http.get<PersonDto[]>(this.peopleUrl, { params });
+        return this.http.get<PersonInputDto[]>(this.peopleUrl, { params });
     }
 
-    getVehicles(filters?: any): Observable<VehicleDto[]> {
+    getVehicles(filters?: any): Observable<VehicleInputDto[]> {
         let params = new HttpParams();
         if (filters) {
             Object.keys(filters).forEach(key => {
@@ -37,7 +38,13 @@ export class VehicleDeploymentPlanningService {
                 }
             });
         }
-        return this.http.get<VehicleDto[]>(this.vehicleUrl, { params });
+        return this.http.get<VehicleInputDto[]>(this.vehicleUrl, { params });
+    }
+
+    getAddresses(filters?: any): Observable<AddressInputDto[]> {
+        for(PersonDto person: persons) {
+            this.http.get()
+        }
     }
 
     postVehicleDeploymentPlanning(data: VehicleDeploymentPlanningInputDto): Observable<any> {

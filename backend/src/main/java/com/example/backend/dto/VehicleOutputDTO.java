@@ -14,7 +14,7 @@ public class VehicleOutputDTO {
     private Long version;
     private Long vehicleId;
     private int seats;
-    private boolean hasWheelchair;
+    private boolean canCarryWheelchair;
     private LocationDTO startLocation;
     private LocationDTO endLocation;
 }

@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { NgForOf, NgIf } from "@angular/common";
 import { VehicleDeploymentPlanningService } from "../services/vehicle-deployment-planning.service";
-import { PersonDto } from "./Person.dto";
-import { VehicleDto } from "./Vehicle.dto";
-import { VehicleDeploymentPlanningInput, VehicleDeploymentPlanningInputDto } from "./VehicleDeploymentPlanningInput.dto";
+import {VehicleDeploymentPlanningInputDto} from "../component/dtos/VehicleDeploymentPlanningInput.dto";
+import {PersonInputDto} from "../component/dtos/PersonInput.dto";
+import {VehicleInputDto} from "../component/dtos/VehicleInput.dto";
 
 @Component({
   selector: 'app-vehicle-deployment-planning',
@@ -18,11 +18,11 @@ import { VehicleDeploymentPlanningInput, VehicleDeploymentPlanningInputDto } fro
   styleUrls: ['./vehicle-deployment-planning.component.css']
 })
 export class VehicleDeploymentPlanningComponent implements OnInit {
-  people: PersonDto[] = [];
-  vehicles: VehicleDto[] = [];
+  people: PersonInputDto[] = [];
+  vehicles: VehicleInputDto[] = [];
   peopleError: boolean = false;
   vehiclesError: boolean = false;
-  vehicleDeploymentPlanning: VehicleDeploymentPlanningInputDto = new VehicleDeploymentPlanningInput();
+  vehicleDeploymentPlanning: VehicleDeploymentPlanningInputDto = new VehicleDeploymentPlanningInputDto();
 
   constructor(private vehicleDeploymentPlanningService: VehicleDeploymentPlanningService) { }
 

@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -12,6 +14,8 @@ public class TripSheetOutputDTO {
     private Date creationDate;
     private Date lastModifiedDate;
     private Long version;
-    private VehicleDeploymentPlanOutputDTO vehicleDeploymentPlan;
-    private LocationDTO[] locations;
+    private VehicleOutputDTO vehicle;
+    private Set<PersonOutputDTO> persons;
+    private List<LocationDTO> locations;
+    private Long vehicleDeploymentPlanId;
 }

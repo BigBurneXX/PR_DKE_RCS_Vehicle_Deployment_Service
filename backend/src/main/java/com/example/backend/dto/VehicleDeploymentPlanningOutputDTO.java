@@ -13,7 +13,7 @@ public class VehicleDeploymentPlanningOutputDTO {
     private Date creationDate;
     private Date lastModifiedDate;
     private Long version;
-    private Set<PersonOutputDTO> persons;
     private Set<VehicleOutputDTO> vehicles;
+    private Set<PersonOutputDTO> persons;
     private Set<VehicleDeploymentPlanOutputDTO> plans;
 }
