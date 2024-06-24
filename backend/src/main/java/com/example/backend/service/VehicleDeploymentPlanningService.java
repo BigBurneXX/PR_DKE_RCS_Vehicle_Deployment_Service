@@ -13,9 +13,7 @@ import org.optaplanner.core.config.solver.SolverConfig;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,13 +26,34 @@ public class VehicleDeploymentPlanningService {
     private final VehicleDeploymentPlanningRepository planningRepository;
     private final ModelMapper modelMapper;
 
-    public VehicleDeploymentPlanningOutputDTO solve(VehicleDeploymentPlanningInputDTO inputPlanning) {
+    public VehicleDeploymentPlanningOutputDTO createPlanning(VehicleDeploymentPlanningInputDTO inputPlanning) {
         // Create VehicleDeploymentPlanning
         VehicleDeploymentPlanning planning = new VehicleDeploymentPlanning();
         planningRepository.save(planning);
 
-        // Save locations
-        VehicleDeploymentPlanning finalPlanning = planning;
+        // Save locations, persons and vehicles
+        saveLocations(inputPlanning);
+        Set<Person> persons = savePersons(inputPlanning);
+        Set<Vehicle> vehicles = saveVehicles(inputPlanning);
+
+        // Add vehicles and person to planning
+        planning.setVehicles(vehicles);
+        planning.setPersons(persons);
+        //planningRepository.save(planning);
+
+        // It's essential to set the vehicles and persons before solving
+        Set<VehicleDeploymentPlan> plans = solve(planning);
+        planning.setPlans(plans);
+
+        printPlansToConsole(planning.getPlans());
+
+        // Save the solved planning
+        planningRepository.save(planning);
+
+        return modelMapper.map(planning, VehicleDeploymentPlanningOutputDTO.class);
+    }
+
+    private void saveLocations(VehicleDeploymentPlanningInputDTO inputPlanning) {
         for(AddressInputDTO address : inputPlanning.addresses()) {
             Optional<Location> possLocation = locationRepository.findByAddressId(address.id());
             Location l = possLocation.orElseGet(Location::new);
@@ -43,9 +62,10 @@ public class VehicleDeploymentPlanningService {
             l.setLongitude(Double.parseDouble(address.longitude()));
             locationRepository.save(l);
         }
+    }
 
-        // Save persons
-        Set<Person> persons = inputPlanning.persons().stream()
+    private Set<Person> savePersons(VehicleDeploymentPlanningInputDTO inputPlanning) {
+        return inputPlanning.persons().stream()
                 .map(inputPerson -> {
                     Optional<Person> possPerson = personRepository.findByPersonId(inputPerson.id());
                     Person p = possPerson.orElseGet(Person::new);
@@ -53,12 +73,12 @@ public class VehicleDeploymentPlanningService {
                     p.setStartLocation(locationRepository.findByAddressId(inputPerson.startAddress()).orElseThrow());
                     p.setEndLocation(locationRepository.findByAddressId(inputPerson.targetAddress()).orElseThrow());
                     p.setHasWheelchair(inputPerson.hasWheelchair());
-                    p.setVehicleDeploymentPlanning(finalPlanning);
                     return personRepository.save(p);
                 }).collect(Collectors.toSet());
+    }
 
-        // Save vehicles
-        Set<Vehicle> vehicles = inputPlanning.vehicles().stream()
+    private Set<Vehicle> saveVehicles(VehicleDeploymentPlanningInputDTO inputPlanning) {
+        return inputPlanning.vehicles().stream()
                 .map(inputVehicle -> {
                     Optional<Vehicle> possVehicle = vehicleRepository.findByVehicleId(inputVehicle.id());
                     Vehicle v = possVehicle.orElseGet(Vehicle::new);
@@ -67,35 +87,8 @@ public class VehicleDeploymentPlanningService {
                     v.setCanCarryWheelchair("Y".equals(inputVehicle.wheelchair()));
                     v.setStartLocation(createLocation(inputVehicle.startCoordinates()));
                     v.setEndLocation(createLocation(inputVehicle.endCoordinates()));
-                    v.setVehicleDeploymentPlanning(finalPlanning);
                     return vehicleRepository.save(v);
                 }).collect(Collectors.toSet());
-
-        // Create and save VehicleDeploymentPlanning
-        planning.setPersons(persons);
-        planning.setVehicles(vehicles);
-        planning = planningRepository.save(planning);
-
-        // Initiate solverFactory
-        // The solver runs only for 10 seconds on this small dataset.
-        // It's recommended to run for at least 5 minutes ("5m") otherwise.
-        SolverFactory<VehicleDeploymentPlanning> solverFactory = SolverFactory.create(new SolverConfig()
-                .withSolutionClass(VehicleDeploymentPlanning.class)
-                .withEntityClasses(Person.class)
-                .withConstraintProviderClass(VehicleRoutingConstraintProvider.class)
-                // The solver runs only for 10 seconds on this small dataset.
-                // It's recommended to run for at least 5 minutes ("5m") otherwise.
-                .withTerminationSpentLimit(Duration.ofSeconds(10)));
-
-        // Solve the problem
-        Solver<VehicleDeploymentPlanning> solver = solverFactory.buildSolver();
-        VehicleDeploymentPlanning solution = solver.solve(planning);
-
-        // Save the solution
-        planRepository.saveAll(solution.getPlans());
-        planningRepository.save(solution);
-
-        return modelMapper.map(solution, VehicleDeploymentPlanningOutputDTO.class);
     }
 
     private Location createLocation(String coordinates) {
@@ -104,6 +97,57 @@ public class VehicleDeploymentPlanningService {
         location.setLatitude(Double.parseDouble(coordinate[0]));
         location.setLongitude(Double.parseDouble(coordinate[1]));
         return locationRepository.save(location);
+    }
+
+    private Set<VehicleDeploymentPlan> solve(VehicleDeploymentPlanning planning) {
+        // Initiate solverFactory
+        SolverFactory<VehicleDeploymentPlanning> solverFactory = SolverFactory.create(new SolverConfig()
+                .withSolutionClass(VehicleDeploymentPlanning.class)
+                .withEntityClasses(Person.class)
+                .withConstraintProviderClass(VehicleRoutingConstraintProvider.class)
+                // The solver runs only for 5 seconds on this small dataset.
+                // It's recommended to run for at least 5 minutes ("5m") otherwise.
+                .withTerminationSpentLimit(Duration.ofSeconds(5)));
+
+        // Solve the problem
+        Solver<VehicleDeploymentPlanning> solver = solverFactory.buildSolver();
+        VehicleDeploymentPlanning solution = solver.solve(planning);
+
+        // Represents a map where every vehicle is mapped to the persons it should transport
+        Map<Vehicle, List<Person>> vehiclePersonMap = solution.getPersons().stream()
+                .collect(Collectors.groupingBy(Person::getAssignedVehicle));
+        return savePlans(vehiclePersonMap, planning);
+    }
+
+    private Set<VehicleDeploymentPlan> savePlans(Map<Vehicle, List<Person>> vehiclePersonMap,
+                                                       VehicleDeploymentPlanning planning) {
+        Set<VehicleDeploymentPlan> vehiclePlans = new HashSet<>();
+        for (Map.Entry<Vehicle, List<Person>> entry : vehiclePersonMap.entrySet()) {
+            Vehicle vehicle = entry.getKey();
+            Set<Person> assignedPersons = new HashSet<>(entry.getValue());
+            VehicleDeploymentPlan plan = new VehicleDeploymentPlan();
+            plan.setVehicle(vehicle);
+            plan.setPersons(assignedPersons);
+            plan.setVehicleDeploymentPlanning(planning);
+            //vehiclePlan.calculateTotalDistance();
+            plan.generateOptimizedRoute();
+            planRepository.save(plan);
+            vehiclePlans.add(plan);
+        }
+        return vehiclePlans;
+    }
+
+    private void printPlansToConsole(Set<VehicleDeploymentPlan> plans) {
+        for (VehicleDeploymentPlan vehiclePlan : plans) {
+            System.out.println("Vehicle: " + vehiclePlan.getVehicle().getId());
+            System.out.println("Persons: " + vehiclePlan.getPersons().stream().map(person -> String.valueOf(person.getId())).
+                    collect(Collectors.joining(", ")));
+            //System.out.println("Total Distance: " + vehiclePlan.getTotalDistance());
+            System.out.println("Optimized Route: " + vehiclePlan.getLocations().stream()
+                    .map(location -> "(" + location.getLatitude() + ", " + location.getLongitude() + ")")
+                    .collect(Collectors.joining(" -> ")));
+            System.out.println();
+        }
     }
 
     public List<VehicleDeploymentPlanningOutputDTO> getAllPlannings() {

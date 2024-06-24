@@ -1,6 +1,9 @@
 package com.example.backend.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,25 +19,69 @@ import java.util.Set;
 @Entity
 public class VehicleDeploymentPlan extends MetaData{
     @ManyToOne
-    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
-
     @ManyToMany
-    @JoinTable(
-            name = "plan_person",
-            joinColumns = @JoinColumn(name = "plan_id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id")
-    )
     private Set<Person> persons = new HashSet<>();
-
-    @ElementCollection
-    @CollectionTable(name = "plan_route", joinColumns = @JoinColumn(name = "plan_id"))
-    private List<Location> route = new ArrayList<>();
-
-    @OneToMany(mappedBy = "vehicleDeploymentPlan")
+    // locations represents the route
+    @ManyToMany
+    private List<Location> locations = new ArrayList<>();
+    @OneToMany
     private Set<TripSheet> tripSheets = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "vehicleDeploymentPlanning_id")
     private VehicleDeploymentPlanning vehicleDeploymentPlanning;
+
+    public void generateOptimizedRoute() {
+        List<Location> route = new ArrayList<>();
+        route.add(vehicle.getStartLocation());
+
+        List<Person> remainingPersons = new ArrayList<>(persons);
+        List<Person> personsInVehicle = new ArrayList<>();
+        Location currentLocation = vehicle.getStartLocation();
+
+
+        while (!remainingPersons.isEmpty() || !personsInVehicle.isEmpty()) {
+            Location nearestLocation = null;
+            Person nearestPerson = null;
+            boolean isStartLocation = true;
+            double shortestDistance = Double.MAX_VALUE;
+
+            // Check nearest start location of remaining persons
+            for (Person person : remainingPersons) {
+                double distance = currentLocation.getDistanceTo(person.getStartLocation());
+                // as distanceMatrixService is not functioning right now
+                //double distance = distanceMatrixService.getDistanceMatrix(currentLocation, person.getStartLocation()).getDistances()[0][1];
+                if (distance < shortestDistance) {
+                    shortestDistance = distance;
+                    nearestLocation = person.getStartLocation();
+                    nearestPerson = person;
+                }
+            }
+
+            // Check nearest end location of persons in the vehicle
+            for (Person person : personsInVehicle) {
+                double distance = currentLocation.getDistanceTo(person.getEndLocation());
+                // as distanceMatrixService is not functioning right now
+                //double distance = distanceMatrixService.getDistanceMatrix(currentLocation, person.getEndLocation()).getDistances()[0][1];
+                if (distance < shortestDistance) {
+                    shortestDistance = distance;
+                    nearestLocation = person.getEndLocation();
+                    nearestPerson = person;
+                    isStartLocation = false;
+                }
+            }
+
+            route.add(nearestLocation);
+            currentLocation = nearestLocation;
+
+            if (isStartLocation) {
+                remainingPersons.remove(nearestPerson);
+                personsInVehicle.add(nearestPerson);
+            } else {
+                personsInVehicle.remove(nearestPerson);
+            }
+        }
+        route.add(vehicle.getEndLocation());
+        this.locations = route;
+    }
 }

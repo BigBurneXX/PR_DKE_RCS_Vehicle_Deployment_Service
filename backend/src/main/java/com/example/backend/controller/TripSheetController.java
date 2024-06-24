@@ -1,9 +1,10 @@
 package com.example.backend.controller;
 
+import com.example.backend.dto.PersonOutputDTO;
 import com.example.backend.dto.TripSheetOutputDTO;
-import com.example.backend.dto.TripSheet_PersonInputDTO;
 import com.example.backend.service.TripSheetService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,11 +37,10 @@ public class TripSheetController {
     }
 
     @PostMapping("/vehicleDeploymentPlan/{vehicleDeploymentPlanId}")
-    public ResponseEntity<TripSheetOutputDTO> createTripSheet(@PathVariable Long vehicleDeploymentPlanId, @RequestBody Set<TripSheet_PersonInputDTO> persons) {
+    public ResponseEntity<TripSheetOutputDTO> createTripSheet(@PathVariable Long vehicleDeploymentPlanId, @RequestBody Set<PersonOutputDTO> persons) {
         if(persons == null || persons.isEmpty() || !tripSheetService.existsPlan(vehicleDeploymentPlanId))
             return ResponseEntity.badRequest().build();
-        TripSheetOutputDTO tripSheet = tripSheetService.createTripSheet(vehicleDeploymentPlanId, persons);
-        return tripSheet == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(tripSheet);
+        return ResponseEntity.status(HttpStatus.CREATED).body(tripSheetService.createTripSheet(vehicleDeploymentPlanId, persons));
     }
 
     @DeleteMapping("/{id}")

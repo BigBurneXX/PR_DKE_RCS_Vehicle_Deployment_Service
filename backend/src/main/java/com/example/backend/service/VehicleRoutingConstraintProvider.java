@@ -1,5 +1,6 @@
-package com.example.backend.model;
+package com.example.backend.service;
 
+import com.example.backend.model.Person;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.score.stream.ConstraintCollectors;
 import org.optaplanner.core.api.score.stream.ConstraintProvider;

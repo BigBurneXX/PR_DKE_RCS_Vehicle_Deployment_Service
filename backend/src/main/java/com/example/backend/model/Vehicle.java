@@ -1,7 +1,11 @@
 package com.example.backend.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -11,18 +15,8 @@ public class Vehicle extends MetaData {
     private Long vehicleId;
     private int seats;
     private boolean canCarryWheelchair;
-
     @ManyToOne
-    @JoinColumn(name = "start_location_id")
     private Location startLocation;
     @ManyToOne
-    @JoinColumn(name = "end_location_id")
     private Location endLocation;
-
-    @ManyToOne
-    @JoinColumn(name = "vehicleDeploymentPlan_id")
-    private VehicleDeploymentPlan vehicleDeploymentPlan;
-    @ManyToOne
-    @JoinColumn(name = "vehicleDeploymentPlanning_id")
-    private VehicleDeploymentPlanning vehicleDeploymentPlanning;
 }

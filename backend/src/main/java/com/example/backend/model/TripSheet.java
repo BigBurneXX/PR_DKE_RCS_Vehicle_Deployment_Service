@@ -1,7 +1,11 @@
 package com.example.backend.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,21 +18,12 @@ import java.util.Set;
 @Entity
 public class TripSheet extends MetaData{
     @ManyToOne
-    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
-
     @ManyToMany
-    @JoinTable(
-            name = "tripsheet_person",
-            joinColumns = @JoinColumn(name = "tripsheet_id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id")
-    )
     private Set<Person> persons = new HashSet<>();
-    @ElementCollection
-    @CollectionTable(name = "tripsheet_route", joinColumns = @JoinColumn(name = "tripsheet_id"))
-    private List<Location> route = new ArrayList<>();
+    @ManyToMany
+    private List<Location> locations = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name="vehicleDeploymentPlan_id", nullable = false)
     private VehicleDeploymentPlan vehicleDeploymentPlan;
 }

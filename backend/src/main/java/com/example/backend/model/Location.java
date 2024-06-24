@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,19 +15,15 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private double latitude;
     private double longitude;
-
     // as the Data Base Systems needs the address id it will be saved here
     private Long addressId = null;
 
-    @ManyToOne
-    @JoinColumn(name = "tripSheet_id")
-    private TripSheet tripSheet;
-    @ManyToOne
-    @JoinColumn(name = "vehicleDeploymentPlan_id")
-    private VehicleDeploymentPlan vehicleDeploymentPlan;
+    @ManyToMany
+    private Set<TripSheet> tripSheets;
+    @ManyToMany
+    private Set<VehicleDeploymentPlan> vehicleDeploymentPlans;
 
     //Temporarily used for LocationSolve
     public Location(double latitude, double longitude) {

@@ -1,7 +1,7 @@
 package com.example.backend.service;
 
+import com.example.backend.dto.PersonOutputDTO;
 import com.example.backend.dto.TripSheetOutputDTO;
-import com.example.backend.dto.TripSheet_PersonInputDTO;
 import com.example.backend.model.Person;
 import com.example.backend.model.TripSheet;
 import com.example.backend.repository.TripSheetRepository;
@@ -23,7 +23,7 @@ public class TripSheetService {
     private final VehicleDeploymentPlanRepository vehicleDeploymentPlanRepository;
     private final ModelMapper modelMapper;
 
-    public TripSheetOutputDTO createTripSheet(Long vehicleDeploymentPlanId, Set<TripSheet_PersonInputDTO> persons) {
+    public TripSheetOutputDTO createTripSheet(Long vehicleDeploymentPlanId, Set<PersonOutputDTO> persons) {
         return vehicleDeploymentPlanRepository.findByIdAndIsActiveTrue(vehicleDeploymentPlanId)
                 .map(plan -> {
                     TripSheet tripSheet = new TripSheet();

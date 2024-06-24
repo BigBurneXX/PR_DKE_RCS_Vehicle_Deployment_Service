@@ -33,7 +33,7 @@ public class VehicleDeploymentPlanningController {
     public ResponseEntity<VehicleDeploymentPlanningOutputDTO> createPlanning(@RequestBody VehicleDeploymentPlanningInputDTO planning) {
         if (planning == null || planning.addresses().isEmpty() || planning.persons().isEmpty() || planning.vehicles().isEmpty())
             return ResponseEntity.badRequest().build();
-        return ResponseEntity.status(HttpStatus.CREATED).body(planningService.solve(planning));
+        return ResponseEntity.status(HttpStatus.CREATED).body(planningService.createPlanning(planning));
     }
 
     @DeleteMapping("/{id}")

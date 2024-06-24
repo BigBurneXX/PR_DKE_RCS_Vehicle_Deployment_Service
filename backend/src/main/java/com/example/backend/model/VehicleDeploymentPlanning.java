@@ -1,7 +1,11 @@
 package com.example.backend.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
 import org.optaplanner.core.api.domain.solution.PlanningScore;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;
@@ -21,23 +25,13 @@ public class VehicleDeploymentPlanning extends MetaData {
     @ProblemFactCollectionProperty
     @ValueRangeProvider(id = "vehicleRange")
     @ManyToMany
-    @JoinTable(
-            name = "planning_vehicle",
-            joinColumns = @JoinColumn(name = "planning_id"),
-            inverseJoinColumns = @JoinColumn(name = "vehicle_id")
-    )
     private Set<Vehicle> vehicles = new HashSet<>();
 
     @PlanningEntityCollectionProperty
     @ManyToMany
-    @JoinTable(
-            name = "planning_person",
-            joinColumns = @JoinColumn(name = "planning_id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id")
-    )
     private Set<Person> persons = new HashSet<>();
 
-    @OneToMany(mappedBy = "vehicleDeploymentPlanning")
+    @OneToMany
     private Set<VehicleDeploymentPlan> plans = new HashSet<>();
 
     @PlanningScore
