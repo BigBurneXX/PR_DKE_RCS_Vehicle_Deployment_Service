@@ -28,10 +28,9 @@ public class VehicleDeploymentPlanController {
     }
 
     @GetMapping("/vehicle/{vehicleId}")
-    public ResponseEntity<VehicleDeploymentPlanOutputDTO> getPlanByVehicle(@PathVariable Long vehicleId) {
-        return planService.getPlanByVehicle(vehicleId)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<List<VehicleDeploymentPlanOutputDTO>> getPlanByVehicle(@PathVariable Long vehicleId) {
+        List<VehicleDeploymentPlanOutputDTO> plans = planService.getPlansByVehicle(vehicleId);
+        return plans.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(plans);
     }
 
     @GetMapping("/vehicleDeploymentPlanning/{id}")

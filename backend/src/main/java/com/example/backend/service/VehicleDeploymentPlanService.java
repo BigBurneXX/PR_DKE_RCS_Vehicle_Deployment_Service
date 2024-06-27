@@ -30,9 +30,10 @@ public class VehicleDeploymentPlanService {
                 .map(plan -> modelMapper.map(plan, VehicleDeploymentPlanOutputDTO.class));
     }
 
-    public Optional<VehicleDeploymentPlanOutputDTO> getPlanByVehicle(Long vehicleId) {
-        return planRepository.findByVehicleIdAndIsActiveTrue(vehicleId)
-                .map(plan -> modelMapper.map(plan, VehicleDeploymentPlanOutputDTO.class));
+    public List<VehicleDeploymentPlanOutputDTO> getPlansByVehicle(Long vehicleId) {
+        return planRepository.findByVehicleIdAndIsActiveTrue(vehicleId).stream()
+                .map(plan -> modelMapper.map(plan, VehicleDeploymentPlanOutputDTO.class))
+                .collect(Collectors.toList());
     }
 
     public List<VehicleDeploymentPlanOutputDTO> getAllPlansByPlanning(Long id) {

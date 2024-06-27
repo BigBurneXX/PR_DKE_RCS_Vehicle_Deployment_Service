@@ -20,11 +20,6 @@ public class Location {
     // as the Data Base Systems needs the address id it will be saved here
     private Long addressId = null;
 
-    @ManyToMany
-    private Set<TripSheet> tripSheets;
-    @ManyToMany
-    private Set<VehicleDeploymentPlan> vehicleDeploymentPlans;
-
     //Temporarily used for LocationSolve
     public Location(double latitude, double longitude) {
         this.latitude = latitude;
