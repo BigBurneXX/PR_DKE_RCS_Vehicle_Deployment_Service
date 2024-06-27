@@ -19,12 +19,11 @@ import { SpinnerComponent } from './shared/spinner.component';
 import {RouteMapComponent} from "./component/route-map/route-map.component";
 import { MatDialogModule } from "@angular/material/dialog";
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    SpinnerComponent,
-  ],
+    declarations: [
+        AppComponent,
+        SpinnerComponent,
+    ],
     imports: [
         CommonModule,
         BrowserModule,
@@ -39,10 +38,10 @@ import { MatDialogModule } from "@angular/material/dialog";
         SidebarComponent,
         RouteMapComponent,
     ],
-  providers: [
-    { provide: LocationStrategy, useClass: PathLocationStrategy },
-      provideHttpClient()
-  ],
-  bootstrap: [AppComponent]
+    providers: [
+        {provide: LocationStrategy, useClass: PathLocationStrategy},
+        provideHttpClient()
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

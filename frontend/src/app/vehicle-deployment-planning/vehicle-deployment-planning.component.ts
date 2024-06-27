@@ -1,22 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {VehicleDeploymentPlanningService} from "../services/vehicle-deployment-planning.service";
-import {VehicleDeploymentPlanningOutputDto} from "../dtos/VehicleDeploymentPlanningOutput.dto";
-import {NgForOf, NgIf} from "@angular/common";
-import {ReactiveFormsModule} from "@angular/forms";
-import {MatDialog} from "@angular/material/dialog";
-import {PersonModalComponent} from "../person-modal/person-modal.component";
-import {VehicleModalComponent} from "../vehicle-modal/vehicle-modal.component";
-import {Router} from "@angular/router";
-import {PersonOutputDto} from "../dtos/PersonOutput.dto";
-import {VehicleOutputDto} from "../dtos/VehicleOutput.dto";
+import { Component, OnInit } from '@angular/core';
+import { VehicleDeploymentPlanningService } from "../services/vehicle-deployment-planning.service";
+import { VehicleDeploymentPlanningOutputDto } from "../dtos/VehicleDeploymentPlanningOutput.dto";
+import { NgForOf} from "@angular/common";
+import { ReactiveFormsModule } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
+import { PersonModalComponent } from "../person-modal/person-modal.component";
+import { VehicleModalComponent } from "../vehicle-modal/vehicle-modal.component";
+import { Router } from "@angular/router";
+import { PersonOutputDto } from "../dtos/PersonOutput.dto";
+import { VehicleOutputDto } from "../dtos/VehicleOutput.dto";
+import { CustomDatePipe } from "../shared/CustomDatePipe";
 
 @Component({
   selector: 'app-vehicle-deployment-planning-list',
   standalone: true,
   imports: [
-    NgForOf,
-    NgIf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CustomDatePipe,
+    NgForOf
   ],
   templateUrl: './vehicle-deployment-planning.component.html',
   styleUrl: './vehicle-deployment-planning.component.scss'
