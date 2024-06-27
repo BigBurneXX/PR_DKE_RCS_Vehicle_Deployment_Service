@@ -6,6 +6,8 @@ export interface VehicleOutputDto {
     lastModifiedDate: Date;
     version: number;
     vehicleId: number;
+    name: string;
+    type: string;
     seats: number;
     canCarryWheelchair: boolean;
     startLocation: LocationDto;

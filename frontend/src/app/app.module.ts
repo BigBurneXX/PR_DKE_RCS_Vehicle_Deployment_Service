@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -17,7 +17,7 @@ import { AppRoutes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './shared/spinner.component';
 import {RouteMapComponent} from "./component/route-map/route-map.component";
-import {MatDialogModule} from "@angular/material/dialog";
+import { MatDialogModule } from "@angular/material/dialog";
 
 
 @NgModule({
@@ -31,7 +31,6 @@ import {MatDialogModule} from "@angular/material/dialog";
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule,
         MatDialogModule,
         NgbModule,
         RouterModule.forRoot(AppRoutes, {useHash: false}),
@@ -41,7 +40,8 @@ import {MatDialogModule} from "@angular/material/dialog";
         RouteMapComponent,
     ],
   providers: [
-    { provide: LocationStrategy, useClass: PathLocationStrategy }
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
+      provideHttpClient()
   ],
   bootstrap: [AppComponent]
 })

@@ -6,9 +6,9 @@ import {
   MatDialogContent,
   MatDialogTitle
 } from "@angular/material/dialog";
-import {VehicleInputDto} from "../dtos/VehicleInput.dto";
 import {NgForOf} from "@angular/common";
 import {MatButton} from "@angular/material/button";
+import {VehicleOutputDto} from "../dtos/VehicleOutput.dto";
 
 @Component({
   selector: 'app-vehicle-modal',
@@ -25,5 +25,5 @@ import {MatButton} from "@angular/material/button";
   styleUrl: './vehicle-modal.component.scss'
 })
 export class VehicleModalComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { vehicles: VehicleInputDto[] }) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { vehicles: VehicleOutputDto[] }) {}
 }

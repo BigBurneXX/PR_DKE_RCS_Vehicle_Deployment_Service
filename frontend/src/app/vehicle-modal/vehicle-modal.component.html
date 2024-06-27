@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Vehicles</h1>
 <div mat-dialog-content>
     <ul>
-        <li *ngFor="let vehicle of data.vehicles">{{ vehicle.vehicle_name }}</li>
+        <li *ngFor="let vehicle of data.vehicles">{{ vehicle.name }}, {{ vehicle.type }}</li>
     </ul>
 </div>
 <div mat-dialog-actions>

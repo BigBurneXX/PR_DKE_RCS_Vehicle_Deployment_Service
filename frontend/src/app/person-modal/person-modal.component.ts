@@ -6,9 +6,9 @@ import {
   MatDialogContent,
   MatDialogTitle
 } from '@angular/material/dialog';
-import {PersonInputDto} from "../dtos/PersonInput.dto";
 import {MatButton} from "@angular/material/button";
 import {NgForOf} from "@angular/common";
+import {PersonOutputDto} from "../dtos/PersonOutput.dto";
 
 @Component({
   selector: 'app-person-modal',
@@ -25,5 +25,5 @@ import {NgForOf} from "@angular/common";
   styleUrl: './person-modal.component.scss'
 })
 export class PersonModalComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { persons: PersonInputDto[] }) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { persons: PersonOutputDto[] }) {}
 }
