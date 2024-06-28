@@ -17,8 +17,6 @@ import java.util.Date;
 @Entity
 public class Person extends MetaData {
     private Long personId;
-    private String firstName;
-    private String lastName;
     private Date dateOfBirth;
     private boolean hasWheelchair = false;
     @ManyToOne

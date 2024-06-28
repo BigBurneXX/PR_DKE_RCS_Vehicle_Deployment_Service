@@ -10,6 +10,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class VehicleDeploymentPlanOutputDTO {
     private Long id;
+    private String name;
     private Date creationDate;
     private Date lastModifiedDate;
     private Long version;

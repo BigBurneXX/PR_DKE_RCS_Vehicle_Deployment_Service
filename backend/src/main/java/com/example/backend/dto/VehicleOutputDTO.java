@@ -9,11 +9,11 @@ import java.util.Date;
 @NoArgsConstructor
 public class VehicleOutputDTO {
     private Long id;
+    private String name;
     private Date creationDate;
     private Date lastModifiedDate;
     private Long version;
     private Long vehicleId;
-    private String name;
     private String type;
     private int seats;
     private boolean canCarryWheelchair;

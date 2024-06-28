@@ -16,7 +16,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
-public class TripSheet extends MetaData{
+public class TripSheet extends MetaData {
     @ManyToOne
     private Vehicle vehicle;
     @ManyToMany

@@ -17,7 +17,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
-public class VehicleDeploymentPlan extends MetaData{
+public class VehicleDeploymentPlan extends MetaData {
     @ManyToOne
     private Vehicle vehicle;
     @ManyToMany

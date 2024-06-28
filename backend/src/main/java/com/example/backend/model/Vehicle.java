@@ -13,7 +13,6 @@ import lombok.Setter;
 @Entity
 public class Vehicle extends MetaData {
     private Long vehicleId;
-    private String name;
     private String type;
     private int seats;
     private boolean canCarryWheelchair;

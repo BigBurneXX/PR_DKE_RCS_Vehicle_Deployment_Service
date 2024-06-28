@@ -30,8 +30,10 @@ public class VehicleDeploymentPlanningService {
 
     public VehicleDeploymentPlanningOutputDTO createPlanning(VehicleDeploymentPlanningInputDTO inputPlanning) {
         // Create VehicleDeploymentPlanning
-        VehicleDeploymentPlanning planning = new VehicleDeploymentPlanning();
-        planningRepository.save(planning);
+        VehicleDeploymentPlanning planning = planningRepository.save(new VehicleDeploymentPlanning());
+
+        // Set the name
+        planning.setName(inputPlanning.name() == null ? "Planning_" + planning.getId() : inputPlanning.name());
 
         // Save locations, persons and vehicles
         saveLocations(inputPlanning);
@@ -41,7 +43,6 @@ public class VehicleDeploymentPlanningService {
         // Add vehicles and person to planning
         planning.setVehicles(vehicles);
         planning.setPersons(persons);
-        //planningRepository.save(planning);
 
         // It's essential to set the vehicles and persons before solving
         Set<VehicleDeploymentPlan> plans = solve(planning);
@@ -72,8 +73,7 @@ public class VehicleDeploymentPlanningService {
                     Optional<Person> possPerson = personRepository.findByPersonId(inputPerson.id());
                     Person p = possPerson.orElseGet(Person::new);
                     p.setPersonId(inputPerson.id());
-                    p.setFirstName(inputPerson.first_name());
-                    p.setLastName(inputPerson.last_name());
+                    p.setName(inputPerson.first_name() + " " + inputPerson.last_name());
                     try {
                         p.setDateOfBirth(DateFormat.getInstance().parse(inputPerson.date_of_birth()));
                     } catch (ParseException e) {
@@ -136,11 +136,12 @@ public class VehicleDeploymentPlanningService {
         for (Map.Entry<Vehicle, List<Person>> entry : vehiclePersonMap.entrySet()) {
             Vehicle vehicle = entry.getKey();
             Set<Person> assignedPersons = new HashSet<>(entry.getValue());
-            VehicleDeploymentPlan plan = new VehicleDeploymentPlan();
+            VehicleDeploymentPlan plan =  planRepository.save(new VehicleDeploymentPlan());
+            plan.setName(planning.getName() + "_" + plan.getId());
             plan.setVehicle(vehicle);
             plan.setPersons(assignedPersons);
             plan.setVehicleDeploymentPlanning(planning);
-            //vehiclePlan.calculateTotalDistance();
+            // vehiclePlan.calculateTotalDistance();
             plan.generateOptimizedRoute();
             planRepository.save(plan);
             vehiclePlans.add(plan);

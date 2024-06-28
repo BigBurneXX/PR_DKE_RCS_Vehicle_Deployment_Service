@@ -26,7 +26,9 @@ public class TripSheetService {
     public TripSheetOutputDTO createTripSheet(Long vehicleDeploymentPlanId, Set<PersonOutputDTO> persons) {
         return vehicleDeploymentPlanRepository.findByIdAndIsActiveTrue(vehicleDeploymentPlanId)
                 .map(plan -> {
-                    TripSheet tripSheet = new TripSheet();
+                    TripSheet tripSheet = tripSheetRepository.save(new TripSheet());
+                    tripSheet.setName(vehicleDeploymentPlanRepository.findById(vehicleDeploymentPlanId).get().getName() +
+                            "_" + tripSheet.getId());
                     tripSheet.setVehicleDeploymentPlan(plan);
                     tripSheet.setPersons(persons.stream()
                             .map(person -> modelMapper.map(person, Person.class))

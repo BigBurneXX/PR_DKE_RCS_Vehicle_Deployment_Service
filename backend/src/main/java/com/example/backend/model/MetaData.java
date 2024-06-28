@@ -18,9 +18,10 @@ public abstract class MetaData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     @CreationTimestamp
     private Date creationDate;
-
     @UpdateTimestamp
     private Date lastModifiedDate;
 

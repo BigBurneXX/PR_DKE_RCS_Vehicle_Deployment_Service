@@ -11,6 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class TripSheetOutputDTO {
     private Long id;
+    private String name;
     private Date creationDate;
     private Date lastModifiedDate;
     private Long version;

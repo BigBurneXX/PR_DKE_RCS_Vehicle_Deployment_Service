@@ -9,12 +9,11 @@ import java.util.Date;
 @NoArgsConstructor
 public class PersonOutputDTO {
     private Long id;
+    private String name;
     private Date creationDate;
     private Date lastModifiedDate;
     private Long version;
     private Long personId;
-    private String firstName;
-    private String lastName;
     private boolean hasWheelchair;
     private LocationDTO startLocation;
     private LocationDTO endLocation;
