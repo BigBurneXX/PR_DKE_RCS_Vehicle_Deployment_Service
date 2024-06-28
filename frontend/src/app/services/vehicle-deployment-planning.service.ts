@@ -13,7 +13,7 @@ import { VehicleDeploymentPlanningOutputDto } from "../dtos/VehicleDeploymentPla
 export class VehicleDeploymentPlanningService {
     private baseDataUrl = 'http://localhost:8080';
     private transportServicePortalUrl = 'http://localhost:8081';
-    private backendUrl = 'http://localhost:8083/vehicle-plannings';
+    private backendUrl = 'http://localhost:8082/vehicle-plannings';
 
     constructor(private http: HttpClient) { }
 

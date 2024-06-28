@@ -2,10 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {TripSheetServices} from "../services/trip-sheet.services";
-import {LocationDto} from "../dtos/Location.dto";
 import {VehicleDeploymentPlanService} from "../services/vehicle-deployment-plan.service";
 import {VehicleDeploymentPlanOutputDto} from "../dtos/VehicleDeploymentPlanOutput.dto";
-import {PersonInputDto} from "../dtos/PersonInput.dto";
+import {PersonOutputDto} from "../dtos/PersonOutput.dto";
 
 @Component({
   selector: 'app-new-trip-sheet',
@@ -20,9 +19,9 @@ import {PersonInputDto} from "../dtos/PersonInput.dto";
 })
 export class NewTripSheetComponent implements OnInit{
   plan: VehicleDeploymentPlanOutputDto | undefined;
-  persons: PersonInputDto[] = [];
+  persons: PersonOutputDto[] = [];
   planError: boolean = false;
-  locations: LocationDto[] = []
+  selectedPersons: PersonOutputDto[] = [];
 
   constructor(private tripSheetService: TripSheetServices, private vehicleDeploymentPlanService: VehicleDeploymentPlanService) { }
 
@@ -34,9 +33,7 @@ export class NewTripSheetComponent implements OnInit{
     this.vehicleDeploymentPlanService.getVehicleDeploymentPlanById(id).subscribe({
       next: (data) => {
         this.plan = data;
-        this.vehicleDeploymentPlanService.getPeopleName(this.plan.persons).subscribe(persons => {
-          this.persons = persons;
-        });
+        this.persons = this.plan.persons;
       },
       error: () => {
         this.planError = true;
@@ -45,12 +42,10 @@ export class NewTripSheetComponent implements OnInit{
   }
 
   saveTripSheet() {
-    /*
-    this.tripSheet.vehicleDeploymentPlan = this.vehicleDeploymentPlan
-    this.tripSheet.locations = this.locations.filter(location => location.selected);
-    this.tripSheetService.postTripSheet(this.tripSheet).subscribe(response => {
+    this.selectedPersons = this.persons.filter(person => person.selected);
+    this.tripSheetService.postTripSheet(this.plan?.id, this.selectedPersons).subscribe(response => {
       console.log('Trip Sheet saved successfully:', response);
-    })*/
+    })
     console.log("Something");
   }
 }

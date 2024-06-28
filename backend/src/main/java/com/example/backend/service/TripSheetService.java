@@ -10,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,9 +27,11 @@ public class TripSheetService {
                     tripSheet.setName(vehicleDeploymentPlanRepository.findById(vehicleDeploymentPlanId).get().getName() +
                             "_tripSheet_" + tripSheet.getId());
                     tripSheet.setVehicleDeploymentPlan(plan);
+                    tripSheet.setVehicle(plan.getVehicle());
                     tripSheet.setPersons(persons.stream()
                             .map(person -> modelMapper.map(person, Person.class))
                             .collect(Collectors.toSet()));
+                    tripSheet.getOptimizedRoute();
                     tripSheetRepository.save(tripSheet);
                     return modelMapper.map(tripSheet, TripSheetOutputDTO.class);
                 }).orElseThrow();

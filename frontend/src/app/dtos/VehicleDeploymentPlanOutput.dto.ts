@@ -4,6 +4,7 @@ import {LocationDto} from "./Location.dto";
 
 export interface VehicleDeploymentPlanOutputDto {
     id: number;
+    name: string;
     creationDate: Date;
     lastModifiedDate: Date;
     version: number;

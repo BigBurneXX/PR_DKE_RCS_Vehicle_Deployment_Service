@@ -4,6 +4,7 @@ import {VehicleOutputDto} from "./VehicleOutput.dto";
 
 export interface TripSheetOutputDto {
     id: number;
+    name: string;
     creationDate: Date;
     lastModifiedDate: Date;
     version: number;

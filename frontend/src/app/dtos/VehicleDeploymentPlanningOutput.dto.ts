@@ -4,6 +4,7 @@ import {VehicleDeploymentPlanOutputDto} from "./VehicleDeploymentPlanOutput.dto"
 
 export interface VehicleDeploymentPlanningOutputDto {
     id: number;
+    name: string;
     creationDate: Date;
     lastModifiedDate: Date;
     version: number;

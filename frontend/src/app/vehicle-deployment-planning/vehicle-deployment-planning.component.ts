@@ -33,10 +33,8 @@ export class VehicleDeploymentPlanningComponent implements OnInit {
   }
 
   loadVehicleDeploymentPlannings() {
-    this.vehicleDeploymentPlanningService.getVehicleDeploymentPlannings().subscribe({
-      next: (data) => {
-        this.plannings = data;
-      }
+    this.vehicleDeploymentPlanningService.getVehicleDeploymentPlannings().subscribe(plannings =>{
+        this.plannings = plannings;
     })
   }
 
@@ -52,7 +50,7 @@ export class VehicleDeploymentPlanningComponent implements OnInit {
     });
   }
 
-  navigateToPlans(): void {
+  navigateToPlans(planningId: number): void {
     this.router.navigate(['/plans']);
   }
 }
