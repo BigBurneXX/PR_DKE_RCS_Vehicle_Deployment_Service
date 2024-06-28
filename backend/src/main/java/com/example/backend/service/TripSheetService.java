@@ -28,7 +28,7 @@ public class TripSheetService {
                 .map(plan -> {
                     TripSheet tripSheet = tripSheetRepository.save(new TripSheet());
                     tripSheet.setName(vehicleDeploymentPlanRepository.findById(vehicleDeploymentPlanId).get().getName() +
-                            "_" + tripSheet.getId());
+                            "_tripSheet_" + tripSheet.getId());
                     tripSheet.setVehicleDeploymentPlan(plan);
                     tripSheet.setPersons(persons.stream()
                             .map(person -> modelMapper.map(person, Person.class))

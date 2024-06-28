@@ -137,7 +137,7 @@ public class VehicleDeploymentPlanningService {
             Vehicle vehicle = entry.getKey();
             Set<Person> assignedPersons = new HashSet<>(entry.getValue());
             VehicleDeploymentPlan plan =  planRepository.save(new VehicleDeploymentPlan());
-            plan.setName(planning.getName() + "_" + plan.getId());
+            plan.setName(planning.getName() + "_plan_" + plan.getId());
             plan.setVehicle(vehicle);
             plan.setPersons(assignedPersons);
             plan.setVehicleDeploymentPlanning(planning);
