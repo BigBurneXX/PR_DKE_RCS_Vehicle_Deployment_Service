@@ -16,8 +16,8 @@
         <tbody>
         <tr *ngFor="let planning of plannings">
             <td class="fs-4">{{ planning.id }}</td>
-            <td class="fs-4">{{ planning.creationDate | CustomDatePipe }}</td>
-            <td class="fs-4">{{ planning.lastModifiedDate | CustomDatePipe }}</td>
+            <td class="fs-4">{{ planning.creationDate | customDate }}</td>
+            <td class="fs-4">{{ planning.lastModifiedDate | customDate }}</td>
             <td class="fs-4">{{ planning.version }}</td>
             <td class="fs-4">
                 <button (click)="openPersonModal(planning.persons)" class="btn btn-link">View persons</button>

@@ -18,28 +18,37 @@ export class OrsService {
       format: 'geojson'
     };
 
-    const response = await axios.post(url, data, {
-      headers: {
-        'Authorization': this.apiKey,
-        'Content-Type': 'application/json'
-      }
-    });
+    try {
+      console.log('Request URL:', url);
+      console.log('Request Data:', JSON.stringify(data));
 
-    const route = response.data.routes[0];
-    const decodedCoordinates = polyline.decode(route.geometry);
-
-    return {
-      type: 'FeatureCollection',
-      features: [
-        {
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'LineString',
-            coordinates: decodedCoordinates.map((coord: number[]) => [coord[1], coord[0]]) // Swap lat and lng
-          }
+      const response = await axios.post(url, data, {
+        headers: {
+          'Authorization': this.apiKey,
+          'Content-Type': 'application/json'
         }
-      ]
-    };
+      });
+
+
+      const route = response.data.routes[0];
+      const decodedCoordinates = polyline.decode(route.geometry);
+
+      return {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'LineString',
+              coordinates: decodedCoordinates.map((coord: number[]) => [coord[1], coord[0]]) // Swap lat and lng
+            }
+          }
+        ]
+      };
+    } catch (error) {
+      console.error('Error in getRoute:', error);
+      throw error;
+    }
   }
 }

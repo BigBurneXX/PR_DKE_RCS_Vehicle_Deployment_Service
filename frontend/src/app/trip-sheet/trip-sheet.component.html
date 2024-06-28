@@ -17,12 +17,16 @@
             <tbody>
             <tr *ngFor="let tripSheet of tripSheets">
                 <td class="fs-4">{{ tripSheet.id }}</td>
-                <td class="fs-4">{{ tripSheet.creationDate }}</td>
-                <td class="fs-4">{{ tripSheet.lastModifiedDate }}</td>
+                <td class="fs-4">{{ tripSheet.creationDate | customDate }}</td>
+                <td class="fs-4">{{ tripSheet.lastModifiedDate | customDate }}</td>
                 <td class="fs-4">{{ tripSheet.version }}</td>
-                <td class="fs-4">{{ tripSheet.vehicle }}</td>
-                <td class="fs-4">{{ tripSheet.persons }}</td>
-                <td class="fs-4">{{ tripSheet.locations }}</td>
+                <td class="fs-4">{{ tripSheet.vehicle.name }}, {{ tripSheet.vehicle.type }}</td>
+                <td class="fs-4">
+                    <button (click)="openPersonModal(tripSheet.persons)" class="btn btn-link">View persons</button>
+                </td>
+                <td class="fs-4">
+                    <a (click)="viewOnMap(tripSheet.locations)" class="btn btn-link">View on map</a>
+                </td>
                 <td class="fs-4">{{ tripSheet.vehicleDeploymentPlanId }}</td>
             </tr>
             </tbody>

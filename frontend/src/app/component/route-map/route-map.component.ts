@@ -3,6 +3,8 @@ import 'leaflet/dist/leaflet.css';
 import * as L from 'leaflet';
 import { OrsService } from '../../services/ors.service';
 import * as chroma from 'chroma-js';
+import {ActivatedRoute} from "@angular/router";
+import {GeoJSON} from "leaflet";
 
 @Component({
   selector: 'app-route-map',
@@ -13,12 +15,32 @@ import * as chroma from 'chroma-js';
 export class RouteMapComponent implements AfterViewInit {
   private map: any;
 
-  constructor(private orsService: OrsService) {
+  constructor(private orsService: OrsService, private route: ActivatedRoute) {
   }
 
   ngAfterViewInit(): void {
     this.initMap();
-    this.loadRoutes();
+    this.route.queryParams.subscribe(params => {
+      const coordinates = JSON.parse(params['coordinates']);
+      /*const coordinates = [
+        [14.2858, 48.3069],  // Linz
+        [14.2407, 48.2406],  // Traun
+        [14.1474, 48.1620],  // Ansfelden
+        [14.3258, 48.2313],  // Leonding
+        [14.4604, 48.2568],  // Enns
+        [14.0185, 48.0770],  // Wels
+        [13.6505, 48.1838],  // Ried im Innkreis
+        [14.0197, 47.9264],  // Steyr
+        //[14.0781, 47.8225],  // Kirchdorf an der Krems
+        [14.2915, 48.3089],  // Mauthausen
+        [14.2817, 48.3131],  // Perg
+        [13.9726, 48.3333],  // Eferding
+        [13.7612, 48.5608],  // Schärding
+        [14.3093, 48.0193],  // Bad Hall
+        [13.6060, 47.9923]   // Bad Ischl
+      ];*/
+      this.loadRoute(coordinates);
+    });
   }
 
   private initMap(): void {
@@ -33,7 +55,32 @@ export class RouteMapComponent implements AfterViewInit {
     }).addTo(this.map);
   }
 
-  private async loadRoutes(): Promise<void> {
+  private async loadRoute(coordinates: number[][]): Promise<void> {
+    try {
+      const geojson = await this.orsService.getRoute(coordinates);
+
+      if (geojson.type !== 'FeatureCollection') {
+        throw new Error('Invalid GeoJSON type');
+      }
+
+      const geoJsonLayer = L.geoJSON(geojson as GeoJSON.FeatureCollection, {
+        style: {
+          color: 'blue',
+          weight: 4,
+          opacity: 0.7
+        }
+      }).addTo(this.map);
+
+      // Fit the map bounds to include the route
+      const bounds = geoJsonLayer.getBounds();
+      this.map.fitBounds(bounds);
+    } catch (error) {
+      console.error(error);
+      alert('Failed to load route. Please try again later.');
+    }
+  }
+
+  private async loadRoutes1(): Promise<void> {
     const persons = [
       {
         name: 'Herbert',
