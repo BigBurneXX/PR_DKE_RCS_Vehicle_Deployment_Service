@@ -105,8 +105,8 @@ public class VehicleDeploymentPlanningService {
     private Location createLocation(String coordinates) {
         String[] coordinate = coordinates.split(",");
         Location location = new Location();
-        location.setLatitude(Double.parseDouble(coordinate[0]));
-        location.setLongitude(Double.parseDouble(coordinate[1]));
+        location.setLatitude(Double.parseDouble(coordinate[1]));
+        location.setLongitude(Double.parseDouble(coordinate[0]));
         return locationRepository.save(location);
     }
 

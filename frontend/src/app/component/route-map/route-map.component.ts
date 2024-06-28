@@ -21,24 +21,15 @@ export class RouteMapComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.initMap();
     this.route.queryParams.subscribe(params => {
-      const coordinates = JSON.parse(params['coordinates']);
-      /*const coordinates = [
-        [14.2858, 48.3069],  // Linz
-        [14.2407, 48.2406],  // Traun
-        [14.1474, 48.1620],  // Ansfelden
-        [14.3258, 48.2313],  // Leonding
-        [14.4604, 48.2568],  // Enns
-        [14.0185, 48.0770],  // Wels
-        [13.6505, 48.1838],  // Ried im Innkreis
-        [14.0197, 47.9264],  // Steyr
-        //[14.0781, 47.8225],  // Kirchdorf an der Krems
-        [14.2915, 48.3089],  // Mauthausen
-        [14.2817, 48.3131],  // Perg
-        [13.9726, 48.3333],  // Eferding
-        [13.7612, 48.5608],  // Schärding
-        [14.3093, 48.0193],  // Bad Hall
-        [13.6060, 47.9923]   // Bad Ischl
-      ];*/
+      //const coordinates = JSON.parse(params['coordinates']);
+      const coordinates = [
+        [14.289007,48.30065],
+        [14.322953,48.338436],
+        [16.359795,48.207531],
+        [16.359795,48.207531],
+        [15.438233,47.070393],
+        [14.289838, 48.300685]
+      ];
       this.loadRoute(coordinates);
     });
   }

@@ -26,7 +26,7 @@ export class NewTripSheetComponent implements OnInit{
   constructor(private tripSheetService: TripSheetServices, private vehicleDeploymentPlanService: VehicleDeploymentPlanService) { }
 
   ngOnInit() {
-    this.loadPlan(1);
+    this.loadPlan(2);
   }
 
   loadPlan(id: number){

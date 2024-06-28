@@ -4,10 +4,8 @@
         <table class="table align-middle text-nowrap">
             <thead>
             <tr>
-                <th class="text-dark font-medium fs-4">ID</th>
+                <th class="text-dark font-medium fs-4">Name</th>
                 <th class="text-dark font-medium fs-4">Creation Date</th>
-                <th class="text-dark font-medium fs-4">Last Modified Date</th>
-                <th class="text-dark font-medium fs-4">Version</th>
                 <th class="text-dark font-medium fs-4">Vehicle</th>
                 <th class="text-dark font-medium fs-4">Persons</th>
                 <th class="text-dark font-medium fs-4">Route</th>
@@ -16,10 +14,8 @@
             </thead>
             <tbody>
             <tr *ngFor="let tripSheet of tripSheets">
-                <td class="fs-4">{{ tripSheet.id }}</td>
+                <td class="fs-4">{{ tripSheet.name }}</td>
                 <td class="fs-4">{{ tripSheet.creationDate | customDate }}</td>
-                <td class="fs-4">{{ tripSheet.lastModifiedDate | customDate }}</td>
-                <td class="fs-4">{{ tripSheet.version }}</td>
                 <td class="fs-4">{{ tripSheet.vehicle.name }}, {{ tripSheet.vehicle.type }}</td>
                 <td class="fs-4">
                     <button (click)="openPersonModal(tripSheet.persons)" class="btn btn-link">View persons</button>
