@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { NgForOf, NgIf } from "@angular/common";
-import { VehicleDeploymentPlanService } from "../vehicle-deployment-plan.service";
-import { VehicleDeploymentPlanOutputDto } from "../../dtos/VehicleDeploymentPlanOutput.dto";
-import { CustomDatePipe } from "../../shared/CustomDatePipe";
-import { LocationDto } from "../../dtos/Location.dto";
 import { Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
-import { PersonOutputDto } from "../../dtos/PersonOutput.dto";
+
+import { CustomDatePipe } from "../../shared/CustomDatePipe";
 import { PersonModalComponent } from "../../modals/person-modal/person-modal.component";
+import { VehicleDeploymentPlanService } from "../vehicle-deployment-plan.service";
+import { VehicleDeploymentPlanOutputDto } from "../../dtos/VehicleDeploymentPlanOutput.dto";
+import { PersonOutputDto } from "../../dtos/PersonOutput.dto";
+import { LocationDto } from "../../dtos/Location.dto";
 
 @Component({
   selector: 'app-vehicle-deployment-plan',
@@ -50,5 +51,16 @@ export class VehicleDeploymentPlanComponent implements OnInit {
     viewOnMap(locations: LocationDto[]): void {
         const coordinates = locations.map(location => [location.longitude, location.latitude]);
         this.router.navigate(['/route-map'], { queryParams: { coordinates: JSON.stringify(coordinates) } });
+    }
+
+    navigateToDetails(planId: number) {
+        this.router.navigate([`/vehicle-deployment-plans/details/${planId}`]);
+    }
+
+    navigateToTripSheets(planId: number) {
+        this.router.navigate([`/vehicle-deployment-plans/${planId}`]);
+    }
+    navigateToPlanning(planningId: number) {
+        this.router.navigate([`/vehicle-deployment-plannings/${planningId}`]);
     }
 }

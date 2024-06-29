@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {FormsModule} from "@angular/forms";
-import {NgForOf, NgIf} from "@angular/common";
-import {TripSheetService} from "../trip-sheet.service";
-import {VehicleDeploymentPlanService} from "../../vehicle-deployment-plans/vehicle-deployment-plan.service";
-import {VehicleDeploymentPlanOutputDto} from "../../dtos/VehicleDeploymentPlanOutput.dto";
-import {PersonOutputDto} from "../../dtos/PersonOutput.dto";
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from "@angular/forms";
+import { NgForOf, NgIf } from "@angular/common";
+
+import { TripSheetService } from "../trip-sheet.service";
+import { VehicleDeploymentPlanService } from "../../vehicle-deployment-plans/vehicle-deployment-plan.service";
+import { VehicleDeploymentPlanOutputDto } from "../../dtos/VehicleDeploymentPlanOutput.dto";
+import { PersonOutputDto } from "../../dtos/PersonOutput.dto";
 
 @Component({
   selector: 'app-new-trip-sheet',

@@ -1,11 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {FormsModule} from "@angular/forms";
-import {NgForOf, NgIf} from "@angular/common";
-import {VehicleDeploymentPlanningService} from "../vehicle-deployment-planning.service";
-import {VehicleDeploymentPlanningInputDto} from "../../dtos/VehicleDeploymentPlanningInput.dto";
-import {PersonInputDto} from "../../dtos/PersonInput.dto";
-import {VehicleInputDto} from "../../dtos/VehicleInput.dto";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { NgForOf, NgIf } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { Router } from "@angular/router";
+
+import { VehicleDeploymentPlanningService } from "../vehicle-deployment-planning.service";
+import { VehicleDeploymentPlanningInputDto } from "../../dtos/VehicleDeploymentPlanningInput.dto";
+import { PersonInputDto } from "../../dtos/PersonInput.dto";
+import { VehicleInputDto } from "../../dtos/VehicleInput.dto";
 
 @Component({
   selector: 'app-vehicle-deployment-planning',
@@ -15,10 +16,10 @@ import {Router} from "@angular/router";
     NgForOf,
     NgIf
   ],
-  templateUrl: './new-vehicle-deployment-planning.component.html',
-  styleUrls: ['./new-vehicle-deployment-planning.component.scss']
+  templateUrl: './vehicle-deployment-plannings-new.component.html',
+  styleUrls: ['./vehicle-deployment-plannings-new.component.scss']
 })
-export class NewVehicleDeploymentPlanningComponent implements OnInit {
+export class VehicleDeploymentPlanningsNewComponent implements OnInit {
   people: PersonInputDto[] = [];
   vehicles: VehicleInputDto[] = [];
   peopleError: boolean = false;

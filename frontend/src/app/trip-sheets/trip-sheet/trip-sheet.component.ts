@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { TripSheetService } from "../trip-sheet.service";
-import { FormsModule } from "@angular/forms";
 import { NgForOf, NgIf } from "@angular/common";
-import { TripSheetOutputDto } from "../../dtos/TripSheetOutput.dto";
-import { CustomDatePipe } from "../../shared/CustomDatePipe";
-import { PersonOutputDto } from "../../dtos/PersonOutput.dto";
-import { PersonModalComponent } from "../../modals/person-modal/person-modal.component";
-import { LocationDto } from "../../dtos/Location.dto";
+import { FormsModule } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
+
+import { CustomDatePipe } from "../../shared/CustomDatePipe";
+import { PersonModalComponent } from "../../modals/person-modal/person-modal.component";
+import { TripSheetService } from "../trip-sheet.service";
+import { TripSheetOutputDto } from "../../dtos/TripSheetOutput.dto";
+import { PersonOutputDto } from "../../dtos/PersonOutput.dto";
+import { LocationDto } from "../../dtos/Location.dto";
+
 
 @Component({
   standalone: true,
@@ -46,5 +48,9 @@ export class TripSheetComponent implements OnInit {
     viewOnMap(locations: LocationDto[]): void {
         const coordinates = locations.map(location => [location.longitude, location.latitude]);
         this.router.navigate(['/route-map'], { queryParams: { coordinates: JSON.stringify(coordinates) } });
+    }
+
+    navigateToPlan(planId: number) {
+        this.router.navigate([`/vehicle-deployment-plan/details/${planId}`])
     }
 }

@@ -4,9 +4,10 @@ import { VehicleDeploymentPlanningOutputDto } from "../../dtos/VehicleDeployment
 import { NgForOf} from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
+import { Router } from "@angular/router";
+
 import { PersonModalComponent } from "../../modals/person-modal/person-modal.component";
 import { VehicleModalComponent } from "../../modals/vehicle-modal/vehicle-modal.component";
-import { Router } from "@angular/router";
 import { PersonOutputDto } from "../../dtos/PersonOutput.dto";
 import { VehicleOutputDto } from "../../dtos/VehicleOutput.dto";
 import { CustomDatePipe } from "../../shared/CustomDatePipe";
@@ -19,10 +20,10 @@ import { CustomDatePipe } from "../../shared/CustomDatePipe";
     CustomDatePipe,
     NgForOf
   ],
-  templateUrl: './vehicle-deployment-planning.component.html',
-  styleUrl: './vehicle-deployment-planning.component.scss'
+  templateUrl: './vehicle-deployment-plannings-all.component.html',
+  styleUrl: './vehicle-deployment-plannings-all.component.scss'
 })
-export class VehicleDeploymentPlanningComponent implements OnInit {
+export class VehicleDeploymentPlanningsAllComponent implements OnInit {
   plannings: VehicleDeploymentPlanningOutputDto[] = [];
   constructor(private vehicleDeploymentPlanningService: VehicleDeploymentPlanningService,
               private dialog: MatDialog,
@@ -50,7 +51,11 @@ export class VehicleDeploymentPlanningComponent implements OnInit {
     });
   }
 
-  navigateToPlans(planningId: number): void {
-    this.router.navigate(['/plans']);
+  navigateToPlans(id: number): void {
+    this.router.navigate([`/vehicle-deployment-plans/${id}`]);
+  }
+
+  navigateToDetails(id: number) {
+    this.router.navigate([`/vehicle-deployment-plannings/details/${id}`]);
   }
 }

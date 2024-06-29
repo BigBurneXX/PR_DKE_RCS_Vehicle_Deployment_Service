@@ -1,8 +1,9 @@
+import { NgForOf } from "@angular/common";
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { TripSheetService } from "../trip-sheet.service";
+
 import { CustomDatePipe } from "../../shared/CustomDatePipe";
-import { NgForOf } from "@angular/common";
+import { TripSheetService } from "../trip-sheet.service";
 
 @Component({
   selector: 'app-trip-sheets-by-plan',

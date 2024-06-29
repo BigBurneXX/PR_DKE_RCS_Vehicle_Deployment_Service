@@ -1,36 +1,34 @@
 <div class="container">
-    <h1>Vehicle Deployment Plans</h1>
+    <h1>Plans for Planning {{ planningId }}</h1>
     <div class="table-responsive">
         <table class="table align-middle text-nowrap">
             <thead>
             <tr>
+                <th class="text-dark font-medium fs-4">ID</th>
                 <th class="text-dark font-medium fs-4">Name</th>
                 <th class="text-dark font-medium fs-4">Creation Date</th>
+                <th class="text-dark font-medium fs-4">Last Modified Date</th>
                 <th class="text-dark font-medium fs-4">Vehicle</th>
                 <th class="text-dark font-medium fs-4">Persons</th>
                 <th class="text-dark font-medium fs-4">Route</th>
-                <th class="text-dark font-medium fs-4">TripSheets</th>
-                <th class="text-dark font-medium fs-4">Planning</th>
+                <th class="text-dark font-medium fs-4">Trip Sheets</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let plan of plans">
-                <td class="fs-4">
-                    <a (click)="navigateToDetails(plan.id)" class="btn-btn-link">{{ plan.name }}</a>
-                </td>
+                <td class="fs-4">{{ plan.id }}</td>
+                <td class="fs-4">{{ plan.name }}</td>
                 <td class="fs-4">{{ plan.creationDate | customDate }}</td>
+                <td class="fs-4">{{ plan.lastModifiedDate | customDate }}</td>
                 <td class="fs-4">{{ plan.vehicle.name }}, {{ plan.vehicle.type }}</td>
                 <td class="fs-4">
                     <button (click)="openPersonModal(plan.persons)" class="btn btn-link">View persons</button>
                 </td>
                 <td class="fs-4">
-                    <button (click)="viewOnMap(plan.locations)" class="btn btn-link">View on map</button>
+                    <button (click)="navigateToTripSheets(plan.id)" class="btn btn-link">View Trip Sheets</button>
                 </td>
                 <td class="fs-4">
-                    <button (click)="navigateToTripSheets(plan.id)" class="btn btn-link">View trip sheets</button>
-                </td>
-                <td class="fs-4">
-                    <button (click)="navigateToPlanning(plan.planningId)" class="btn btn-link">View plans</button>
+                    <button (click)="navigateToTripSheets(plan.id)" class="btn btn-link">View Trip Sheets</button>
                 </td>
             </tr>
             </tbody>

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, map, Observable } from 'rxjs';
-import { PersonInputDto } from "../dtos/PersonInput.dto";
-import { VehicleInputDto } from "../dtos/VehicleInput.dto";
+
 import { VehicleDeploymentPlanningInputDto } from "../dtos/VehicleDeploymentPlanningInput.dto";
-import { AddressInputDto } from "../dtos/AddressInput.dto";
 import { VehicleDeploymentPlanningOutputDto } from "../dtos/VehicleDeploymentPlanningOutput.dto";
+import { VehicleInputDto } from "../dtos/VehicleInput.dto";
+import { PersonInputDto } from "../dtos/PersonInput.dto";
+import { AddressInputDto } from "../dtos/AddressInput.dto";
 
 @Injectable({
     providedIn: 'root'
