@@ -1,7 +1,7 @@
 import {AfterViewInit, Component } from '@angular/core';
 import 'leaflet/dist/leaflet.css';
 import * as L from 'leaflet';
-import { OrsService } from '../../services/ors.service';
+import { OrsService } from './ors.service';
 import * as chroma from 'chroma-js';
 import {ActivatedRoute} from "@angular/router";
 import {GeoJSON} from "leaflet";

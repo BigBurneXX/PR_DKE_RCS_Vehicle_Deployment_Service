@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
-import {VehicleDeploymentPlanningService} from "../services/vehicle-deployment-planning.service";
-import {VehicleDeploymentPlanningInputDto} from "../dtos/VehicleDeploymentPlanningInput.dto";
-import {PersonInputDto} from "../dtos/PersonInput.dto";
-import {VehicleInputDto} from "../dtos/VehicleInput.dto";
+import {VehicleDeploymentPlanningService} from "../vehicle-deployment-planning.service";
+import {VehicleDeploymentPlanningInputDto} from "../../dtos/VehicleDeploymentPlanningInput.dto";
+import {PersonInputDto} from "../../dtos/PersonInput.dto";
+import {VehicleInputDto} from "../../dtos/VehicleInput.dto";
 import {Router} from "@angular/router";
 
 @Component({

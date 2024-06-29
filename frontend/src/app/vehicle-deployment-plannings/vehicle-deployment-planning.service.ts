@@ -45,4 +45,8 @@ export class VehicleDeploymentPlanningService {
     getVehicleDeploymentPlannings(): Observable<VehicleDeploymentPlanningOutputDto[]> {
         return this.http.get<VehicleDeploymentPlanningOutputDto[]>(this.backendUrl);
     }
+
+    getVehicleDeploymentPlanning(id: number | undefined): Observable<VehicleDeploymentPlanningOutputDto> {
+        return this.http.get<VehicleDeploymentPlanningOutputDto>(`${this.backendUrl}/${id}`);
+    }
 }

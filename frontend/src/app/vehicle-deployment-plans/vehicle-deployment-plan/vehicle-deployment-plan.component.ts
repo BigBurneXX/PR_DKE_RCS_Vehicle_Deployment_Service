@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { NgForOf, NgIf } from "@angular/common";
-import { VehicleDeploymentPlanService } from "../services/vehicle-deployment-plan.service";
-import { VehicleDeploymentPlanOutputDto } from "../dtos/VehicleDeploymentPlanOutput.dto";
-import { CustomDatePipe } from "../shared/CustomDatePipe";
-import { LocationDto } from "../dtos/Location.dto";
+import { VehicleDeploymentPlanService } from "../vehicle-deployment-plan.service";
+import { VehicleDeploymentPlanOutputDto } from "../../dtos/VehicleDeploymentPlanOutput.dto";
+import { CustomDatePipe } from "../../shared/CustomDatePipe";
+import { LocationDto } from "../../dtos/Location.dto";
 import { Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
-import { PersonOutputDto } from "../dtos/PersonOutput.dto";
-import { PersonModalComponent } from "../person-modal/person-modal.component";
+import { PersonOutputDto } from "../../dtos/PersonOutput.dto";
+import { PersonModalComponent } from "../../modals/person-modal/person-modal.component";
 
 @Component({
   selector: 'app-vehicle-deployment-plan',

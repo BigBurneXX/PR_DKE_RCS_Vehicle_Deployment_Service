@@ -8,7 +8,7 @@ import {
 } from '@angular/material/dialog';
 import {MatButton} from "@angular/material/button";
 import {NgForOf} from "@angular/common";
-import {PersonOutputDto} from "../dtos/PersonOutput.dto";
+import {PersonOutputDto} from "../../dtos/PersonOutput.dto";
 
 @Component({
   selector: 'app-person-modal',

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { TripSheetServices } from "../services/trip-sheet.services";
+import { TripSheetService } from "../trip-sheet.service";
 import { FormsModule } from "@angular/forms";
 import { NgForOf, NgIf } from "@angular/common";
-import { TripSheetOutputDto } from "../dtos/TripSheetOutput.dto";
-import { CustomDatePipe } from "../shared/CustomDatePipe";
-import { PersonOutputDto } from "../dtos/PersonOutput.dto";
-import { PersonModalComponent } from "../person-modal/person-modal.component";
-import { LocationDto } from "../dtos/Location.dto";
+import { TripSheetOutputDto } from "../../dtos/TripSheetOutput.dto";
+import { CustomDatePipe } from "../../shared/CustomDatePipe";
+import { PersonOutputDto } from "../../dtos/PersonOutput.dto";
+import { PersonModalComponent } from "../../modals/person-modal/person-modal.component";
+import { LocationDto } from "../../dtos/Location.dto";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 
@@ -24,7 +24,7 @@ import { Router } from "@angular/router";
 export class TripSheetComponent implements OnInit {
   tripSheets: TripSheetOutputDto[] = [];
 
-  constructor(private tripSheetService: TripSheetServices, private dialog: MatDialog, private router: Router) {
+  constructor(private tripSheetService: TripSheetService, private dialog: MatDialog, private router: Router) {
   }
 
   ngOnInit() {

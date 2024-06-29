@@ -20,4 +20,8 @@ public class VehicleDeploymentPlan extends Route {
 
     @ManyToOne
     private VehicleDeploymentPlanning vehicleDeploymentPlanning;
+
+    public void addTripSheet(TripSheet tripSheet) {
+        tripSheets.add(tripSheet);
+    }
 }

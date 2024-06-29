@@ -8,7 +8,7 @@ import {
 } from "@angular/material/dialog";
 import {NgForOf} from "@angular/common";
 import {MatButton} from "@angular/material/button";
-import {VehicleOutputDto} from "../dtos/VehicleOutput.dto";
+import {VehicleOutputDto} from "../../dtos/VehicleOutput.dto";
 
 @Component({
   selector: 'app-vehicle-modal',

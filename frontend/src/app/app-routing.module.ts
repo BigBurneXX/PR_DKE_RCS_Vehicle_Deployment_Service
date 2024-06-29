@@ -26,23 +26,26 @@ export const AppRoutes: Routes = [
       },
       {
         path: 'trip-sheet',
-        loadChildren: () => import('./trip-sheet/trip-sheet.module').then(m => m.TripSheetModule)
+        loadChildren: () => import('./trip-sheets/trip-sheet/trip-sheet.module').then(m => m.TripSheetModule)
       },
       {
         path: 'vehicle-deployment-plan',
-        loadChildren: () => import('./vehicle-deployment-plan/vehicle-deployment-plan.module').then(m => m.VehicleDeploymentPlanModule)
+        loadChildren: () => import('./vehicle-deployment-plans/vehicle-deployment-plan/vehicle-deployment-plan.module')
+            .then(m => m.VehicleDeploymentPlanModule)
       },
       {
         path: 'vehicle-deployment-planning',
-        loadChildren: () => import('./vehicle-deployment-planning/vehicle-deployment-planning.module').then(m => m.VehicleDeploymentPlanningModule)
+        loadChildren: () => import('./vehicle-deployment-plannings/vehicle-deployment-planning/vehicle-deployment-planning.module')
+            .then(m => m.VehicleDeploymentPlanningModule)
       },
       {
         path: 'new-vehicle-deployment-planning',
-        loadChildren: () => import('./vehicle-deployment-planning-new/new-vehicle-deployment-planning.module').then(m => m.NewVehicleDeploymentPlanningModule)
+        loadChildren: () => import('./vehicle-deployment-plannings/vehicle-deployment-planning-new/new-vehicle-deployment-planning.module')
+            .then(m => m.NewVehicleDeploymentPlanningModule)
       },
       {
         path: 'new-trip-sheet',
-        loadChildren: () => import('./trip-sheet-new/new-trip-sheet.module').then(m => m.NewTripSheetModule)
+        loadChildren: () => import('./trip-sheets/trip-sheet-new/new-trip-sheet.module').then(m => m.NewTripSheetModule)
       }
     ]
   },

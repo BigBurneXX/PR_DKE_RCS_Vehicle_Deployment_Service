@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
-import {TripSheetServices} from "../services/trip-sheet.services";
-import {VehicleDeploymentPlanService} from "../services/vehicle-deployment-plan.service";
-import {VehicleDeploymentPlanOutputDto} from "../dtos/VehicleDeploymentPlanOutput.dto";
-import {PersonOutputDto} from "../dtos/PersonOutput.dto";
+import {TripSheetService} from "../trip-sheet.service";
+import {VehicleDeploymentPlanService} from "../../vehicle-deployment-plans/vehicle-deployment-plan.service";
+import {VehicleDeploymentPlanOutputDto} from "../../dtos/VehicleDeploymentPlanOutput.dto";
+import {PersonOutputDto} from "../../dtos/PersonOutput.dto";
 
 @Component({
   selector: 'app-new-trip-sheet',
@@ -23,7 +23,7 @@ export class NewTripSheetComponent implements OnInit{
   planError: boolean = false;
   selectedPersons: PersonOutputDto[] = [];
 
-  constructor(private tripSheetService: TripSheetServices, private vehicleDeploymentPlanService: VehicleDeploymentPlanService) { }
+  constructor(private tripSheetService: TripSheetService, private vehicleDeploymentPlanService: VehicleDeploymentPlanService) { }
 
   ngOnInit() {
     this.loadPlan(2);

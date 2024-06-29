@@ -24,8 +24,12 @@
                 <td class="fs-4">
                     <a (click)="viewOnMap(plan.locations)" class="btn btn-link">View on map</a>
                 </td>
-                <td class="fs-4">{{ plan.tripSheetIds }}</td>
-                <td class="fs-4">{{ plan.planningId }}</td>
+                <td class="fs-4">
+                    <button (click)="navigateToTripSheets(plan.id)" class="btn btn-link">View plans</button>
+                </td>
+                <td class="fs-4">
+                    <button (click)="navigateToPlanning(plan.id)" class="btn btn-link">View plans</button>
+                </td>
             </tr>
             </tbody>
         </table>

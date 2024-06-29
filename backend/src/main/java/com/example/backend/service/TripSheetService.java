@@ -33,6 +33,8 @@ public class TripSheetService {
                             .collect(Collectors.toSet()));
                     tripSheet.getOptimizedRoute();
                     tripSheetRepository.save(tripSheet);
+                    plan.addTripSheet(tripSheet);
+                    vehicleDeploymentPlanRepository.save(plan);
                     return modelMapper.map(tripSheet, TripSheetOutputDTO.class);
                 }).orElseThrow();
     }
