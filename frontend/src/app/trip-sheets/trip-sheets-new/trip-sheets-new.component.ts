@@ -15,10 +15,10 @@ import { PersonOutputDto } from "../../dtos/PersonOutput.dto";
     NgForOf,
     NgIf
   ],
-  templateUrl: './new-trip-sheet.component.html',
-  styleUrls: ['./new-trip-sheet.component.scss']
+  templateUrl: './trip-sheets-new.component.html',
+  styleUrls: ['./trip-sheets-new.component.scss']
 })
-export class NewTripSheetComponent implements OnInit{
+export class TripSheetsNewComponent implements OnInit{
   plan: VehicleDeploymentPlanOutputDto | undefined;
   persons: PersonOutputDto[] = [];
   planError: boolean = false;

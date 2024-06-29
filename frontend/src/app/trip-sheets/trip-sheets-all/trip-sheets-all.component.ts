@@ -14,16 +14,16 @@ import { LocationDto } from "../../dtos/Location.dto";
 
 @Component({
   standalone: true,
-  templateUrl: './trip-sheet.component.html',
+  templateUrl: './trip-sheets-all.component.html',
     imports: [
         NgIf,
         NgForOf,
         FormsModule,
         CustomDatePipe
     ],
-  styleUrls: ['./trip-sheet.component.scss']
+  styleUrls: ['./trip-sheets-all.component.scss']
 })
-export class TripSheetComponent implements OnInit {
+export class TripSheetsAllComponent implements OnInit {
   tripSheets: TripSheetOutputDto[] = [];
 
   constructor(private tripSheetService: TripSheetService, private dialog: MatDialog, private router: Router) {

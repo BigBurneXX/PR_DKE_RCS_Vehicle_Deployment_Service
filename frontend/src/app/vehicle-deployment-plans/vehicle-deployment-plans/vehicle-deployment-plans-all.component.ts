@@ -20,11 +20,11 @@ import { LocationDto } from "../../dtos/Location.dto";
         NgIf,
         CustomDatePipe
     ],
-  templateUrl: './vehicle-deployment-plan.component.html',
-  styleUrls: ['./vehicle-deployment-plan.component.scss']
+  templateUrl: './vehicle-deployment-plans-all.component.html',
+  styleUrls: ['./vehicle-deployment-plans-all.component.scss']
 })
 
-export class VehicleDeploymentPlanComponent implements OnInit {
+export class VehicleDeploymentPlansAllComponent implements OnInit {
     plans: VehicleDeploymentPlanOutputDto[] = [];
 
     constructor(private vehicleDeploymentPlanService: VehicleDeploymentPlanService,

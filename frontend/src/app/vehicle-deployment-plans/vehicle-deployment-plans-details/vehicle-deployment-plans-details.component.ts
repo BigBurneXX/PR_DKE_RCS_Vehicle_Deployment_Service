@@ -20,10 +20,10 @@ import { LocationDto} from "../../dtos/Location.dto";
     AsyncPipe,
     NgIf
   ],
-  templateUrl: './vehicle-deployment-plan-details.component.html',
-  styleUrl: './vehicle-deployment-plan-details.component.scss'
+  templateUrl: './vehicle-deployment-plans-details.component.html',
+  styleUrl: './vehicle-deployment-plans-details.component.scss'
 })
-export class VehicleDeploymentPlanDetailsComponent implements OnInit {
+export class VehicleDeploymentPlansDetailsComponent implements OnInit {
   plan: VehicleDeploymentPlanOutputDto | undefined;
   
   constructor(private vehicleDeploymentPlanService: VehicleDeploymentPlanService,

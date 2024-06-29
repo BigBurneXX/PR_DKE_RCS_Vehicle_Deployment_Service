@@ -3,16 +3,16 @@ import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Routes, RouterModule } from "@angular/router";
 
-import {TripSheetComponent} from "./trip-sheet.component";
+import { TripSheetsByPlanComponent } from "./trip-sheets-by-plan.component";
 
 const routes: Routes = [
   {
     path: "",
     data: {
       title: "TripSheet",
-      urls: [{ title: "TripSheet", url: "/trip-sheets" }, { title: "TripSheet" }],
+      urls: [{ title: "TripSheet", url: "/trip-sheets/details" }, { title: "TripSheet" }],
     },
-    component: TripSheetComponent,
+    component: TripSheetsByPlanComponent,
   },
 ];
 
@@ -26,4 +26,4 @@ const routes: Routes = [
   declarations: [
   ],
 })
-export class TripSheetModule {}
+export class TripSheetsByPlanModule {}
