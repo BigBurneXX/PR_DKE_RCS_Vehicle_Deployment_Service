@@ -51,6 +51,10 @@ export class TripSheetsAllComponent implements OnInit {
     }
 
     navigateToPlan(planId: number) {
-        this.router.navigate([`/vehicle-deployment-plan/details/${planId}`])
+        this.router.navigate([`/vehicle-deployment-plans/details/${planId}`]);
+    }
+
+    navigateToDetails(id: number) {
+        this.router.navigate([`/trip-sheets/details/${id}`]);
     }
 }

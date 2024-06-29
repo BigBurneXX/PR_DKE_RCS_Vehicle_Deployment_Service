@@ -16,7 +16,11 @@ export class TripSheetService {
     return this.http.get<TripSheetOutputDto[]>(this.backendUrl);
   }
 
-  getTripSheetByPlanId(planId: number | undefined): Observable<TripSheetOutputDto[]> {
+  getTripSheetById(id: number): Observable<TripSheetOutputDto> {
+    return this.http.get<TripSheetOutputDto>(`${this.backendUrl}/${id}`);
+  }
+
+  getTripSheetsByPlanId(planId: number | undefined): Observable<TripSheetOutputDto[]> {
     return this.http.get<TripSheetOutputDto[]>(`${this.backendUrl}/vehicleDeploymentPlan/${planId}`);
   }
 

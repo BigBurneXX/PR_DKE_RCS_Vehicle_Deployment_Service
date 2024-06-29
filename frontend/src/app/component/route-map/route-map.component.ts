@@ -1,10 +1,11 @@
-import {AfterViewInit, Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import 'leaflet/dist/leaflet.css';
 import * as L from 'leaflet';
 import { OrsService } from './ors.service';
 import * as chroma from 'chroma-js';
 import {ActivatedRoute} from "@angular/router";
 import {GeoJSON} from "leaflet";
+import {VehicleDeploymentPlanOutputDto} from "../../dtos/VehicleDeploymentPlanOutput.dto";
 
 @Component({
   selector: 'app-route-map',
@@ -12,25 +13,30 @@ import {GeoJSON} from "leaflet";
   templateUrl: './route-map.component.html',
   styleUrls: ['./route-map.component.css']
 })
-export class RouteMapComponent implements AfterViewInit {
+export class RouteMapComponent implements OnInit {
   private map: any;
 
-  constructor(private orsService: OrsService, private route: ActivatedRoute) {
+  constructor(private orsService: OrsService,
+              private route: ActivatedRoute) {
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.initMap();
     this.route.queryParams.subscribe(params => {
-      //const coordinates = JSON.parse(params['coordinates']);
-      const coordinates = [
-        [14.289007,48.30065],
-        [14.322953,48.338436],
-        [16.359795,48.207531],
-        [16.359795,48.207531],
-        [15.438233,47.070393],
-        [14.289838, 48.300685]
-      ];
-      this.loadRoute(coordinates);
+      console.log('Query Params:', params);
+
+      const coordinates = params['coordinates'] ? JSON.parse(params['coordinates']) : null;
+      if (coordinates) {
+        console.log('Loading single route with coordinates:', coordinates);
+        const bounds = this.loadRoute(coordinates, "blue");
+        bounds.then(b => this.map.fitBounds(b));
+      }
+
+      const plans = params['plans'] ? JSON.parse(params['plans']) : null;
+      if (plans) {
+        console.log('Loading multiple routes with plans:', plans);
+        this.loadRoutes(plans);
+      }
     });
   }
 
@@ -46,28 +52,50 @@ export class RouteMapComponent implements AfterViewInit {
     }).addTo(this.map);
   }
 
-  private async loadRoute(coordinates: number[][]): Promise<void> {
+  private async loadRoute(coordinates: number[][], color: string): Promise<L.LatLngBounds> {
     try {
       const geojson = await this.orsService.getRoute(coordinates);
-
       if (geojson.type !== 'FeatureCollection') {
         throw new Error('Invalid GeoJSON type');
       }
 
       const geoJsonLayer = L.geoJSON(geojson as GeoJSON.FeatureCollection, {
         style: {
-          color: 'blue',
+          color: color,
           weight: 4,
           opacity: 0.7
         }
       }).addTo(this.map);
 
-      // Fit the map bounds to include the route
       const bounds = geoJsonLayer.getBounds();
       this.map.fitBounds(bounds);
+      return bounds;
     } catch (error) {
-      console.error(error);
-      alert('Failed to load route. Please try again later.');
+      console.error('Failed to load route:', error);
+      throw error;
+    }
+  }
+
+  private async loadRoutes(plans: VehicleDeploymentPlanOutputDto[]): Promise<void> {
+    const colorScale = chroma.scale(['blue', 'red', 'green']).mode('lab').colors(plans.length);
+
+    try {
+      const allBounds: L.LatLngBounds[] = [];
+
+      for (let i = 0; i < plans.length; i++) {
+        const coordinates = plans[i].locations.map((location: any) => [location.longitude, location.latitude]);
+        console.log(coordinates);
+        const bounds = await this.loadRoute(coordinates, colorScale[i]);
+        allBounds.push(bounds);
+      }
+
+      if (allBounds.length > 0) {
+        const overallBounds = allBounds.reduce((acc, bounds) => acc.extend(bounds), L.latLngBounds([]));
+        this.map.fitBounds(overallBounds);
+      }
+    } catch (error) {
+      console.error('Failed to load routes:', error);
+      alert('Failed to load routes. Please try again later.');
     }
   }
 

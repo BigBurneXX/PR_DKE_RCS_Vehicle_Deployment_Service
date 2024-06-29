@@ -1,1 +1,35 @@
-<p>vehicle-deployment-plannings-details works!</p>
+<div class="container" *ngIf="planning">
+    <h1>Vehicle Deployment Plannings</h1>
+    <div class="table-responsive">
+        <table class="table align-middle text-nowrap">
+            <thead>
+            <tr>
+                <th class="text-dark font-medium fs-4">ID</th>
+                <th class="text-dark font-medium fs-4">Name</th>
+                <th class="text-dark font-medium fs-4">Creation Date</th>
+                <th class="text-dark font-medium fs-4">Last Modified Date</th>
+                <th class="text-dark font-medium fs-4">Persons</th>
+                <th class="text-dark font-medium fs-4">Vehicles</th>
+                <th class="text-dark font-medium fs-4">Plans</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="fs-4">{{ planning.id }}</td>
+                <td class="fs-4">{{ planning.name }}</td>
+                <td class="fs-4">{{ planning.creationDate | customDate }}</td>
+                <td class="fs-4">{{ planning.lastModifiedDate | customDate }}</td>
+                <td class="fs-4">
+                    <a (click)="openPersonModal(planning.persons)" class="btn btn-link">View persons</a>
+                </td>
+                <td class="fs-4">
+                    <a (click)="openVehicleModal(planning.vehicles)" class="btn btn-link">View vehicles</a>
+                </td>
+                <td class="fs-4">
+                    <a (click)="navigateToPlans(planning.id)" class="btn btn-link">View plans</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -40,13 +40,8 @@ export const AppRoutes: Routes = [
             .then(m => m.VehicleDeploymentPlanningsNewModule)
       },
       {
-        path: 'vehicle-deployment-plannings/plans/:id',
-        loadChildren: () => import('./vehicle-deployment-plannings/vehicle-deployment-plannings-plans/vehicle-deployment-plannings-plans.module')
-            .then(m => m.VehicleDeploymentPlanningsPlansModule)
-      },
-      {
-        path: 'vehicle-deployment-plans',
-        loadChildren: () => import('./vehicle-deployment-plans/vehicle-deployment-plans/vehicle-deployment-plans-all.module')
+        path: 'vehicle-deployment-plans/all',
+        loadChildren: () => import('./vehicle-deployment-plans/vehicle-deployment-plans-all/vehicle-deployment-plans-all.module')
             .then(m => m.VehicleDeploymentPlansAllModule)
       },
       {
@@ -55,12 +50,25 @@ export const AppRoutes: Routes = [
             .then(m => m.VehicleDeploymentPlansDetailsModule)
       },
       {
-        path: 'trip-sheets/new',
-        loadChildren: () => import('./trip-sheets/trip-sheets-new/trip-sheet-new.module').then(m => m.TripSheetNewModule)
+        path: 'vehicle-deployment-plans/planning/:id',
+        loadChildren: () => import('./vehicle-deployment-plans/vehicle-deployment-plans-planning/vehicle-deployment-plans-planning.module')
+            .then(m => m.VehicleDeploymentPlansPlanningModule)
       },
       {
-        path: 'trip-sheets',
+        path: 'trip-sheets/all',
         loadChildren: () => import('./trip-sheets/trip-sheets-all/trip-sheets-all.module').then(m => m.TripSheetsAllModule)
+      },
+      {
+        path: 'trip-sheets/plan/:id',
+        loadChildren: () => import('./trip-sheets/trip-sheets-by-plan/trip-sheets-by-plan.module').then(m => m.TripSheetsByPlanModule)
+      },
+      {
+        path: 'trip-sheets/details/:id',
+        loadChildren: () => import('./trip-sheets/trip-sheets-details/trip-sheets-details.module').then(m => m.TripSheetsDetailsModule)
+      },
+      {
+        path: 'trip-sheets/new',
+        loadChildren: () => import('./trip-sheets/trip-sheets-new/trip-sheet-new.module').then(m => m.TripSheetNewModule)
       },
     ]
   },

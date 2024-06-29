@@ -11,6 +11,7 @@ import { VehicleModalComponent } from "../../modals/vehicle-modal/vehicle-modal.
 import { PersonOutputDto } from "../../dtos/PersonOutput.dto";
 import { VehicleOutputDto } from "../../dtos/VehicleOutput.dto";
 import { CustomDatePipe } from "../../shared/CustomDatePipe";
+import {VehicleDeploymentPlanOutputDto} from "../../dtos/VehicleDeploymentPlanOutput.dto";
 
 @Component({
   selector: 'app-vehicle-deployment-planning-list',
@@ -51,11 +52,15 @@ export class VehicleDeploymentPlanningsAllComponent implements OnInit {
     });
   }
 
-  navigateToPlans(id: number): void {
-    this.router.navigate([`/vehicle-deployment-plans/${id}`]);
+  navigateToPlans(planningId: number): void {
+    this.router.navigate([`/vehicle-deployment-plans/planning/${planningId}`]);
   }
 
-  navigateToDetails(id: number) {
-    this.router.navigate([`/vehicle-deployment-plannings/details/${id}`]);
+  navigateToDetails(planningId: number) {
+    this.router.navigate([`/vehicle-deployment-plannings/details/${planningId}`]);
+  }
+
+  viewOnMap(plans: VehicleDeploymentPlanOutputDto[]) {
+    this.router.navigate(['/route-map'], { queryParams: { plans: JSON.stringify(plans) } });
   }
 }

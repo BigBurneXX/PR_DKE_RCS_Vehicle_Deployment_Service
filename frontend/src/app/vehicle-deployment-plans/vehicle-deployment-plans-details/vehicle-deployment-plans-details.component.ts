@@ -70,6 +70,6 @@ export class VehicleDeploymentPlansDetailsComponent implements OnInit {
 
   navigateToPlanning() {
     if(this.plan)
-      this.router.navigate([`/vehicle-deployment-plannings/${this.plan.planningId}`]);
+      this.router.navigate([`/vehicle-deployment-plannings/details/${this.plan.planningId}`]);
   }
 }

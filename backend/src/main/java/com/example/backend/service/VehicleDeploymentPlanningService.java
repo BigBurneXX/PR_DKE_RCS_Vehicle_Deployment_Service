@@ -141,7 +141,6 @@ public class VehicleDeploymentPlanningService {
             plan.setVehicle(vehicle);
             plan.setPersons(assignedPersons);
             plan.setVehicleDeploymentPlanning(planning);
-            // vehiclePlan.calculateTotalDistance();
             plan.getOptimizedRoute();
             planRepository.save(plan);
             vehiclePlans.add(plan);

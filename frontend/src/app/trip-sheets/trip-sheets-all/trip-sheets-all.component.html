@@ -14,17 +14,19 @@
             </thead>
             <tbody>
             <tr *ngFor="let tripSheet of tripSheets">
-                <td class="fs-4">{{ tripSheet.name }}</td>
+                <td class="fs-4">
+                    <a (click)="navigateToDetails(tripSheet.id)">{{ tripSheet.name }}</a>
+                </td>
                 <td class="fs-4">{{ tripSheet.creationDate | customDate }}</td>
                 <td class="fs-4">{{ tripSheet.vehicle.name }}, {{ tripSheet.vehicle.type }}</td>
                 <td class="fs-4">
-                    <button (click)="openPersonModal(tripSheet.persons)" class="btn btn-link">View persons</button>
+                    <a (click)="openPersonModal(tripSheet.persons)" class="btn btn-link">View persons</a>
                 </td>
                 <td class="fs-4">
                     <a (click)="viewOnMap(tripSheet.locations)" class="btn btn-link">View on map</a>
                 </td>
                 <td class="fs-4">
-                    <button (click)="navigateToPlan(tripSheet.id)" class="btn btn-link">View plan</button>
+                    <a (click)="navigateToPlan(tripSheet.vehicleDeploymentPlanId)" class="btn btn-link">View plan</a>
                 </td>
             </tr>
             </tbody>

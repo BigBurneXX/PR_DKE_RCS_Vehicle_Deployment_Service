@@ -1,9 +1,14 @@
 import { NgForOf } from "@angular/common";
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { CustomDatePipe } from "../../shared/CustomDatePipe";
+import { PersonModalComponent } from "../../modals/person-modal/person-modal.component";
 import { TripSheetService } from "../trip-sheet.service";
+import { PersonOutputDto} from "../../dtos/PersonOutput.dto";
+import { LocationDto } from "../../dtos/Location.dto";
+
 
 @Component({
   selector: 'app-trip-sheets-by-plan',
@@ -19,7 +24,10 @@ export class TripSheetsByPlanComponent implements OnInit {
   planId: number | undefined;
   tripSheets: any[] = [];
 
-  constructor(private route: ActivatedRoute, private tripSheetService: TripSheetService) {}
+  constructor(private tripSheetService: TripSheetService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.planId = Number(this.route.snapshot.paramMap.get('id')!);
@@ -27,8 +35,27 @@ export class TripSheetsByPlanComponent implements OnInit {
   }
 
   getTripSheets(): void {
-    this.tripSheetService.getTripSheetByPlanId(this.planId).subscribe(tripSheets => {
+    this.tripSheetService.getTripSheetsByPlanId(this.planId).subscribe(tripSheets => {
       this.tripSheets = tripSheets;
     });
+  }
+
+  openPersonModal(persons: PersonOutputDto[]): void {
+    this.dialog.open(PersonModalComponent, {
+      data: { persons }
+    });
+  }
+
+  viewOnMap(locations: LocationDto[]): void {
+    const coordinates = locations.map(location => [location.longitude, location.latitude]);
+    this.router.navigate(['/route-map'], { queryParams: { coordinates: JSON.stringify(coordinates) } });
+  }
+
+  navigateToPlan(planId: number) {
+    this.router.navigate([`/vehicle-deployment-plans/details/${planId}`]);
+  }
+
+  navigateToDetails(id: number) {
+    this.router.navigate([`/trip-sheets/details/${id}`]);
   }
 }

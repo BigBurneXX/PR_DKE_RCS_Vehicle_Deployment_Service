@@ -4,7 +4,6 @@ import { NgForOf, NgIf } from "@angular/common";
 import { Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 
-import { CustomDatePipe } from "../../shared/CustomDatePipe";
 import { PersonModalComponent } from "../../modals/person-modal/person-modal.component";
 import { VehicleDeploymentPlanService } from "../vehicle-deployment-plan.service";
 import { VehicleDeploymentPlanOutputDto } from "../../dtos/VehicleDeploymentPlanOutput.dto";
@@ -18,7 +17,6 @@ import { LocationDto } from "../../dtos/Location.dto";
         FormsModule,
         NgForOf,
         NgIf,
-        CustomDatePipe
     ],
   templateUrl: './vehicle-deployment-plans-all.component.html',
   styleUrls: ['./vehicle-deployment-plans-all.component.scss']
@@ -58,9 +56,9 @@ export class VehicleDeploymentPlansAllComponent implements OnInit {
     }
 
     navigateToTripSheets(planId: number) {
-        this.router.navigate([`/vehicle-deployment-plans/${planId}`]);
+        this.router.navigate([`/trip-sheets/plan/${planId}`]);
     }
     navigateToPlanning(planningId: number) {
-        this.router.navigate([`/vehicle-deployment-plannings/${planningId}`]);
+        this.router.navigate([`/vehicle-deployment-plannings/details/${planningId}`]);
     }
 }

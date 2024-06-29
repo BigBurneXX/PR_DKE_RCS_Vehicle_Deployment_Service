@@ -18,14 +18,10 @@ export class VehicleDeploymentPlanningService {
 
     constructor(private http: HttpClient) { }
 
+    // Methods corresponding with base data system //
     getPeople(): Observable<PersonInputDto[]> {
         return this.http.get<PersonInputDto[]>(`${this.baseDataUrl}/people`);
     }
-
-    getVehicles(): Observable<VehicleInputDto[]> {
-        return this.http.get<VehicleInputDto[]>(`${this.transportServicePortalUrl}/transport-services/vehicles`);
-    }
-
     getAddresses(persons: PersonInputDto[]): Observable<AddressInputDto[]> {
         const addressRequests: Observable<AddressInputDto[]>[] = persons.map(person =>
             forkJoin([
@@ -39,15 +35,21 @@ export class VehicleDeploymentPlanningService {
         );
     }
 
-    postVehicleDeploymentPlanning(data: VehicleDeploymentPlanningInputDto): Observable<any> {
-        return this.http.post<VehicleDeploymentPlanningInputDto>(this.backendUrl, data);
+    // Methods corresponding with transport service portal //
+    getVehicles(): Observable<VehicleInputDto[]> {
+        return this.http.get<VehicleInputDto[]>(`${this.transportServicePortalUrl}/transport-services/vehicles`);
     }
 
+    // Methods corresponding with own backend //
     getVehicleDeploymentPlannings(): Observable<VehicleDeploymentPlanningOutputDto[]> {
         return this.http.get<VehicleDeploymentPlanningOutputDto[]>(this.backendUrl);
     }
 
-    getVehicleDeploymentPlanning(id: number | undefined): Observable<VehicleDeploymentPlanningOutputDto> {
+    getVehicleDeploymentPlanningById(id: number | undefined): Observable<VehicleDeploymentPlanningOutputDto> {
         return this.http.get<VehicleDeploymentPlanningOutputDto>(`${this.backendUrl}/${id}`);
+    }
+
+    postVehicleDeploymentPlanning(data: VehicleDeploymentPlanningInputDto): Observable<any> {
+        return this.http.post<VehicleDeploymentPlanningInputDto>(this.backendUrl, data);
     }
 }

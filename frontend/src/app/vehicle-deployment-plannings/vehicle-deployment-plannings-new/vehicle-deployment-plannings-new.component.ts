@@ -68,6 +68,6 @@ export class VehicleDeploymentPlanningsNewComponent implements OnInit {
     });
     console.log('Current URL:', this.router.url);
     console.log('Navigating to: /vehicle-deployment-planning');
-    this.router.navigate(['/vehicle-deployment-planning']);
+    this.router.navigate(['/vehicle-deployment-plannings/all']);
   }
 }
