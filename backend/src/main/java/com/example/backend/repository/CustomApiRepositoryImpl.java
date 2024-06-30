@@ -5,11 +5,22 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Implementation of the CustomApiRepository interface.
+ *
+ * @param <T> the type of the entity
+ */
 @Repository
 public class CustomApiRepositoryImpl<T> implements CustomApiRepository<T> {
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * Soft deletes an entity by setting its isActive field to false.
+     *
+     * @param entityId the ID of the entity to be soft deleted
+     * @param entityClass the class of the entity
+     */
     @Override
     @Transactional
     public void softDelete(Long entityId, Class<T> entityClass) {
