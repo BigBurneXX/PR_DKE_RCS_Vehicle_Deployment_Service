@@ -16,6 +16,11 @@ import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Represents the planning solution for vehicle deployment, including available vehicles, the persons that should be
+ * transported, the plans with which the optimized use of vehicles, and a score that scores the planning so that the
+ * best scoring planning can be the one that will be implemented.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

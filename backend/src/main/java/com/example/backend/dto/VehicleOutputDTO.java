@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+/**
+ * Data Transfer Object for vehicle output.
+ */
 @Data
 @NoArgsConstructor
 public class VehicleOutputDTO {

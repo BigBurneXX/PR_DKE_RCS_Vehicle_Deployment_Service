@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.Set;
 
+/**
+ * Data Transfer Object for vehicle deployment plan output.
+ */
 @Data
 @NoArgsConstructor
 public class VehicleDeploymentPlanOutputDTO {

@@ -3,7 +3,9 @@ package com.example.backend.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+/**
+ * Data Transfer Object for locations.
+ */
 @Data
 @NoArgsConstructor
 public class LocationDTO {

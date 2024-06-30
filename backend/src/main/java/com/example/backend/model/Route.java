@@ -12,6 +12,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Abstract class representing a route, including a vehicle, persons, and locations.
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -24,6 +27,10 @@ public abstract class Route extends MetaData {
     @ManyToMany
     private List<Location> locations = new ArrayList<>();
 
+    /**
+     * Optimizes the route by finding the shortest path through all locations with a set start location (the vehicle's
+     * start location) and a set end location (the vehicle's end location)
+     */
     public void getOptimizedRoute() {
         List<Location> route = new ArrayList<>();
         route.add(vehicle.getStartLocation());

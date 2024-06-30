@@ -1,8 +1,6 @@
 package com.example.backend.service;
 
-import com.example.backend.dto.AddressInputDTO;
-import com.example.backend.dto.VehicleDeploymentPlanningInputDTO;
-import com.example.backend.dto.VehicleDeploymentPlanningOutputDTO;
+import com.example.backend.dto.*;
 import com.example.backend.model.*;
 import com.example.backend.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +16,9 @@ import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for managing VehicleDeploymentPlanning.
+ */
 @Service
 @RequiredArgsConstructor
 public class VehicleDeploymentPlanningService {
@@ -28,6 +29,12 @@ public class VehicleDeploymentPlanningService {
     private final VehicleDeploymentPlanningRepository planningRepository;
     private final ModelMapper modelMapper;
 
+    /**
+     * Creates a new VehicleDeploymentPlanning.
+     *
+     * @param inputPlanning the VehicleDeploymentPlanningInputDTO containing the planning details.
+     * @return the created VehicleDeploymentPlanningOutputDTO
+     */
     public VehicleDeploymentPlanningOutputDTO createPlanning(VehicleDeploymentPlanningInputDTO inputPlanning) {
         // Create VehicleDeploymentPlanning
         VehicleDeploymentPlanning planning = planningRepository.save(new VehicleDeploymentPlanning());
@@ -36,9 +43,9 @@ public class VehicleDeploymentPlanningService {
         planning.setName(inputPlanning.name() == null ? "Planning_" + planning.getId() : inputPlanning.name());
 
         // Save locations, persons and vehicles
-        saveLocations(inputPlanning);
-        Set<Person> persons = savePersons(inputPlanning);
-        Set<Vehicle> vehicles = saveVehicles(inputPlanning);
+        saveLocations(inputPlanning.addresses());
+        Set<Person> persons = savePersons(inputPlanning.persons());
+        Set<Vehicle> vehicles = saveVehicles(inputPlanning.vehicles());
 
         // Add vehicles and person to planning
         planning.setVehicles(vehicles);
@@ -56,8 +63,13 @@ public class VehicleDeploymentPlanningService {
         return modelMapper.map(planning, VehicleDeploymentPlanningOutputDTO.class);
     }
 
-    private void saveLocations(VehicleDeploymentPlanningInputDTO inputPlanning) {
-        for(AddressInputDTO address : inputPlanning.addresses()) {
+    /**
+     * Saves the locations from the VehicleDeploymentPlanningInputDTO.
+     *
+     * @param inputAddresses the addresses of the VehicleDeploymentPlanningInputDTO.
+     */
+    private void saveLocations(Set<AddressInputDTO> inputAddresses) {
+        for(AddressInputDTO address : inputAddresses) {
             Optional<Location> possLocation = locationRepository.findByAddressId(address.id());
             Location l = possLocation.orElseGet(Location::new);
             l.setAddressId(address.id());
@@ -67,8 +79,14 @@ public class VehicleDeploymentPlanningService {
         }
     }
 
-    private Set<Person> savePersons(VehicleDeploymentPlanningInputDTO inputPlanning) {
-        return inputPlanning.persons().stream()
+    /**
+     * Saves the persons from the VehicleDeploymentPlanningInputDTO.
+     *
+     * @param inputPersons the persons of the VehicleDeploymentPlanningInputDTO.
+     * @return a set of saved persons
+     */
+    private Set<Person> savePersons(Set<PersonInputDTO> inputPersons) {
+        return inputPersons.stream()
                 .map(inputPerson -> {
                     Optional<Person> possPerson = personRepository.findByPersonId(inputPerson.id());
                     Person p = possPerson.orElseGet(Person::new);
@@ -86,8 +104,14 @@ public class VehicleDeploymentPlanningService {
                 }).collect(Collectors.toSet());
     }
 
-    private Set<Vehicle> saveVehicles(VehicleDeploymentPlanningInputDTO inputPlanning) {
-        return inputPlanning.vehicles().stream()
+    /**
+     * Saves the vehicles from the VehicleDeploymentPlanningInputDTO.
+     *
+     * @param inputVehicles the vehicles of the VehicleDeploymentPlanningInputDTO.
+     * @return a set of saved vehicles
+     */
+    private Set<Vehicle> saveVehicles(Set<VehicleInputDTO> inputVehicles) {
+        return inputVehicles.stream()
                 .map(inputVehicle -> {
                     Optional<Vehicle> possVehicle = vehicleRepository.findByVehicleId(inputVehicle.id());
                     Vehicle v = possVehicle.orElseGet(Vehicle::new);
@@ -102,6 +126,12 @@ public class VehicleDeploymentPlanningService {
                 }).collect(Collectors.toSet());
     }
 
+    /**
+     * Creates a location entity from the provided coordinates string.
+     *
+     * @param coordinates the coordinates string
+     * @return the created location
+     */
     private Location createLocation(String coordinates) {
         String[] coordinate = coordinates.split(",");
         Location location = new Location();
@@ -110,6 +140,12 @@ public class VehicleDeploymentPlanningService {
         return locationRepository.save(location);
     }
 
+    /**
+     * Solves the vehicle deployment problem.
+     *
+     * @param planning the VehicleDeploymentPlanning entity
+     * @return a set of solved VehicleDeploymentPlans
+     */
     private Set<VehicleDeploymentPlan> solve(VehicleDeploymentPlanning planning) {
         // Initiate solverFactory
         SolverFactory<VehicleDeploymentPlanning> solverFactory = SolverFactory.create(new SolverConfig()
@@ -130,6 +166,13 @@ public class VehicleDeploymentPlanningService {
         return savePlans(vehiclePersonMap, planning);
     }
 
+    /**
+     * Saves the VehicleDeploymentPlans based on the provided vehicle and person mapping.
+     *
+     * @param vehiclePersonMap a map of vehicles to their assigned persons
+     * @param planning the VehicleDeploymentPlanning entity
+     * @return a set of saved VehicleDeploymentPlans
+     */
     private Set<VehicleDeploymentPlan> savePlans(Map<Vehicle, List<Person>> vehiclePersonMap,
                                                        VehicleDeploymentPlanning planning) {
         Set<VehicleDeploymentPlan> vehiclePlans = new HashSet<>();
@@ -148,6 +191,11 @@ public class VehicleDeploymentPlanningService {
         return vehiclePlans;
     }
 
+    /**
+     * Prints the VehicleDeploymentPlans to the console for debugging purposes.
+     *
+     * @param plans the set of VehicleDeploymentPlans
+     */
     private void printPlansToConsole(Set<VehicleDeploymentPlan> plans) {
         for (VehicleDeploymentPlan vehiclePlan : plans) {
             System.out.println("Vehicle: " + vehiclePlan.getVehicle().getId());
@@ -161,21 +209,43 @@ public class VehicleDeploymentPlanningService {
         }
     }
 
+    /**
+     * Retrieves all active VehicleDeploymentPlannings.
+     *
+     * @return a list of VehicleDeploymentPlanningOutputDTOs
+     */
     public List<VehicleDeploymentPlanningOutputDTO> getAllPlannings() {
         return planningRepository.findByIsActiveTrue().stream()
                 .map(planning -> modelMapper.map(planning, VehicleDeploymentPlanningOutputDTO.class))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Retrieves an active VehicleDeploymentPlanning by its ID.
+     *
+     * @param id the ID of the VehicleDeploymentPlanning
+     * @return an optional containing the vVehicleDeploymentPlanningOutputDTO, if found
+     */
     public Optional<VehicleDeploymentPlanningOutputDTO> getPlanningById(Long id) {
         return planningRepository.findByIdAndIsActiveTrue(id)
                 .map(planning -> modelMapper.map(planning, VehicleDeploymentPlanningOutputDTO.class));
     }
 
+    /**
+     * Soft deletes a VehicleDeploymentPlanning by its ID.
+     *
+     * @param id the ID of the VehicleDeploymentPlanning to delete
+     */
     public void deletePlanning(Long id) {
         planningRepository.softDelete(id, VehicleDeploymentPlanning.class);
     }
 
+    /**
+     * Checks if an active VehicleDeploymentPlanning exists by its ID.
+     *
+     * @param id the ID of the VehicleDeploymentPlanning
+     * @return true if the VehicleDeploymentPlanning exists, false otherwise
+     */
     public boolean existsPlanning(Long id){
         return planningRepository.existsByIdAndIsActiveTrue(id);
     }

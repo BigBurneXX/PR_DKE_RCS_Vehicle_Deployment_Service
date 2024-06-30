@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Represents a vehicle with metadata, including start and end locations, and attributes like type and seats.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

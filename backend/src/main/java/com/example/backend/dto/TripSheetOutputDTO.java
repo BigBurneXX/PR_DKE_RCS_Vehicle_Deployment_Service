@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Data Transfer Object for trip sheet output.
+ */
 @Data
 @NoArgsConstructor
 public class TripSheetOutputDTO {

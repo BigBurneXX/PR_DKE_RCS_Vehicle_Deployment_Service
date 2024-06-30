@@ -10,6 +10,9 @@ import org.optaplanner.core.api.domain.variable.PlanningVariable;
 
 import java.util.Date;
 
+/**
+ * Represents a person with metadata, including start and end locations, and an assigned vehicle.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

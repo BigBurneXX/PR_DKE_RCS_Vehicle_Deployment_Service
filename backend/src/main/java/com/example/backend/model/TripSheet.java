@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Represents a trip sheet, which is a specific type of route.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

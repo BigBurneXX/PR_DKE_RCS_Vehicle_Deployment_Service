@@ -9,6 +9,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
+/**
+ * Abstract class representing metadata for entities.
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor
