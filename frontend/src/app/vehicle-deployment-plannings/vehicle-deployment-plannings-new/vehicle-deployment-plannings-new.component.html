@@ -1,6 +1,6 @@
 <div class="container">
     <h1>Vehicle Deployment Planning</h1>
-    <input id="name" placeholder="Enter the name for the planning" required="true"><br>
+    <input id="name" #planningName placeholder="Enter the name for the planning" required><br>
 
     <h2>Select People</h2>
     <div *ngIf="peopleError" class="alert alert-danger">
@@ -61,6 +61,6 @@
     </div>
 
     <div class="mt-3">
-        <button type="submit" class="btn btn-success" (click)="savePlanning()">Save</button>
+        <button type="submit" class="btn btn-success" (click)="savePlanning(planningName.value)">Save</button>
     </div>
 </div>

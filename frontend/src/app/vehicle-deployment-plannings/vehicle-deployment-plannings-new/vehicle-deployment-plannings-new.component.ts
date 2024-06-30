@@ -55,7 +55,8 @@ export class VehicleDeploymentPlanningsNewComponent implements OnInit {
     });
   }
 
-  savePlanning() {
+  savePlanning(name: string) {
+    this.vehicleDeploymentPlanning.name = name;
     this.vehicleDeploymentPlanning.persons = this.people.filter(person => person.selected);
     this.vehicleDeploymentPlanning.vehicles = this.vehicles.filter(vehicle => vehicle.selected);
     this.vehicleDeploymentPlanningService.getAddresses(this.vehicleDeploymentPlanning.persons).subscribe({
