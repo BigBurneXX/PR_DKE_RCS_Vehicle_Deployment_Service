@@ -27,4 +27,8 @@ export class TripSheetService {
   postTripSheet(planId: number | undefined, selectedPersons: PersonOutputDto[]): Observable<TripSheetOutputDto> {
     return this.http.post<TripSheetOutputDto>(`${this.backendUrl}/vehicleDeploymentPlan/${planId}`, selectedPersons);
   }
+
+  deleteTripSheet(id: number){
+    return this.http.delete(`${this.backendUrl}/${id}`);
+  }
 }

@@ -52,4 +52,8 @@ export class VehicleDeploymentPlanningService {
     postVehicleDeploymentPlanning(data: VehicleDeploymentPlanningInputDto): Observable<any> {
         return this.http.post<VehicleDeploymentPlanningInputDto>(this.backendUrl, data);
     }
+
+    deleteVehicleDeploymentPlanning(id: number) {
+        return this.http.delete(`${this.backendUrl}/${id}`);
+    }
 }

@@ -1,7 +1,7 @@
 import { RouteInfo } from './sidebar.metadata';
 
 export const ROUTES: RouteInfo[] = [
-
+/*
   {
     path: '/dashboard',
     title: 'Dashboard',
@@ -9,7 +9,7 @@ export const ROUTES: RouteInfo[] = [
     class: '',
     extralink: false,
     submenu: []
-  },
+  },*/
   {
     path: '/vehicle-deployment-plannings/all',
     title: 'Plannings',

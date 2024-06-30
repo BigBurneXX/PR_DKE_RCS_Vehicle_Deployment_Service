@@ -5,10 +5,6 @@ import {VehicleDeploymentPlanningOutputDto} from "../../dtos/VehicleDeploymentPl
 import {VehicleDeploymentPlanningService} from "../vehicle-deployment-planning.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
-import {PersonOutputDto} from "../../dtos/PersonOutput.dto";
-import {PersonModalComponent} from "../../modals/person-modal/person-modal.component";
-import {VehicleOutputDto} from "../../dtos/VehicleOutput.dto";
-import {VehicleModalComponent} from "../../modals/vehicle-modal/vehicle-modal.component";
 import {catchError, of} from "rxjs";
 
 @Component({
@@ -25,7 +21,6 @@ import {catchError, of} from "rxjs";
 export class VehicleDeploymentPlanningsDetailsComponent implements OnInit {
     planning: VehicleDeploymentPlanningOutputDto | undefined;
     constructor(private vehicleDeploymentPlanningService: VehicleDeploymentPlanningService,
-                private dialog: MatDialog,
                 private router: Router,
                 private route: ActivatedRoute,
                 private location: Location) {}
@@ -47,18 +42,6 @@ export class VehicleDeploymentPlanningsDetailsComponent implements OnInit {
             } else {
                 this.location.back();
             }
-        });
-    }
-
-    openPersonModal(persons: PersonOutputDto[]): void {
-        this.dialog.open(PersonModalComponent, {
-            data: { persons }
-        });
-    }
-
-    openVehicleModal(vehicles: VehicleOutputDto[]): void {
-        this.dialog.open(VehicleModalComponent, {
-            data: { vehicles }
         });
     }
 

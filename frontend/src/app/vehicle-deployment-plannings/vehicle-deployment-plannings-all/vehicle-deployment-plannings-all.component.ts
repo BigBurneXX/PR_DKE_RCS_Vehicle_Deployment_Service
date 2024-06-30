@@ -12,6 +12,7 @@ import { PersonOutputDto } from "../../dtos/PersonOutput.dto";
 import { VehicleOutputDto } from "../../dtos/VehicleOutput.dto";
 import { CustomDatePipe } from "../../shared/CustomDatePipe";
 import {VehicleDeploymentPlanOutputDto} from "../../dtos/VehicleDeploymentPlanOutput.dto";
+import {ConfirmDialogModalComponent} from "../../modals/confirm-dialog-modal/confirm-dialog-modal.component";
 
 @Component({
   selector: 'app-vehicle-deployment-planning-list',
@@ -62,5 +63,26 @@ export class VehicleDeploymentPlanningsAllComponent implements OnInit {
 
   viewOnMap(plans: VehicleDeploymentPlanOutputDto[]) {
     this.router.navigate(['/route-map'], { queryParams: { plans: JSON.stringify(plans) } });
+  }
+
+  confirmDelete(id: number) {
+    const dialogRef = this.dialog.open(ConfirmDialogModalComponent, {
+      data: {
+        message: 'Are you sure you want to delete this trip sheet? This action cannot be undone.'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.deletePlanning(id);
+      }
+    });
+  }
+
+  deletePlanning(id: number) {
+    this.vehicleDeploymentPlanningService.deleteVehicleDeploymentPlanning(id).subscribe(() => {
+      this.plannings = this.plannings.filter(tripSheet => tripSheet.id !== id);
+      console.log('Trip sheet deleted successfully');
+    });
   }
 }

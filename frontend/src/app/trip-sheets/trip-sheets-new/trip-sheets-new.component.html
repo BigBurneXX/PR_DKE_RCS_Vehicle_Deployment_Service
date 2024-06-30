@@ -1,8 +1,15 @@
 <div class="container">
     <h1>Create a new Trip Sheet</h1>
 
+    <h2>Select a Vehicle Deployment Plan</h2>
+    <div>
+        <select [(ngModel)]="selectedPlanId" (change)="onPlanChange($event)">
+            <option *ngFor="let plan of vehicleDeploymentPlans" [value]="plan.id">{{ plan.name }}</option>
+        </select>
+    </div>
+
     <h2>Select the persons that have been visited</h2>
-    <div class="table-responsive" *ngIf="plan != undefined">
+    <div class="table-responsive" *ngIf="!planError">
         <table class="table align-middle text-nowrap">
             <thead>
             <tr>

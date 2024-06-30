@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import 'leaflet/dist/leaflet.css';
 import * as L from 'leaflet';
 import { OrsService } from './ors.service';
@@ -14,10 +14,13 @@ import {VehicleDeploymentPlanOutputDto} from "../../dtos/VehicleDeploymentPlanOu
   styleUrls: ['./route-map.component.css']
 })
 export class RouteMapComponent implements OnInit {
+  @Input() plans: any;
+
   private map: any;
 
   constructor(private orsService: OrsService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -37,6 +40,8 @@ export class RouteMapComponent implements OnInit {
         console.log('Loading multiple routes with plans:', plans);
         this.loadRoutes(plans);
       }
+
+      this.cdr.detectChanges();
     });
   }
 

@@ -5,12 +5,12 @@ import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 
 import { CustomDatePipe } from "../../shared/CustomDatePipe";
+import { ConfirmDialogModalComponent } from "../../modals/confirm-dialog-modal/confirm-dialog-modal.component";
 import { PersonModalComponent } from "../../modals/person-modal/person-modal.component";
 import { TripSheetService } from "../trip-sheet.service";
 import { TripSheetOutputDto } from "../../dtos/TripSheetOutput.dto";
 import { PersonOutputDto } from "../../dtos/PersonOutput.dto";
 import { LocationDto } from "../../dtos/Location.dto";
-
 
 @Component({
   standalone: true,
@@ -56,5 +56,26 @@ export class TripSheetsAllComponent implements OnInit {
 
     navigateToDetails(id: number) {
         this.router.navigate([`/trip-sheets/details/${id}`]);
+    }
+
+    confirmDelete(id: number) {
+        const dialogRef = this.dialog.open(ConfirmDialogModalComponent, {
+            data: {
+                message: 'Are you sure you want to delete this trip sheet? This action cannot be undone.'
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result === true) {
+                this.deleteTripSheet(id);
+            }
+        });
+    }
+
+    deleteTripSheet(id: number) {
+        this.tripSheetService.deleteTripSheet(id).subscribe(() => {
+            this.tripSheets = this.tripSheets.filter(tripSheet => tripSheet.id !== id);
+            console.log('Trip sheet deleted successfully');
+        });
     }
 }

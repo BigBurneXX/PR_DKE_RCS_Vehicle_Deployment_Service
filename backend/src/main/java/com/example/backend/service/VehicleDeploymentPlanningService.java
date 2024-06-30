@@ -232,11 +232,17 @@ public class VehicleDeploymentPlanningService {
     }
 
     /**
-     * Soft deletes a VehicleDeploymentPlanning by its ID.
+     * Soft deletes a VehicleDeploymentPlanning by its ID and all corresponding VehicleDeploymentPlans
      *
      * @param id the ID of the VehicleDeploymentPlanning to delete
      */
     public void deletePlanning(Long id) {
+        Optional<VehicleDeploymentPlanning> planning = planningRepository.findByIdAndIsActiveTrue(id);
+        // delete all corresponding plans
+        if(planning.isPresent())
+            for(VehicleDeploymentPlan plan : planning.get().getPlans())
+                planRepository.softDelete(plan.getId(), VehicleDeploymentPlan.class);
+        // delete the planning itself
         planningRepository.softDelete(id, VehicleDeploymentPlanning.class);
     }
 

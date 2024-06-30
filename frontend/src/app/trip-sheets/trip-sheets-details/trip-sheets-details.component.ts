@@ -10,6 +10,7 @@ import { TripSheetService } from "../trip-sheet.service";
 import { TripSheetOutputDto } from "../../dtos/TripSheetOutput.dto";
 import { PersonOutputDto } from "../../dtos/PersonOutput.dto";
 import { LocationDto } from "../../dtos/Location.dto";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-trip-sheet-details',
@@ -17,7 +18,8 @@ import { LocationDto } from "../../dtos/Location.dto";
     imports: [
         CustomDatePipe,
         NgForOf,
-        NgIf
+        NgIf,
+        FormsModule
     ],
   templateUrl: './trip-sheets-details.component.html',
   styleUrl: './trip-sheets-details.component.scss'
