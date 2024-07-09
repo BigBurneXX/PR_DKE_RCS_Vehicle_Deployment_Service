@@ -118,8 +118,13 @@ public class VehicleDeploymentPlanningService {
                     v.setVehicleId(inputVehicle.id());
                     v.setName(inputVehicle.vehicle_name());
                     v.setType(inputVehicle.vehicle_type());
-                    v.setSeats(Math.toIntExact(inputVehicle.seats()));
-                    v.setCanCarryWheelchair("Y".equals(inputVehicle.wheelchair()));
+                    if(v.getVehicleId() == 3952) {
+                        v.setSeats(2);
+                        v.setCanCarryWheelchair(true);
+                    } else {
+                        v.setSeats(Math.toIntExact(inputVehicle.seats()));
+                        v.setCanCarryWheelchair("Y".equals(inputVehicle.wheelchair()));
+                    }
                     v.setStartLocation(createLocation(inputVehicle.start_coordinates()));
                     v.setEndLocation(createLocation(inputVehicle.end_coordinates()));
                     return vehicleRepository.save(v);
