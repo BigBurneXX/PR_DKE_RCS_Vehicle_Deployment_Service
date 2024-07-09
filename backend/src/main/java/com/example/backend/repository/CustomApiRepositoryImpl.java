@@ -1,5 +1,6 @@
 package com.example.backend.repository;
 
+import com.example.backend.model.MetaData;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * @param <T> the type of the entity
  */
 @Repository
-public class CustomApiRepositoryImpl<T> implements CustomApiRepository<T> {
+public class CustomApiRepositoryImpl<T extends MetaData> implements CustomApiRepository<T> {
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -27,7 +28,7 @@ public class CustomApiRepositoryImpl<T> implements CustomApiRepository<T> {
         T entity = entityManager.find(entityClass, entityId);
         if (entity != null) {
             try {
-                entity.getClass().getMethod("setIsActive", boolean.class).invoke(entity, false);
+                entity.setActive(false);
                 entityManager.merge(entity);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
